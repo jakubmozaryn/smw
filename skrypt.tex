@@ -15,9 +15,11 @@
 	W rozdziale przedstawiono podstawy matematyczne i fizyczne s³u¿¹ce do opisu
 	robotów o wielu stopniach swobody (mechniazmów wielocz³onowych). Przedstawiono model robota w przestrzeni zmiennych stanu. Opisano sposób symulacji komputerowej dynamiki robota.	
 	\section{Model geometrii, kinematyki i dynamiki mechanizmów wielocz³onowych.}
+	
+	\subsection{Model geometrii}
 	W pracy rozwa¿any jest robot o pojedynczym ³añcuchu kinematycznym, sk³adaj¹cy
 	siê z cz³onów po³¹czonych przegubami. Ka¿dy z przegubów posiada jeden stopieñ swobody. W dalszej czêœci pracy rozwa¿any bêdzie robot o $n$-stopniach swobody z przegubami typu obrotowego, gdy¿ tylko przeguby tego typu wystêpuj¹ w rozwa¿anym w pracy robocie PUMA 560. Przyjêto, ¿e dla robota o $n$-przegubach ponumerowanych od 1 do $n$ istnieje $n$+1 cz³onów ponumerowanych od 0 do $n$. Cz³on o numerze 0 nazywany jest cz³onem bazowym, natomiast cz³on $n$ jest cz³onem z elementem wykonawczym. Przegub i ³¹czy cz³ony o numerach $i$-1 i $i$. Z ka¿dym z cz³onów zwi¹zany jest uk³ad wspó³rzêdnych o tym samym numerze.
-	
+	\subsection{Model kinematyki}
 	Dla okreœlenia uk³adów wspó³rzêdnych kartezjañskich, które bêd¹ przyporz¹dkowane
 	w odpowiedni sposób do cz³onów i przegubów przyjêto notacjê Denavita-Hartenberga
 	\cite{hartenberg:1955}, której podstawy zamieszczono na Rys. \ref{fig:1}:
@@ -36,8 +38,77 @@
 	
 	\begin{equation}
 	^{i-1}T{i}=T_{z,\theta}T_{z,d}T_{x,a}T_{x,\alpha}
-	\end{equation}
+	\end{equation}\label{eq:1}
+	%
+	gdzie: $^{i-1}T{i}$ - jednorodna macierz przekszta³cenia uk³adu $i-1$ wzglêdem uk³adu $i$,$T_{z,\theta}$ - jednorodna macierz obrotu uk³adu $i$ wzglêdem uk³adu $i-1$ wokó³ osi $z_i-1$ o k¹t $\theta_i$, $T_{z,d}$ - jednorodna macierz przesuniêcia uk³adu $i$ wzglêdem uk³adu $i-1$ o $d_i$ wzd³u¿ osi $z_i-1$,$T_{x,a}$ -  jednorodna macierz przesuniêcia uk³adu $i$ wzglêdem uk³adu $i-1$ o $a_i$ wzd³u¿ osi $x_i$. ,$T_{x,\alpha}$-jednorodna macierz obrotu uk³adu $i$ wzglêdem uk³adu $i-1$ wokó³ osi $x_i$ o k¹t $\alpha_i$. 
 	
+	Macierze te wyra¿one s¹ nastêpuj¹cymi zale¿noœciami:
+	%
+	\begin{equation}
+	T_{z,\theta}=\left[\begin{array}{cccc}
+	\cos{\theta_i} & -\sin{\theta_i} & 0 & 0 \\ 
+	\sin{\theta_i} & \cos{\theta_i} & 0 & 0 \\ 
+	0 & 0 & 1 & 0 \\ 
+	0 & 0 & 0 & 1
+	\end{array}\right] 
+	\end{equation}\label{eq:2}
+	%
+	\begin{equation}
+	T_{z,d}=\left[\begin{array}{cccc}
+	1 & 0 & 0 & 0 \\ 
+	0 & 1 & 0 & 0 \\ 
+	0 & 0 & 1 & d_{i} \\ 
+	0 & 0 & 0 & 1
+	\end{array}\right] 
+	\end{equation}\label{eq:3}
+	%
+	\begin{equation}
+	T_{x,a}=\left[\begin{array}{cccc}
+	1 & 0 & 0 & a_{i} \\ 
+	0 & 1 & 0 & 0 \\ 
+	0 & 0 & 1 & 0 \\ 
+	0 & 0 & 0 & 1
+	\end{array}\right] 
+	\end{equation}\label{eq:4}
+	%
+	\begin{equation}
+	T_{x,\alpha}=\left[\begin{array}{cccc}
+	1 & 0 & 0 & 0 \\ 
+	0 & \cos{\alpha_i} & -\sin{\alpha_i} & 0 \\ 
+	0 & \sin{\alpha_i} & \cos{\alpha_i} & 0 \\ 
+	0 & 0 & 0 & 1
+	\end{array}\right] 
+	\end{equation}\label{eq:5}
+	%
+	Wykorzystuj¹c jednorodne macierze przekszta³ceñ mo¿na obliczyæ wspó³rzêdne
+	punktu w $m$-tym uk³adzie, znaj¹c wspó³rzêdne tego samego punktu w $k$-tym uk³adzie
+	(zak³adaj¹c, ¿e $k>m$), jest to tzw. proste zadanie kinematyki. Zale¿noœæ t¹ wyznacza siê
+	korzystaj¹c z wyra¿enia \cite{fu:1987}:
+	%
+	\begin{equation}
+	P_{Am}=^{m}T_{k}P_{Ak}, k>m
+	\end{equation}\label{eq:6}
+	%
+	gdzie:
+	%
+	\begin{equation}
+	^{m}T_{k}=^{m}T_{m+1}\quad ^{m+1}T_{m+2} \dots ^{k-1}T_{k}
+	\end{equation}\label{eq:7}
+	%
+	$P_{Ak}=\left[\begin{array}{c}
+	x_{Ak}\\ 
+	y_{Ak}\\ 
+	z_{Ak}\\ 
+	1
+	\end{array}\right]$ - jednorodny wektor wspó³rzêdnych punktu $A$ w $k$-tym uk³adzie wspó³rzêdnych
+	
+	$P_{Am}=\left[\begin{array}{c}
+	x_{Am}\\ 
+	y_{Am}\\ 
+	z_{Am}\\ 
+	1
+	\end{array}\right]$ - jednorodny wektor wspó³rzêdnych punktu $A$ w $m$-tym uk³adzie wspó³rzêdnych
+	\subsection{Model dynamiki}
 	\section{Opis mechanizmów wielocz³onowych w przestrzeni stanu.}
 	\section{Identyfikacja parametrów kinematycznych i dynamicznych robotów.}
 	\section{Zastosowanie kwaternionów.}
