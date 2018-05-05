@@ -1,0 +1,54 @@
+%& --translate-file=cp1250pl.tcx
+\documentclass[10pt,a4paper]{book}
+\usepackage{polski}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\author{Jakub Mo¿aryn}
+\title{Sterowanie Mechanizmów Wielocz³onowych}
+\begin{document}
+	\maketitle
+	\tableofcontents
+	%ROZDZIA£ 1
+	\chapter{Opis mechanizmów wielocz³onowych}
+	W rozdziale przedstawiono podstawy matematyczne i fizyczne s³u¿¹ce do opisu
+	robotów o wielu stopniach swobody (mechniazmów wielocz³onowych). Przedstawiono model robota w przestrzeni zmiennych stanu. Opisano sposób symulacji komputerowej dynamiki robota.	
+	\section{Model geometrii, kinematyki i dynamiki mechanizmów wielocz³onowych.}
+	W pracy rozwa¿any jest robot o pojedynczym ³añcuchu kinematycznym, sk³adaj¹cy
+	siê z cz³onów po³¹czonych przegubami. Ka¿dy z przegubów posiada jeden stopieñ swobody. W dalszej czêœci pracy rozwa¿any bêdzie robot o $n$-stopniach swobody z przegubami typu obrotowego, gdy¿ tylko przeguby tego typu wystêpuj¹ w rozwa¿anym w pracy robocie PUMA 560. Przyjêto, ¿e dla robota o $n$-przegubach ponumerowanych od 1 do $n$ istnieje $n$+1 cz³onów ponumerowanych od 0 do $n$. Cz³on o numerze 0 nazywany jest cz³onem bazowym, natomiast cz³on $n$ jest cz³onem z elementem wykonawczym. Przegub i ³¹czy cz³ony o numerach $i$-1 i $i$. Z ka¿dym z cz³onów zwi¹zany jest uk³ad wspó³rzêdnych o tym samym numerze.
+	
+	Dla okreœlenia uk³adów wspó³rzêdnych kartezjañskich, które bêd¹ przyporz¹dkowane
+	w odpowiedni sposób do cz³onów i przegubów przyjêto notacjê Denavita-Hartenberga
+	\cite{hartenberg:1955}, której podstawy zamieszczono na Rys. \ref{fig:1}:
+	
+	\begin{figure}[htb!]
+		\begin{center}
+			\includegraphics[width=1\linewidth]{fig1}
+			%\\[1em]%
+			\caption{Standardowa notacja Denavita – Hartenberga (przyk³ad dwóch obrotowych przegubów $i$-1 oraz $i$), $a_i$ - d³ugoœæ cz³onu, odleg³oœæ od osi $z_i-1$ do osi $z_i$ mierzona wzd³u¿ osi $x_i$, $\alpha_i$ – k¹t skrêcenia, k¹t miêdzy osiami $z_i-1$ i $z_i$ mierzony wokó³ osi $x_i$, $d_i$ - odsuniêcie cz³onów,
+				odleg³oœæ od œrodka uk³adu $i-1$ do osi $x_i$ mierzona wzd³u¿ osi $z_i-1$, $\theta_i$ - k¹t konfiguracji, k¹t miêdzy osiami $x_i-1$ i $x_i$ mierzony wokó³ osi $z_i-1$ } \label{fig:1}
+		\end{center}                                         
+	\end{figure}
+
+	Po okreœleniu parametrów uk³adów wspó³rzêdnych kartezjañskich mo¿na wyznaczyæ
+	jednorodne macierze przekszta³ceñ okreœlaj¹cych orientacjê i po³o¿enie uk³adu $i$ wzglêdem uk³adu $i-1$ \cite{fu:1987}:
+	
+	\begin{equation}
+	^{i-1}T{i}=T_{z,\theta}T_{z,d}T_{x,a}T_{x,\alpha}
+	\end{equation}
+	
+	\section{Opis mechanizmów wielocz³onowych w przestrzeni stanu.}
+	\section{Identyfikacja parametrów kinematycznych i dynamicznych robotów.}
+	\section{Zastosowanie kwaternionów.}
+	\section{Otwarte i zamkniête ³añcuchy kinematyczne.}
+	\section{Uk³ady niedosterowane.}
+	\section{Uk³ady nieholonomiczne.}
+	\section{Kolizje.}
+	%ROZDZIA? 2
+	\newpage
+	
+	%BIBLIOGRAFIA
+	\bibliographystyle{unsrt}
+	\bibliography{bibliografia}
+\end{document}}
