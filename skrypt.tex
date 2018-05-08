@@ -109,6 +109,132 @@
 	1
 	\end{array}\right]$ - jednorodny wektor wspó³rzêdnych punktu $A$ w $m$-tym uk³adzie wspó³rzêdnych
 	\subsection{Model dynamiki}
+	%
+	Zale¿noœci opisuj¹ce dynamikê robota o $n$-stopniach swobody mo¿na wyznaczyæ
+	wykorzystuj¹c uogólnione równanie Lagrange’a - Eulera o postaci \cite{fu:1987}
+	%
+	\begin{equation}
+	\tau_{i}=\dfrac{d}{dt}\left(\dfrac{\delta L}{\delta \dot{q_{i}}}\right)-\dfrac{\delta L}{\delta q_{i}}, i=1,2,\dots,n
+	\end{equation}\label{eq:8}
+	gdzie: 
+	$L$ - funkcja Lagrange’a (lagrangian) – funkcja potencja³u kinetycznego.
+	%
+	\begin{equation}
+	L = K-P
+	\end{equation}\label{eq:9}
+	%
+	$K$ - ca³kowita energia kinetyczna uk³adu, 
+	$P$ - ca³kowita energia potencjalna uk³adu,
+	$q_i$ - uogólnione wspó³rzêdne uk³adu w przegubie $i$, $\tau_i$ - uogólnione wymuszenia (si³y lub momenty) dzia³aj¹ce w przegubie $i$
+	\footnote{W robocie o przegubach obrotowych, jako uogólnione wspó³rzêdne przyjmuje siê
+	po³o¿enia k¹towe w przegubach, natomiast jako uogólnione wymuszenia przyjmuje siê
+	momenty napêdowe w przegubach.}.
+
+	Korzystaj¹c z równañ Lagrange’a-Eulera, zale¿noœci opisuj¹ce dynamikê robota z
+	wszystkimi przegubami obrotowymi, mo¿na przedstawiæ w nastêpuj¹cy sposób \cite{fu:1987}.
+		%
+	\begin{equation}
+	\tau=M(\theta)\ddot{\theta}+V(\theta, \dot{\theta})+G(\theta)
+	\end{equation}\label{eq:10}
+	%
+	gdzie: $\tau\in R^{n}$ - wektor momentów napêdowych w przegubach, $n$ - iloœæ stopni swobody robota, 
+	$M(\theta)\in R^{n\times n}$ - macierz bezw³adnoœci robota.
+	$V(\theta, \dot{\theta})$ - wektor wyrazów zawieraj¹cych sk³adowe momentu zale¿ne od si³
+	odœrodkowych i Coriolisa, $G(\theta)\in R^{n}$- wektor wyrazów zawieraj¹cych sk³adowe momentu zale¿ne od si³
+	grawitacji, $\theta\in R^{n}$ - wektor po³o¿eñ k¹towych w poszczególnych przegubach.
+	
+	\textbf{Macierz $M(\theta)\in R^{n\times n}$}
+	
+	Elementy macierzy bezw³adnoœci wyznacza siê korzystaj¹c z zale¿noœci:
+	
+	\begin{equation}
+	m_{ik}=\sum_{j=\max(i,k)}^{n}Tr(U_{jk}J_{j}U_{jk}^{T}), i,k=1,2,\dots,n
+	\end{equation}\label{eq:11}
+	gdzie:
+	\begin{equation}
+	U_{jk}\equiv \dfrac{\delta ^{0}T_{i}}{\delta \theta_{j}}=
+	\left\{\begin{array}{l}
+	^{0}T_{j-1}Q ^{j-1}T_{i}, \text{dla} j\leq i\\ 
+	0, \text{dla} j>i
+	\end{array}\right. 
+	\end{equation}\label{eq:12}
+	%
+	\begin{equation}
+	Q=\left[ \begin{array}{cccc}
+	0 & -1  & 0 & 0 \\ 
+	1 & 0 & 0 & 0 \\ 
+	0 & 0 & 0 & 0 \\ 
+	0 & 0 & 0 & 0
+	\end{array} \right] \text{- dla przegubu obrotowego}
+	\end{equation}\label{eq:13}
+	%
+	$J_{i}$ - jednorodna macierz inercji cz³onu $i$ wyra¿ona zale¿noœci¹:
+	%
+	\begin{equation}
+	\begin{array}{l}
+	J_{i}=\int r_{i}r_{i}^{T}dm=\\
+	\left[ \begin{array}{cccc}
+	\dfrac{-I_{XXi}+I_{YYi}+I_{ZZi}}{2} & I_{XYi} & I_{XZi} & m_{i}\overline{x}_{i} \\ 
+	I_{XYi} & \dfrac{I_{XXi}-I_{YYi}+I_{ZZi}}{2} & I_{YZi} & m_{i}\overline{y}_{i} \\ 
+	I_{XZi} & I_{YZi} & \dfrac{I_{XXi}+I_{YYi}-I_{ZZi}}{2} & m_{i}\overline{z}_{i} \\ 
+	m_{i}\overline{x}_{i} & m_{i}\overline{y}_{i} & m_{i}\overline{z}_{i} & m_{i}
+	\end{array} \right] 
+	\end{array}
+	\end{equation}\label{eq:14}
+	%
+	$I_{XXi}$,$I_{YYi}$,$I_{ZZi}$ - masowe momenty bezw³adnoœci cz³onu $i$, $I_{XYi}$,$I_{XZi}$,$I_{YZi}$ - masowe momenty dewiacji cz³onu $i$, $r_{i}=[x_{i}\quad y_{i} ]\quad z_{i}]^{T}$ - jednorodny wektor wspó³rzêdnych œrodka masy cz³onu $i$ wyra¿ony w
+	$i$-tym uk³adzie wspó³rzêdnych, $Tr(A)=\sum_{i=1}^{n}a_{ii}$ - œlad macierzy kwadratowej $A\in R^{n\times n}$.
+	
+	\textbf{Wektor $V(\theta, \dot{\theta})$ ma postaæ}
+	
+	\begin{equation}
+	V(\theta, \dot{\theta})=[V_{1},V_{2},\dots,V_{n}]^{T}
+	\end{equation}\label{eq:15}
+	
+	Elementy wektora $V(\theta, \dot{\theta})$ mo¿na wyznaczyæ korzystaj¹c z nastêpuj¹cych zale¿noœci:
+	
+	\begin{equation}
+	V_{i}=\dot{\theta}^{T}H_{i}\dot{\theta}
+	\end{equation}\label{eq:16}
+ 
+ 	\begin{equation}
+ H_{i}\in R^{n\times n}, i=1,2,\dots,n
+ \end{equation}\label{eq:17}
+ 
+  	\begin{equation}
+ 	h_{ikl}=\sum_{j=\max(i,k,l)}^{n}Tr(U_{jkl}J_{j}U_{ji}^{T}), i,k,l=1,2,\dots,n
+ 	\end{equation}\label{eq:18}
+	
+	gdzie:
+	\begin{equation}
+	U_{ijk}\equiv \dfrac{\delta ^{0}U_{ij}}{\delta \theta_{k}}=
+	\left\{\begin{array}{l}
+	^{0}T_{j-1}Q_{j} ^{j-1}T_{k-1} Q_{k} ^{k-1}T_{i}, \text{dla} j\leq k\leq i\\ 
+	^{0}T_{k-1}Q_{k} ^{k-1}T_{j-1} Q_{j} ^{j-1}T_{i}, \text{dla } k\leq j\leq i\\ 
+	0, \text{dla } j>i \text{ lub } i<k
+	\end{array}\right. 
+	\end{equation}\label{eq:19}
+	%
+	\textbf{Wektor $G(\theta)$ ma postaæ}
+	
+	Elementy wektora $G(\theta)$ mo¿na wyznaczyæ korzystaj¹c z zale¿noœci:
+	
+	\begin{equation}
+	g_{i}=\sum_{j=i}^{n}(-m_{j}\overline{g}U_{ij} ^{j}\overline{r}_{j}), i=1,2,\dots,n
+	\end{equation}\label{eq:20}
+	
+	gdzie: $\overline{g}=[g_{x}\quad g_{y}\quad g_{x}\quad 0]^{T}$ -jednorodny wektor grawitacji wyra¿ony w bazowym uk³adzie
+	wspó³rzêdnych, $\sqrt{\overline{g}\overline{g}^{T}}=9.8062 [m/s{2}]$ - na powierzcni ziemi, $m_{i}$ masa cz³onu $i$.
+
+	Nale¿y dodaæ, ¿e istnieje szereg innych metod wyznaczania równañ dynamiki robota,
+	np. metoda Newtona-Eulera, uogólniona metoda d’Alamberta \cite{fu:1987},
+	metoda Christoffela-Lagrange’a, metoda Walkera-Orina \cite{hejmo:1997}. Ich powstanie
+	wynik³o g³ównie z potrzeby stworzenia szybkich algorytmów do obliczeñ numerycznych.
+	Dok³adniejsz¹ analizê i porównanie algorytmów mo¿na znaleŸæ w \cite{fu:1987,hejmo:1997}.
+	W dalszej czêœci pracy wykorzystywany jest algorytm Lagrange’a-Eulera.
+	Wyznaczona tym sposobem postaæ równañ dynamiki \ref{eq:10} pozwala na ³atw¹ analizê w³aœciwoœci robota, zaprojektowania uniwersalnego algorytmu do jego symulacji, oraz
+	syntezê uk³adu sterowania.
+	%
 	\section{Opis mechanizmów wielocz³onowych w przestrzeni stanu.}
 	\section{Identyfikacja parametrów kinematycznych i dynamicznych robotów.}
 	\section{Zastosowanie kwaternionów.}
@@ -116,9 +242,63 @@
 	\section{Uk³ady niedosterowane.}
 	\section{Uk³ady nieholonomiczne.}
 	\section{Kolizje.}
-	%ROZDZIA? 2
+	%-----
+	%Rodzia³ 2
 	\newpage
-	
+	\chapter{Standardowe modele uk³adów wielocz³onowych}
+	\section{wahad³o odwrócone}
+	\section{acrobot}
+	\section{maszyny krocz¹ce}
+	%-----
+	%Rodzia³ 3
+	\newpage
+	\chapter{Planowanie trajektorii ruchu robota}
+	\section{Planowanie trajektorii ruchu robota w przestrzeni wewnêtrznej, zewnêtrznej i kartezjañskiej}
+	\section{Koordynacja ruchu robotów w przestrzeni zadañ}
+	\section{Planowanie ruchu jako przeszukiwanie}
+	%-----
+	%Rodzia³ 4
+	\newpage
+	\chapter{Sterowanie w przestrzeni przegubów}
+	\section{Serwomechanizmy przegubów}
+	\section{Sterowanie w przestrzeni przegubów}
+	\subsection{Transmitancja przegubu}
+	\subsection{Regulator po³o¿enia przegubu}
+	\subsection{Regulator momentu przegubu}
+	\subsection{stabilnoœæ uk³adu regulacji i wskaŸniki jakoœci regulacji}
+	\section{Sterowanie adaptacyjne}
+	%-----
+	%Rodzia³ 5
+	\newpage
+	\chapter{Sterowanie w przestrzeni stanu}
+	\section{Regulator dla robota o wielu stopniach swobody}
+	\section{Linearyzacja sprzê¿enia zwrotnego}
+	\section{Dobór funkcji Lapunova dla potrzeb sterowania mechanizmów wielocz³onowych}
+	\section{Sterownie pozycyjne i sterowanie nad¹¿ne}
+	\section{Projektowanie sterowania jako zadanie optymalizacji}
+	%-----
+	%Rodzia³ 6
+	\newpage
+	\chapter{Sterowanie si³owe}
+	\section{Sterowanie impedancyjne}
+	\section{Sterowanie si³owe}
+	\section{Sterowanie pozycyjno-si³owe}
+	\section{Modele tarcia}
+	%-----
+	%Rodzia³ 7
+	\newpage
+	\chapter{Sterowanie optymalne i sterowanie odporne}
+	\section{Sterowanie o zmiennej strukturze mechanizmów wielocz³onowych}
+	\section{Sterowanie predykcyjne mechanizmów wielocz³onowych}
+	\section{Sterowanie LQR/LQG mechanizmów wielocz³onowych}
+	%-----
+	%Rodzia³ 8
+	\newpage
+	\chapter{Metody sztucznej inteligencji w sterowaniu mechanizmów wielocz³onowych}
+	\section{Sieci neuronowe do modelowania mechanizmów wielocz³onowych}
+	\section{Regulator stanu mechanizmu wielocz³oowego oparty o sieci neuronowe}
+	\section{Logika rozmyta w sterowaniu mechanizmów wieloczlonowych}
+	\section{Sterowanie z wzmocnieniem mechanizmów welocz³onowych}	
 	%BIBLIOGRAFIA
 	\bibliographystyle{unsrt}
 	\bibliography{bibliografia}
