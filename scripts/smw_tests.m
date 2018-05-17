@@ -47,15 +47,15 @@ rrr2_robot = SerialLink( [
     ], 'name', 'simple');
          
 rrr2_T = [ 
-    cos(q0)*cos(q1 + q2), -cos(q0)*sin(q1 + q2), sin(q0), a1*cos(q0)*cos(q1) + a2*cos(q0)*cos(q1 + q2) + d2*sin(q0);
-    sin(q0)*cos(q1 + q2), -sin(q0)*sin(q1 + q2), cos(q0), a1*sin(q0)*cos(q1) + a2*sin(q0)*cos(q1 + q2) - d2*cos(q0);
-            sin(q1 + q2),          cos(q1 + q2),       0,                         a1*sin(q1) + a2*sin(q1 + q2) + d0;
-                       0,                     0,       0,                                                         1;];
+    cos(q0)*cos(q1 + q2), -cos(q0)*sin(q1 + q2),  sin(q0), a1*cos(q0)*cos(q1) + a2*cos(q0)*cos(q1 + q2) + d2*sin(q0);
+    sin(q0)*cos(q1 + q2), -sin(q0)*sin(q1 + q2), -cos(q0), a1*sin(q0)*cos(q1) + a2*sin(q0)*cos(q1 + q2) - d2*cos(q0);
+            sin(q1 + q2),          cos(q1 + q2),        0,                         a1*sin(q1) + a2*sin(q1 + q2) + d0;
+                       0,                     0,        0,                                                         1;];
                     
 rrr2_J = [ 
    d2*cos(q0) - a1*cos(q1)*sin(q0) - a2*sin(q0)*cos(q1 + q2), -cos(q0)*(a2*sin(q1 + q2) + a1*sin(q1)), -a2*sin(q1 + q2)*cos(q0);
    d2*sin(q0) + a1*cos(q0)*cos(q1) + a2*cos(q0)*cos(q1 + q2), -sin(q0)*(a2*sin(q1 + q2) + a1*sin(q1)), -a2*sin(q1 + q2)*sin(q0);
-                                                           0,  sin(q0)*(a1*sin(q0)*cos(q1) + a2*sin(q0)*cos(q1 + q2) - cos(q0)*d2) + cos(q0)*(a1*cos(q0)*cos(q1) + a2*cos(q0)*cos(q1 + q2) + sin(q0)*d2),          sin(q0)*a1*sin(q0)*cos(q1 + q2) + cos(q0)*a1*cos(q0)*cos(q1 + q2);
+                                                           0,  sin(q0)*(a1*sin(q0)*cos(q1) + a2*sin(q0)*cos(q1 + q2) - cos(q0)*d2) + cos(q0)*(a1*cos(q0)*cos(q1) + a2*cos(q0)*cos(q1 + q2) + sin(q0)*d2),          sin(q0)*a2*sin(q0)*cos(q1 + q2) + cos(q0)*a2*cos(q0)*cos(q1 + q2);
                                                            0,                                 sin(q0),                  sin(q0);
                                                            0,                                -cos(q0),                 -cos(q0);
                                                            1,                                       0,                        0;];                 
@@ -63,44 +63,62 @@ rrr2_J = [
 % q = rrr_q;
 % dh_parameters = rrr_dh_parameters;
 % robot = rrr_robot;
+% T_ideal = rrr_T;
+% J_ideal = rrr_J;
 q = rrr2_q;
 dh_parameters = rrr2_dh_parameters;
 robot = rrr2_robot;
 T_ideal = rrr2_T;
 J_ideal = rrr2_J;
 
-test_calculations(q, dh_parameters, robot, T_ideal, J_ideal);
+test_raw_calculations(q, dh_parameters, T_ideal, J_ideal);
+test_ETS3_calculations(q, robot, T_ideal, J_ideal);  
 
 
-
-function test_calculations(q, dh_parameters, robot, T_ideal, J_ideal)  
+function test_raw_calculations(q, dh_parameters, T_ideal, J_ideal)   
+    fprintf('test_raw_calculations\n'); 
     % Kinematics: End Frame Homogeneous Transformations
-    T = simplify(calculate_transformation_matrix(dh_parameters));
-    T_toolbox = robot.fkine(q);
-    compare_end_frame_transform(T, simplify(T_ideal));
+    T = calculate_transformation_matrix(dh_parameters);
+    compare_end_frame_transform(T, T_ideal);
     
-    % Kinematics: End Frame Angular Velocity
-    % R = get_rotation_matrix(T);
-    % w = zeros(3);
-    % for i = 1:size(tp_dh_parameters, 1)
-    %     w = w + diff(R, theta(1, i))*R'*theta_dot(1, i);
-    % end
-    % simplify(w);
-
     % Kinematics Test 1: End Frame Position
     t = get_translation_matrix(T);
-    t_toolbox = T_toolbox.t;
-%     compare_end_frame_position(t, t_toolbox);
+    t_ideal = get_translation_matrix(T_ideal);
+    compare_end_frame_position(t, t_ideal);
 
     % Kinematics: Linear Velocity Jacobian
     J_v = simplify(calculate_jacobian_v(t, q));
-    %J_v_toolbox = simplify(robot.jacob0(theta, 'trans'))
-    J_v_toolbox = jacobian(t_toolbox, q);
-%     compare_linear_velocity_jacobian(J_v, J_v_toolbox);
 
     % Kinematics: Angular Velocity Jacobian
     J_w = simplify(calculate_jacobian_w(dh_parameters));
-    J_w_toolbox = robot.jacobe(q, 'rot');
+
+    % Kinematics: Combined Velocity Jacobian
+    J = [ J_v;
+          J_w ];
+    compare_velocity_jacobian(J, J_ideal);
+end
+
+function test_ETS3_calculations(q, robot, T_ideal, J_ideal)  
+    fprintf('test_ETS3_calculations\n');
+    % Kinematics: End Frame Homogeneous Transformations
+    T_obj = robot.fkine(q);
+    t = T_obj.t;
+    R = [T_obj.n, T_obj.o, T_obj.a];
+    T = [           R, t;
+          zeros(1, 3), 1;   ];
+    compare_end_frame_transform(T, T_ideal);
+   
+    % Kinematics Test 1: End Frame Position
+    t_ideal = get_translation_matrix(T_ideal);
+    compare_end_frame_position(t, t_ideal);
+
+    % Kinematics: Linear Velocity Jacobian
+    %J_v_toolbox = simplify(robot.jacob0(theta, 'trans'))
+    J_v = jacobian(t, q);
+%     compare_linear_velocity_jacobian(J_v, J_v_toolbox);
+
+    % Kinematics: Angular Velocity Jacobian
+    J_w = robot.jacobe(q, 'rot');
 %     compare_angular_velocity_jacobian(J_w, J_w_toolbox, 'jacobe');
 
     % J_w_toolbox = robot.jacob0(theta, 'rot');
@@ -108,19 +126,17 @@ function test_calculations(q, dh_parameters, robot, T_ideal, J_ideal)
 %     compare_angular_velocity_jacobian(J_w, J_w_toolbox, 'jacob0');
 
     % Kinematics: Combined Velocity Jacobian
+    
     J = [ J_v;
           J_w ];
-
-    J_toolbox = [ J_v_toolbox;
-                  J_w_toolbox ];
     % J_toolbox = robot.jacob0(q)
-%     compare_velocity_jacobian(J, J_toolbox);
-    compare_velocity_jacobian(J, simplify(J_ideal));
-    compare_velocity_jacobian(J_toolbox, simplify(J_ideal));
+    compare_velocity_jacobian(J, J_ideal);
 end
 
 function compare_matrices(M1, M2)
-    if(isequal(M1, M2))
+%     simplify(expand(M1))
+%     simplify(expand(M2))
+    if(isequal(simplify(expand(M1)), simplify(expand(M2))))
         fprintf('SUCCESS!\n');
     else
         fprintf('FAILED!\n');
