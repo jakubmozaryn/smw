@@ -5,15 +5,16 @@ import ETS3.*
 clear;
 clc;
 
-% test case models
+% configure symbolic variables for calculations
 syms a0 a1 a2 d0 d1 d2 q0 q1 q2 real
 
-% test case 1
+% configure test case 1  --------------------------------------------------
 rrr_q = [ q0 q1 q2 ];
+% raw dh parameters
 rrr_dh_parameters = [   0  a0   0   q0;
                         0  a1   0   q1; 
                         0  a2   0   q2; ];
-                    
+% ets3 dh parameters                    
 rrr_robot = SerialLink( [   Revolute('a', a0)
                             Revolute('a', a1)
                             Revolute('a', a2)
@@ -33,13 +34,14 @@ rrr_J = [
                                                       0,                                        0,                     0;
                                                       1,                                        1,                     1;];                      
 
-% test case 2
+% configure test case 2 ---------------------------------------------------
 rrr2_q = [ q0 q1 q2 ];
+% raw dh parameters   
 rrr2_dh_parameters = [   
     sym(pi/2),  0, d0, q0;
             0, a1,  0, q1; 
             0, a2, d2, q2; ];
-                    
+% ets3 dh parameters                       
 rrr2_robot = SerialLink( [   
     Revolute('alpha', sym(pi/2), 'd', d0) 
     Revolute('a', a1)
@@ -60,19 +62,33 @@ rrr2_J = [
                                                            0,                                -cos(q0),                 -cos(q0);
                                                            1,                                       0,                        0;];                 
          
-% q = rrr_q;
-% dh_parameters = rrr_dh_parameters;
-% robot = rrr_robot;
-% T_ideal = rrr_T;
-% J_ideal = rrr_J;
-q = rrr2_q;
-dh_parameters = rrr2_dh_parameters;
-robot = rrr2_robot;
-T_ideal = rrr2_T;
-J_ideal = rrr2_J;
-
-test_raw_calculations(q, dh_parameters, T_ideal, J_ideal);
-test_ETS3_calculations(q, robot, T_ideal, J_ideal);  
+% test calculations -------------------------------------------------------  
+test_case_count = 2;
+for test_case = 1:test_case_count
+    if(test_case == 1)
+        q = rrr_q;
+        dh_parameters = rrr_dh_parameters;
+        robot = rrr_robot;
+        T_ideal = rrr_T;
+        J_ideal = rrr_J;
+    elseif(test_case == 2)
+        q = rrr2_q;
+        dh_parameters = rrr2_dh_parameters;
+        robot = rrr2_robot;
+        T_ideal = rrr2_T;
+        J_ideal = rrr2_J;
+    else % default
+        q = rrr_q;
+        dh_parameters = rrr_dh_parameters;
+        robot = rrr_robot;
+        T_ideal = rrr_T;
+        J_ideal = rrr_J;
+    end
+    
+    fprintf('\ntesting case %d\n', test_case);
+    test_raw_calculations(q, dh_parameters, T_ideal, J_ideal);
+    test_ETS3_calculations(q, robot, T_ideal, J_ideal);  
+end
 
 
 function test_raw_calculations(q, dh_parameters, T_ideal, J_ideal)   
@@ -84,7 +100,7 @@ function test_raw_calculations(q, dh_parameters, T_ideal, J_ideal)
     % Kinematics Test 1: End Frame Position
     t = get_translation_matrix(T);
     t_ideal = get_translation_matrix(T_ideal);
-    compare_end_frame_position(t, t_ideal);
+%     compare_end_frame_position(t, t_ideal);
 
     % Kinematics: Linear Velocity Jacobian
     J_v = simplify(calculate_jacobian_v(t, q));
@@ -109,27 +125,20 @@ function test_ETS3_calculations(q, robot, T_ideal, J_ideal)
     compare_end_frame_transform(T, T_ideal);
    
     % Kinematics Test 1: End Frame Position
-    t_ideal = get_translation_matrix(T_ideal);
-    compare_end_frame_position(t, t_ideal);
+%     t_ideal = get_translation_matrix(T_ideal);
+%     compare_end_frame_position(t, t_ideal);
 
     % Kinematics: Linear Velocity Jacobian
-    %J_v_toolbox = simplify(robot.jacob0(theta, 'trans'))
-    J_v = jacobian(t, q);
-%     compare_linear_velocity_jacobian(J_v, J_v_toolbox);
+%     J_v = jacobian(t, q);
 
     % Kinematics: Angular Velocity Jacobian
-    J_w = robot.jacobe(q, 'rot');
-%     compare_angular_velocity_jacobian(J_w, J_w_toolbox, 'jacobe');
-
-    % J_w_toolbox = robot.jacob0(theta, 'rot');
-%     J_w_toolbox = robot.jacob0(q, 'rot');
-%     compare_angular_velocity_jacobian(J_w, J_w_toolbox, 'jacob0');
+%     J_w = robot.jacobe(q, 'rot');
+%     J_w = robot.jacob0(q, 'rot');
 
     % Kinematics: Combined Velocity Jacobian
-    
-    J = [ J_v;
-          J_w ];
-    % J_toolbox = robot.jacob0(q)
+%     J = [ J_v;
+%           J_w ];
+    J = robot.jacob0(q);
     compare_velocity_jacobian(J, J_ideal);
 end
 
