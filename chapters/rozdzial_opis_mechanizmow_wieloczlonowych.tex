@@ -1,14 +1,15 @@
 
 %ROZDZIA£ 1
-\chapter{Opis mechanizmów wielocz³onowych}
+\chapter{Opis mechanizmów wielocz³onowych - Janek+Kuba}
   W rozdziale przedstawiono podstawy matematyczne i fizyczne s³u¿¹ce do opisu
   robotów o wielu stopniach swobody (mechniazmów wielocz³onowych). Przedstawiono model robota w przestrzeni zmiennych stanu. Opisano sposób symulacji komputerowej dynamiki robota.	
   \section{Model geometrii, kinematyki i dynamiki mechanizmów wielocz³onowych.}
 
-  \subsection{Model geometrii}
+  \subsection{Model geometrii - Janek}
   W pracy rozwa¿any jest robot o pojedynczym ³añcuchu kinematycznym, sk³adaj¹cy
   siê z cz³onów po³¹czonych przegubami. Ka¿dy z przegubów posiada jeden stopieñ swobody. W dalszej czêœci pracy rozwa¿any bêdzie robot o $n$-stopniach swobody z przegubami typu obrotowego, gdy¿ tylko przeguby tego typu wystêpuj¹ w rozwa¿anym w pracy robocie PUMA 560. Przyjêto, ¿e dla robota o $n$-przegubach ponumerowanych od 1 do $n$ istnieje $n$+1 cz³onów ponumerowanych od 0 do $n$. Cz³on o numerze 0 nazywany jest cz³onem bazowym, natomiast cz³on $n$ jest cz³onem z elementem wykonawczym. Przegub i ³¹czy cz³ony o numerach $i$-1 i $i$. Z ka¿dym z cz³onów zwi¹zany jest uk³ad wspó³rzêdnych o tym samym numerze.
-  \subsection{Model kinematyki}
+  %
+  \subsection{Model kinematyki - Janek}
   Dla okreœlenia uk³adów wspó³rzêdnych kartezjañskich, które bêd¹ przyporz¹dkowane
   w odpowiedni sposób do cz³onów i przegubów przyjêto notacjê Denavita-Hartenberga
   \cite{hartenberg:1955}, której podstawy zamieszczono na Rys. \ref{fig:1}:
@@ -97,7 +98,9 @@
   z_{Am}\\ 
   1
   \end{array}\right]$ - jednorodny wektor wspó³rzêdnych punktu $A$ w $m$-tym uk³adzie wspó³rzêdnych
-  \subsection{Model dynamiki}
+  %
+  
+  \subsection{Model dynamiki - Kuba}
   %
   Zale¿noœci opisuj¹ce dynamikê robota o $n$-stopniach swobody mo¿na wyznaczyæ
   wykorzystuj¹c uogólnione równanie Lagrange’a - Eulera o postaci \cite{fu:1987}
@@ -224,6 +227,92 @@
   Wyznaczona tym sposobem postaæ równañ dynamiki \ref{eq:10} pozwala na ³atw¹ analizê w³aœciwoœci robota, zaprojektowania uniwersalnego algorytmu do jego symulacji, oraz
   syntezê uk³adu sterowania.
   %
+  \subsubsection{W³aœciwoœci strukturalne modelu dynamiki}
+  \par Model matematyczny robota (\ref{2.3.3}) posiada charakterystyczne w³asnoœci strukturalne. S¹ one czêsto wykorzystywane podczas weryfikacji poprawnoœci modeli otrzymanych ró¿nymi metodami w trakcie projektowania i analizy uk³adów sterowania robotów. Podstawowe w³asnoœci, które bêd¹ wykorzystywane w pracy, s¹ nastêpuj¹ce \cite*{tourassis:properties,swider:phd,morecki:podstawy,lewis:neuralcontrol}
+  %
+  \par \textbf{W³asnoœci strukturalne modelu robota ({WMR})}
+  %
+  \begin{description}
+  	%
+  	\item[WMR.1] Macierz inercji $M(q)$ jest symetryczna
+  	%
+  	\begin{equation}\label{2.4.1}%{2.17}
+  	M(q)=M^{T}(q)
+  	\end{equation}
+  	%
+  	\item[WMR.2] Macierz inercji $M(q)$ jest dodatnio okreœlona
+  	%
+  	\begin{equation}\label{2.4.2}%{2.18}
+  	x^{T}M(q)x > 0 \qquad \forall x=[x_{i}]_{n \times 1}, x \neq 0
+  	\end{equation}
+  	%
+  	\item[WMR.3] Elementy $m_{i,j}(q)$ macierzy inercji $M(q)$ nie zale¿¹ od przemieszczeñ uogólnionych w 'aktualnym' przegubie i przegubach 'poprzednich'
+  	%
+  	\begin{equation}\label{2.4.4}%{2.20}
+  	m_{i,j}(q)=m_{i,j}(q_{k+1},q_{k+2}, \ldots, q_{n}), \ \mathrm{gdzie} \ k=\min(i,j), \ \forall i,j=1,\ldots,n
+  	\end{equation}
+  	%
+  \end{description}
+  %
+  Z w³asnoœci \emph{WMR.1} - \emph{WMR.3} wynikaj¹ nastêpuj¹ce wnioski
+  %
+  \begin{enumerate}
+  	%
+  	\item Macierz $M(q)$ jest nieosobliwa
+  	%
+  	\begin{equation}\label{2.4.3}
+  	\text{det}[M(q)]\neq 0
+  	\end{equation}
+  	%
+  	\item Mo¿na dokonaæ dekompozycji macierzy $M(q)$
+  	%
+  	\begin{equation}\label{2.4.3a}
+  	M(q)=P^{T}P \qquad \det{P}\neq 0
+  	\end{equation}
+  	%
+  	\item ¯aden element macierzy inercji nie zale¿y od przemieszczenia uogólnionego w pierwszym przegubie, natomiast element $m_{n,n}$ nie zale¿y od przemieszczeñ uogólnionych w ¿adnym z przegubów i ma wartoœæ sta³¹.
+  	%
+  	\item Odwrócona macierz inercji $\bar{M}(q)=[\bar{m}_{i,j}(q)]_{n \times n}$ jest symetryczna
+  	%
+  	\begin{equation}\label{2.6.9}%{2.17}
+  	\bar{M}(q)=M(q)^{-1}=\bar{M}^{T}(q)
+  	\end{equation}
+  	%
+  	\item Odwrócona macierz inercji $\bar{M}(q)$ jest dodatnio okreœlona
+  	%
+  	\begin{equation}\label{2.6.10}%{2.18}
+  	x^{T}\bar{M}(q)x > 0 \qquad \forall x=[x_{i}]_{n \times 1}, x \neq 0
+  	\end{equation}
+  	%
+  	\item Ka¿dy element odwróconej macierzy inercji $\bar{M}(q)$ jest funkcj¹ przemieszczeñ uogólnionych we wszystkich przegubach oprócz pierwszego
+  	%
+  	\begin{equation}\label{2.6.12}%{2.20}
+  	\bar{m}_{i,j}(q)=\bar{m}_{i,j}(q_{2}, \ldots, q_{n}) \qquad \forall i,j=1,\ldots,n
+  	\end{equation}
+  	%
+  \end{enumerate}
+  %
+  \par Model matematyczny robota o $n$-stopniach swobody z czasem dyskretnym mo¿na otrzymaæ aproksymuj¹c pochodne przemieszczeñ uogólnionych \cite*{kurek:neural} (ró¿niczkowanie metod¹ \emph{Eulera})
+  %
+  \begin{equation}\label{3.1.1}
+  \dot{q}(k)\approx\frac{q(k)-q(k-1)}{T_{p}}
+  \end{equation}
+  %
+  \begin{equation}\label{3.1.2}
+  \ddot{q}(k)\approx\frac{\dot{q}(k+1)-\dot{q}(k)}{T_{p}}\approx\frac{q(k+1)-2q(k)+q(k-1)}{{T_{p}}^2}
+  \end{equation}
+  %
+  gdzie $T_{p}$ - okres próbkowania, $k$ - czas dyskretny, $t=kT_{p}$.
+  %
+  \par Po podstawieniu zale¿noœci (\ref{3.1.1}) i (\ref{3.1.2}) do równania (\ref{2.3.3}) otrzymuje siê model z czasem dyskretnym robota w postaci równañ \emph{Lagrange'a - Eulera}
+  %
+  \begin{equation}\label{3.1.3}
+  M[q(k)]\frac{q(k+1)-2q(k)+q(k-1)}{{T_{p}}^2}+V[q(k),q(k-1)]+G[q(k)]=\tau(k)
+  \end{equation}
+  %
+  gdzie, analogicznie jak w modelu (\ref{2.3.3}), $M[q(k)]=[m_{i,j}[q(k)]]_{n \times n}$ - macierz inercji (bezw³adnoœci) robota, $V[q(k),q(k-1)]=[v_{i}[q(k),q(k-1)]]_{n \times 1}$ - wektor oddzia³ywañ zale¿nych od si³ odœrodkowych i si³ \emph{Coriolisa}, $G[q(k)]=[g_{i}[q(k)]]_{n \times 1}$ - wektor oddzia³ywañ zale¿nych od si³ grawitacji.
+  %
+  \par Model z czasem dyskretnym robota (\ref{3.1.3}) zachowuje w³asnoœci strukturalne modelu robota \emph{WMR.1} - \emph{WMR.3}.
   \section{Opis mechanizmów wielocz³onowych w przestrzeni stanu.}
   \section{Identyfikacja parametrów kinematycznych i dynamicznych robotów.}
   \section{Zastosowanie kwaternionów.}
