@@ -227,9 +227,11 @@
   Wyznaczona tym sposobem postaæ równañ dynamiki \ref{eq:10} pozwala na ³atw¹ analizê w³aœciwoœci robota, zaprojektowania uniwersalnego algorytmu do jego symulacji, oraz
   syntezê uk³adu sterowania.
   %
-  \subsubsection{W³aœciwoœci strukturalne modelu dynamiki}
-  \par Model matematyczny robota (\ref{2.3.3}) posiada charakterystyczne w³asnoœci strukturalne. S¹ one czêsto wykorzystywane podczas weryfikacji poprawnoœci modeli otrzymanych ró¿nymi metodami w trakcie projektowania i analizy uk³adów sterowania robotów. Podstawowe w³asnoœci, które bêd¹ wykorzystywane w pracy, s¹ nastêpuj¹ce \cite*{tourassis:properties,swider:phd,morecki:podstawy,lewis:neuralcontrol}
+  \subsection{W³aœciwoœci strukturalne modelu dynamiki}
   %
+  \par Model matematyczny robota (\ref{eq:10}) posiada charakterystyczne w³asnoœci strukturalne. S¹ one czêsto wykorzystywane podczas weryfikacji poprawnoœci modeli otrzymanych ró¿nymi metodami w trakcie projektowania i analizy uk³adów sterowania robotów. Podstawowe w³asnoœci, które bêd¹ wykorzystywane w pracy, s¹ nastêpuj¹ce \cite{tourassis:properties,swider:phd,morecki:podstawy,lewis:neuralcontrol}
+  %
+  
   \par \textbf{W³asnoœci strukturalne modelu robota ({WMR})}
   %
   \begin{description}
@@ -304,16 +306,79 @@
   %
   gdzie $T_{p}$ - okres próbkowania, $k$ - czas dyskretny, $t=kT_{p}$.
   %
-  \par Po podstawieniu zale¿noœci (\ref{3.1.1}) i (\ref{3.1.2}) do równania (\ref{2.3.3}) otrzymuje siê model z czasem dyskretnym robota w postaci równañ \emph{Lagrange'a - Eulera}
+  \par Po podstawieniu zale¿noœci (\ref{3.1.1}) i (\ref{3.1.2}) do równania (\ref{eq:10}) otrzymuje siê model z czasem dyskretnym robota w postaci równañ \emph{Lagrange'a - Eulera}
   %
   \begin{equation}\label{3.1.3}
   M[q(k)]\frac{q(k+1)-2q(k)+q(k-1)}{{T_{p}}^2}+V[q(k),q(k-1)]+G[q(k)]=\tau(k)
   \end{equation}
   %
-  gdzie, analogicznie jak w modelu (\ref{2.3.3}), $M[q(k)]=[m_{i,j}[q(k)]]_{n \times n}$ - macierz inercji (bezw³adnoœci) robota, $V[q(k),q(k-1)]=[v_{i}[q(k),q(k-1)]]_{n \times 1}$ - wektor oddzia³ywañ zale¿nych od si³ odœrodkowych i si³ \emph{Coriolisa}, $G[q(k)]=[g_{i}[q(k)]]_{n \times 1}$ - wektor oddzia³ywañ zale¿nych od si³ grawitacji.
+  gdzie, analogicznie jak w modelu (\ref{eq:10}), $M[q(k)]=[m_{i,j}[q(k)]]_{n \times n}$ - macierz inercji (bezw³adnoœci) robota, $V[q(k),q(k-1)]=[v_{i}[q(k),q(k-1)]]_{n \times 1}$ - wektor oddzia³ywañ zale¿nych od si³ odœrodkowych i si³ \emph{Coriolisa}, $G[q(k)]=[g_{i}[q(k)]]_{n \times 1}$ - wektor oddzia³ywañ zale¿nych od si³ grawitacji.
   %
   \par Model z czasem dyskretnym robota (\ref{3.1.3}) zachowuje w³asnoœci strukturalne modelu robota \emph{WMR.1} - \emph{WMR.3}.
+  %
   \section{Opis mechanizmów wielocz³onowych w przestrzeni stanu.}
+  %
+  Równanie dynamiki robota w przestrzeni zmiennych stanu mo¿na wyznaczyæ w  oparciu o macierzowe równanie dynamiki (\ref{eq:10}). Definiuj¹c wektor stanu dla robota w  postaci \cite{fu:1987}:
+ %
+ \begin{equation}
+ x=\left[\begin{array}{c}
+ x_{1}\\ 
+ x_{2}
+ \end{array}  \right]=\left[\begin{array}{c}
+ \theta \\ 
+ \dot{\theta}
+ \end{array}  \right]
+ \end{equation}
+  %
+  oraz przyjmuj¹c, ¿e wejœciami do uk³adu s¹ sygna³y steruj¹ce $\tau$ , natomiast wyjœciami
+  po³o¿enia k¹towe $\theta$ , równanie dynamiki (\ref{eq:10}) mo¿na wyraziæ w przestrzeni zmiennych
+  stanu jako
+  %
+   \begin{equation}\label{eq:21}
+  \begin{array}{l}
+  \dot{x}=\left[\begin{array}{c}
+  x_{2}\\ 
+  -M^{-1}(\theta)[V(\theta, \dot{\theta})+G(\theta)]
+  \end{array}  \right]+\left[\begin{array}{c}
+  0 \\ 
+  M^{-1}(\theta)
+  \end{array}  \right]\tau
+  \\
+  y=\left[I \quad 0 \right]x
+  \end{array}
+  \end{equation}
+  %
+  Stosuj¹c standardowe oznaczenia modeli stanu, uk³ad rówañ (\ref{eq:21}) zapisuje siê nastêpuj¹co
+  %
+  \begin{equation}\label{eq:22}
+  \begin{array}{l}
+  \dot{x}=A(x)+B(x)\tau
+  \\
+  y=Cx
+  \end{array}
+  \end{equation}
+  gdzie:
+  \begin{equation}\label{eq:23}
+  A(x)=\left[\begin{array}{c}
+  x_{2}\\ 
+  -M^{-1}(\theta)[V(\theta, \dot{\theta})+G(\theta)]
+  \end{array}  \right]
+  \end{equation}
+  %
+  \begin{equation}\label{eq:24}
+  B(x)=\left[\begin{array}{c}
+  0 \\ 
+  M^{-1}(\theta)
+  \end{array}  \right]
+  \end{equation}
+  %
+   \begin{equation}\label{eq:24}
+  C(x)=\left[I \quad 0 \right]
+  \end{equation}
+  %
+  Charakterystycznymi w³aœciwoœciami robota jako obiektu sterowania s¹ nieliniowoœci
+  wynikaj¹ce z istnienia si³ Coriolisa i si³ odœrodkowych, zmiennoœæ parametrów uk³adu w
+  czasie, oraz sprzê¿enia pomiêdzy wszystkimi stopniami swobody.
   \section{Identyfikacja parametrów kinematycznych i dynamicznych robotów.}
   \section{Zastosowanie kwaternionów.}
   \section{Otwarte i zamkniête ³añcuchy kinematyczne.}
