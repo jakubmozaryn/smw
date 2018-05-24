@@ -379,10 +379,25 @@
   Charakterystycznymi w³aœciwoœciami robota jako obiektu sterowania s¹ nieliniowoœci
   wynikaj¹ce z istnienia si³ Coriolisa i si³ odœrodkowych, zmiennoœæ parametrów uk³adu w
   czasie, oraz sprzê¿enia pomiêdzy wszystkimi stopniami swobody.
-  \section{Identyfikacja parametrów kinematycznych i dynamicznych robotów.}
+  \section{Identyfikacja parametrów kinematycznych i dynamicznych robotów.
+  }
   \section{Zastosowanie kwaternionów.}
+  
   \section{Otwarte i zamkniête ³añcuchy kinematyczne.}
+  
   \section{Uk³ady niedosterowane.}
+  %
+  Uk³ady niedosterowane (ang. \textit{underactuated systems}) nale¿¹ do szerokiej klasy urz¹dzeñ i systemów wystêpuj¹cych w robotyce oraz teorii sterowania. W ogólnoœci przez \textbf{uk³ady niedosterowane} rozumie siê systemy, w których liczba mo¿liwych wymuszeñ (wejœæ uk³adu) jest mniejsza od liczby stopni swobody (wyjœæ uk³adu). W przypadku uk³adów sterowania, omawiane zagadnienie sprowadza siê do procesów, w których liczba sterowanych wyjœæ jest mniejsza od liczby dostêpnych sygna³ów steruj¹cych. 
+  
+  Uk³ady niedosterowane w teorii sterowania s¹ interesuj¹ce ze wzglêdu na swoje w³asnoœci. Niedobór elementów wykonawczych powoduje, ¿e generowane sterowania dzia³aj¹ jednoczeœnie na kilka wyjœæ i nie ma mo¿liwoœci na niezale¿ne wp³ywanie na ka¿de z nich. 
+  
+  W efekcie algorytm regulacji kontroluj¹cy takie urz¹dzenie musi uwzglêdniaæ wiele wymagañ naraz i wybieraæ rozwi¹zanie dla zadanej sytuacji. 
+  Badania takich uk³adów by³y prowadzone miêdzy innymi w zakresie wykorzystania teorii chaosu do sterowania niedosterowanym systemem satelitów \cite{pang:2015}, sterowania œlizgowego nieliniowymi uk³adami niedosterowanymi \cite{khan:2015} lub u¿ycia adaptacyjnego modelu z predykcj¹ 
+  do sterowania robotem i minimalizacji zu¿ycia energii \cite{ahmad:2016}.
+  Jednym z najprostszych urz¹dzeñ niedosterowanych jest wahad³o odwrócone. Konstrukcja wahad³a pozwala na niezale¿ny ruch wzd³u¿ osi prowadnicy, na której jest zamontowane oraz obrót wokó³ w³asnej osi. Pomimo prostej konstrukcji wahad³o odwrócone jest uk³adem czêsto wykorzystywanym w celu testowania ró¿nego rodzaju algorytmów regulacji. 
+  
+  Ze wzglêdu na swoj¹ budowê, wahad³o posiada chwiejny punkt równowagi w pozycji pionowej, którego opuszczenie powoduje utratê stabilnoœci i upadek do stabilnej pozycji dolnej. Pomimo prostego opisu matematycznego jego zachowañ, jest to obiekt nieliniowy, dla którego realizacja sterowania nie jest prosta.
+  %
   \section{Uk³ady nieholonomiczne.}
   \section{Kolizje.}
   %-----
