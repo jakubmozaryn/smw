@@ -2,7 +2,193 @@
 %Rodzia³ 2
 \newpage
 \chapter{Standardowe modele uk³adów wielocz³onowych - Janek}
-  \section{wahad³o odwrócone}
-  \section{acrobot}
-  \section{maszyny krocz¹ce}
+  \section{Wahad³o odwrócone na wózku - Kuba}
+  %
+  Wahad³o odwrócone sk³ada siê z prêta swobodnie przymocowanego do wózka je¿d¿¹cego po prowadnicy. Ruch wózkiem pozwala na realizacjê przemieszczenia liniowego wahad³a, natomiast ruch k¹towy prêta jest wynikiem dzia³ania si³ bezw³adnoœci. Wahad³o posiada punkt stabilnoœci w dolnym po³o¿eniu prêta oraz punkt chwiejnej równowagi w pozycji górnej. W momencie gdy uk³ad jest utrzymywany w górnej pozycji, mówi siê o wahadle odwróconym. 
+  
+  Z przedstawionego opisu wynika, ¿e jest to obiekt regulacji typu SIMO (ang.\textit{ single-input, multi-output}) i stanowi przykad uk³adu niedosterowanego. Jako sygna³ steruj¹cy przyjmuje siê moment silnika powoduj¹cy przemieszczenie wózka, natomiast sygna³ami wyjœciowymi jest po³o¿enie liniowe i k¹towe wahad³a.
+  
+  \subsection{Model nieliniowy w oparciu o równania fizyczne}
+  %
+  Model wahad³a zosta³ wyznaczony w oparciu o schemat przedstawiony na rys.\ref{fig:2_1}. Pocz¹tek uk³adu wspó³rzêdnych przyjêto w pocz¹tkowym po³o¿eniu wózka.
+  %
+    \begin{figure}[htb!]
+  	\begin{center}
+  		\includegraphics[width=0.5\linewidth]{figures/fig2_1}
+  		%\\[1em]%
+  		\caption{Schemat wahad³a odwróconego } \label{fig:2_1}
+  	\end{center}                                         
+  \end{figure}
+  %
+  Wózek wahad³a ma mo¿liwoœæ przemieszczania siê w osi  $x$. Prêt wahad³a zamocowany jest jednym koñcem na wózku i obraca siê wokó³ osi przechodz¹cej prostopadle przez wózek o k¹t  $\theta$. Jest to uk³ad dwóch cia³ poruszaj¹cych siê zale¿nie od siebie. Z tego powodu w dalszych rozwa¿aniach parametry zwi¹zane z wózkiem zosta³y oznaczone indeksem $_w$, natomiast parametry zwi¹zane z prêtem indeksem $_p$. Uk³ad si³ dzia³aj¹cych na wózek wahad³a przedstawiono na rys. \ref{fig:2_2}.
+  %
+     \begin{figure}[htb!]
+	\begin{center}
+		\includegraphics[width=0.5\linewidth]{figures/fig2_2}
+		%\\[1em]%
+		\caption{Okreœlenie uk³adu si³ dzia³aj¹cych na wózek wahad³a} \label{fig:2_2}
+	\end{center}                                         
+\end{figure}
+ %
+ \begin{equation}
+ 	m_W\dot{x}_W=\sum F
+ \end{equation}\label{eq:2_1}
+ %
+  \begin{equation}
+ m_W\dot{x}_W=F-F_T-F_x
+ \end{equation}\label{eq:2_2}
+%
+gdzie:  $m_W$ oznacza masê wózka,  $x_W$ po³o¿enie wózka w osi  $x$,  $F$ si³ê nadan¹ przez silnik,  $F_T$ si³ê tarcia wózka o prowadnicê,  $F_x$ si³ê reakcji prêta wahad³a na wózek. 
+
+Ponadto przyjêto, ¿e tarcie wózka o prowadnicê jest proporcjonalne do prêdkoœci wózka, tak wiêc:
+%
+\begin{equation}
+F_T=b\dot{x}_W
+\end{equation}\label{eq:2_3}
+%
+gdzie:  $b$ oznacza wspó³czynnik tarcia wiskotycznego.
+
+Dodatkowo w badanym uk³adzie sygna³em steruj¹cym nie jest si³a dzia³aj¹ca na wózek, lecz moment si³y generowany na wale silnika. Zatem si³ê  $F$ mo¿na okreœliæ jako:
+%
+\begin{equation}
+F=\frac{M_s}{r}
+\end{equation}\label{eq:2_4}
+%
+gdzie: $M_s$ oznacza moment silnika, $r$ promieñ ko³a zêbatego na silniku.
+
+Ostatnia si³a w równaniu (\ref{eq:2_2}) -  $F_x$, bêd¹ca oddzia³ywaniem prêta na wózek, wynika z przyspieszeñ dzia³aj¹cych na poruszaj¹cy siê prêt:
+%
+\begin{equation}
+F_x=m_P\dot{x}_P
+\end{equation}\label{eq:2_5}
+%
+Po³o¿enie œrodka ciê¿koœci prêta  $x_P$ w przyjêtym uk³adzie wspó³rzêdnych mo¿na okreœliæ w zale¿noœci od aktualnego po³o¿enia wózka zgodnie z zale¿noœci¹:
+%
+\begin{equation}
+x_P=x_W+l\sin(\theta)
+\end{equation}\label{eq:2_6}
+%
+gdzie:  $l$ jest odleg³oœci¹ œrodka ciê¿koœci prêta od wózka.
+
+Znaj¹c zale¿noœæ (\ref{eq:2_6}) mo¿na wyznaczyæ kolejne pochodne  $x_P$ po czasie, odpowiednio:
+%
+\begin{equation}
+\dot{x}_P=\frac{dx_P}{dt}=\frac{dx_W+l\sin(\theta)}{dt}=\frac{dx_W}{dt}+l\frac{d\sin(\theta)}{dt}=\frac{dx_W}{dt}+l\cos(\theta)\frac{d\theta}{dt}=\dot{x}_W+l\dot{\theta}\cos{\theta}
+\end{equation}\label{eq:2_7}
+%
+oraz
+\begin{equation}
+\ddot{x}_P=\frac{d}{dt}\left(\frac{dx_W+l\sin(\theta)}{dt}\right)=\frac{d^{2}x_W}{dt^2}+\frac{d}{dt}\left(l\cos{\theta}\dfrac{\theta}{dt}\right)=\frac{d^{2}x_W}{dt^{2}}-l\sin(\theta)\left(\frac{d\theta}{dt}\right)+l\cos{\theta}\left(\frac{d^{2}\theta}{dt^{2}}\right)
+\end{equation}\label{eq:2_8}
+%
+Podstawiaj¹c równanie (\ref{eq:2_8}) do zale¿noœci (\ref{eq:2_5}) otrzymuje siê: 
+%
+\begin{equation}
+F_x=m_P\ddot{x}_W-m_Pl\ddot{\theta}^2\sin(\theta) +m_Pl\ddot{\theta}\cos(\theta)
+\end{equation}\label{eq:2_9}
+%
+Znaj¹c wszystkie si³y dzia³aj¹ce na wózek mo¿na ostatecznie zapisaæ, ¿e:
+%
+\begin{equation}
+m_W\ddot{x}_W=\frac{M}{r}-b\dot{x}_W-m_P\ddot{x}_W+m_Pl\ddot{\theta}^2\sin{\theta}-m_Pl\ddot{\theta}\cos{\theta} 
+\end{equation}\label{eq:2_10}
+%
+\begin{equation}
+\left(m_W+m_P\right)\ddot{x}_W+b\dot{x}_W=\frac {M}{r}+m_Pl\dot{\theta}^2\sin{\theta}-m_Pl\ddot{\theta}\cos(\theta) 
+\end{equation}\label{eq:2_11}
+%
+\begin{figure}[htb!]
+	\begin{center}
+		\includegraphics[width=0.5\linewidth]{figures/fig2_3}
+		%\\[1em]%
+		\caption{Schemat wahad³a - si³y dzia³aj¹ce na wahad³o} \label{fig:2_3}
+	\end{center}                               
+\end{figure}
+%
+Po³o¿enie œrodka ciê¿koœci prêta w osi poziomej  $x$ mo¿e zostaæ wyznaczone zgodnie z (\ref{eq:2_6}) na podstawie po³o¿enia wózka. Aby wyznaczyæ po³o¿enie wahad³a w osi pionowej  $y$, nale¿y rozpatrzyæ si³y dzia³aj¹ce na prêt w tej osi zgodnie z rys. \ref{fig:2_3}:
+\begin{equation}
+F_y-m_Pg=m_P\ddot{y}_P
+\end{equation}\label{eq:2_12}
+%
+\begin{equation}
+y_p=y_W+l\cos(\theta)
+\end{equation}\label{eq:2_13}
+%
+Pochodne po³o¿enia pionowego  $\dot{y}_P$ oraz $\ddot{y}_P$ zosta³y wyznaczone analogicznie do $\dot{x}_P$ oraz $\ddot{x}_P$. Poniewa¿ wózek jest nieruchomy w osi  $y$ przyjêto, ¿e  $y_W=0$, $\dot{y}_W=0$, $\ddot{y}_W=0$, z czego wynika, ¿e:
+%
+\begin{equation}
+\dot{y}_P=-l\dot{\theta}\sin(\theta)
+\end{equation}\label{eq:2_14}
+%
+\begin{equation}
+\ddot{y}_P=-l\dot{\theta}^{2}\cos(\theta)-l\ddot{\theta}\sin(\theta)
+\end{equation}\label{eq:2_15}
+%
+Podstawiaj¹c zale¿noœæ (\ref{eq:2_15}) w równaniu (\ref{eq:2_12}) uzyskuje siê:
+%
+\begin{equation}
+F_y=m_Pg-m_Pl\dot{\theta}^{2}\cos(\theta) -m_Pl\ddot{\theta}\sin(\theta)
+\end{equation}\label{eq:2_16}
+%
+Ze wzglêdu, i¿ wahad³o porusza siê ruchem obrotowym, nale¿y dla niego równie¿ rozpatrzeæ równanie momentów:
+% 
+\begin{equation}
+I\ddot{\theta}=\sum \overline{M},
+\end{equation}\label{eq:2_17}
+%
+gdzie: $I$ jest momentem bezw³adnoœci wahad³a, $\overline{M}$ to momenty dzia³aj¹ce na prêt wahad³a prostopadle do osi obrotu. 
+
+Traktuj¹c prêt wahad³a jako cia³o sztywne mo¿na przyj¹æ, ¿e momenty $\overline{M}$ powstaj¹ na skutek si³ dzia³aj¹cych na ramieniu wzglêdem œrodka ciê¿koœci wahad³a:
+%
+\begin{equation}
+\overline{M}=\overline{F}\times\overline{r},
+\end{equation}\label{eq:2_18}
+%
+gdzie: $\overline{F}$ to si³a dzia³aj¹ca na wahad³o, natomiast  $\overline{r}$ to ramiê, na którym dzia³a ta si³a.
+
+Si³y generuj¹ce momenty na wahadle to  $\overline{F}_{x}$ oraz  $\overline{F}_y$, poniewa¿ dla skupionej si³y grawitacji wahad³a ramiê  $r=0$. Zatem mo¿na napisaæ, ¿e:
+%
+\begin{equation}
+I\ddot{\theta}=-F_xl\cos(\theta)+F_yl\sin(\theta)
+\end{equation}\label{eq:2_19}
+%
+Podstawiaj¹c równania (\ref{eq:2_9}) oraz (\ref{eq:2_17}) do równania (\ref{eq:2_19}) otrzymuje siê:
+%
+\begin{equation}
+\begin{array}{rl}
+I\ddot{\theta}&=-\left(m_P\ddot{x}_W-m_Pl\ddot{\theta}^2\sin(\theta) +m_Pl\ddot{\theta}\cos(\theta)\right)l\cos(\theta)+\\
+&+\left(m_Pg-m_Pl\dot{\theta}^{2}\cos(\theta) -m_Pl\ddot{\theta}\sin(\theta)\right)l\sin(\theta)=\\ 
+&=-m_Pl\ddot{x}_W\cos(\theta)+m_Pl\ddot{\theta}^2\sin(\theta)\cos(\theta)-m_Pl^2\ddot{\theta}\cos(\theta)^2+\\ 
+&+m_Pgl\sin(\theta)-m_Pl^2\dot{\theta}^{2}\cos(\theta)\sin(\theta)-m_Pl^2\ddot{\theta}\sin(\theta)^2=\\
+&=-m_Pl\ddot{x}_W\cos(\theta)-m_Pl^2\ddot{\theta}\cos(\theta)^2+m_Pgl\sin(\theta)-m_Pl^2\ddot{\theta}\sin(\theta)^2=\\ 
+&=-m_Pl^2\ddot{\theta}+m_Pgl\sin(\theta)-m_Pl\ddot{x}_W\cos(\theta) 
+\end{array} 
+\end{equation}\label{eq:2_20}
+%
+\begin{equation}
+\left(I+m_Pl^2\right)\ddot{\theta}=m_Pgl\sin(\theta)-m_Pl\ddot{x}_W\cos(\theta)
+\end{equation}\label{eq:2_21}
+%
+Równania (\ref{eq:2_11}) oraz (\ref{eq:2_21}) umo¿liwiaj¹ w pe³ni opisaæ ruch wózka z wahad³em. Jednak¿e przedstawiaj¹ one opis obiektu w postaci uwik³anej. Mo¿na je przekszta³ciæ do nastêpuj¹cego uk³adu równañ, umo¿liwiaj¹cego bezpoœrednie obliczenie przyspieszeñ  $\ddot{x}_W$ i  $\ddot{\theta}$: 
+%
+\begin{equation}
+\left\{
+\begin{array}{l}
+x_W=\dfrac{\dfrac{M}{r}-F_x-b\dot{x}_W}{M}
+\\
+\dot{\theta}=\frac{-F_xl\cos(\theta)+F_yl\sin(\theta)}{I}
+\\
+F_x=m_P\ddot{x}_W-m_Pl\dot{\theta}^{2}\sin(\theta)+m_Pl\ddot{\theta}\cos(\theta) 
+\\
+F_y=m_Pg-m_Pl\dot{\theta}^{2}\cos(\theta)-m_Pl\ddot{\theta}\sin(\theta)
+\end{array}
+\right.
+\end{equation}\label{eq:2_22}
+%
+  \subsection{Model liniowy dla wybranego punktu pracy}
+  %
+  Wyznaczony model nieliniowy obiektu pozwala w pe³ni opisaæ zachowanie i ruch wahad³a. Jednak¿e zgodnie z za³o¿eniami z rozdzia³u 3 do wyznaczenia wybranego regulatora predykcyjnego wymagany jest model liniowy. Z tego powodu, wyznaczony model nieliniowy zosta³ zlinearyzowany w otoczeniu wybranego punktu pracy. Poniewa¿ celem regulatora jest utrzymanie wahad³a w pozycji pionowej górnej, przyjêto j¹ jako punkt pracy, czyli  $\theta=0$.
+  %
+  \section{Acrobot}
+  \section{Maszyny krocz¹ce}
 %-----
