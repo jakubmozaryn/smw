@@ -2,13 +2,14 @@
 %Rodzia³ 8
 \newpage
 \chapter{Metody sztucznej inteligencji w sterowaniu mechanizmów wielocz³onowych - Janek+Kuba}
-  \section{Sieci neuronowe do modelowania mechanizmów wielocz³onowych}
+%
+\section{Sieci neuronowe do modelowania mechanizmów wielocz³onowych}
 %
   Sztuczne sieci neuronowe s¹ jedn¹ z popularnych metod stosowanych do aproksymacji funkcji nieliniowych. Inspiracj¹ do ich opracowania by³y badania struktur biologicznych oraz sztucznej inteligencji. Budowa oraz sposób dzia³ania sztucznych sieci neuronowych pozwoli³y na wykorzystanie ich w wielu dziedzinach niezwi¹zanych bezpoœrednio z biologi¹ m.in. w naukach technicznych, fizyce i ekonomii.
-  %
-  \subsection{Model neuronu}
-  %
-  Podstawowym elementem sieci neuronowej jest pojedyncza struktura nazywana \textbf{neuronem}, który sk³ada siê z elementu sumuj¹cego wagowo sygna³y wejœciowe, tzw. sumatora, oraz elementu przetwarzaj¹cego sygna³ wyjœciowy sumatora. Ogólny model matematyczny neuronu opiera siê na klasycznym modelu \emph{McCullocha - Pittsa} \cite*{mcculloch:logical}.
+%
+\subsection{Model neuronu}
+%
+  Podstawowym elementem sieci neuronowej jest pojedyncza struktura nazywana \textbf{neuronem}, który sk³ada siê z elementu sumuj¹cego wagowo sygna³y wejœciowe, tzw. sumatora, oraz elementu przetwarzaj¹cego sygna³ wyjœciowy sumatora. Ogólny model matematyczny neuronu opiera siê na klasycznym modelu \emph{McCullocha - Pittsa} \cite{mcculloch:logical}.
   %
   \par Model matematyczny pojedynczego neuronu jest opisany nastêpuj¹c¹ zale¿noœci¹
   %
@@ -22,19 +23,11 @@
   %
   gdzie $x$ - sygna³ wyjœciowy sumatora, $u_{i}$ - $i$-ty sygna³ wejœciowy neuronu, $b$ - przesuniêcie sygna³u $x$, $n$ - liczba sygna³ów wejœciowych neuronu, $w_{i}$ - waga $i$-tego sygna³u wejœciowego neuronu, $y$ - sygna³ wyjœciowy neuronu, $f(x)$ - funkcja aktywacji neuronu.
   %
-  \begin{comment}
-  \par £atwo zauwa¿yæ, ¿e przesuniêcie mo¿e byæ interpretowane jako waga sygna³u wejœciowego neuronu $u_{\mathrm{n}0}=1$
-  %
-  \begin{equation}
-  b_{\mathrm{n}}=w_{\mathrm{n}0}u_{\mathrm{n}0}=w_{\mathrm{n}0}
-  \end{equation}
-  \end{comment}
-  %
   \par Na rys. \ref{rys4.1} przedstawiono strukturê modelu neuronu (\ref{4.2.1})
   %
   \begin{figure}[htb!]
   	\begin{center}
-  		\includegraphics[scale=1]{model_neuronu.eps}
+  		\includegraphics[scale=1]{figures/fig8_1}
   		\caption{Struktura modelu neuronu}\label{rys4.1}
   	\end{center}
   \end{figure}
@@ -98,7 +91,7 @@
   %
   \begin{figure}[htb!]
   	\begin{center}
-  		\includegraphics[scale=0.9]{funkcje_aktywacji.eps}
+  		\includegraphics[scale=0.9]{figures/fig8_2}
   		\caption{Wykresy funkcji aktywacji neuronu: a) funkcja
   			liniowa (\ref{4.2.3}), b) funkcja sigmoidalna unipolarna (\ref{4.2.5}), c) funkcja sigmoidalna bipolarna (\ref{4.2.7})}\label{rys4.2}
   	\end{center}
@@ -124,11 +117,9 @@
   %
   \par Na rys. \ref{rys4.5} przedstawiono strukturê jednowarstwowej jednokierunkowej sieci neuronowej.
   %
-  \cleardoublepage
-  %
   \begin{figure}[htb!]
   	\begin{center}
-  		\includegraphics[scale=1]{model_warstwy_siec_jednowarstwowa.eps}
+  		\includegraphics[scale=1]{figures/fig8_3}
   		\caption{Struktura jednowarstwowej jednokierunkowej sieci neuronowej}\label{rys4.5}
   	\end{center}
   \end{figure}
@@ -159,7 +150,7 @@
   %
   \begin{figure}[htb!]
   	\begin{center}
-  		\includegraphics[scale=1]{model_sieci.eps}
+  		\includegraphics[scale=1]{figures/fig8_4}
   		\caption{Struktura wielowarstwowej jednokierunkowej sieci neuronowej}\label{rys4.3}
   	\end{center}
   \end{figure}
@@ -185,11 +176,9 @@
   %
   gdzie $y_{\mathrm{NN}}$ - wektor sygna³ów wyjœciowych (\ref{4.3.3}) sieci neuronowej, $u$ - wektor sygna³ów wejœciowych sieci neuronowej.
   %
-  \cleardoublepage
-  %
   \begin{figure}[htb!]
   	\begin{center}
-  		\includegraphics[scale=1]{model_warstwy.eps}
+  		\includegraphics[scale=1]{figures/fig8_5}
   		\caption{Struktura $i$-tej warstwy sztucznej sieci neuronowej}\label{rys4.4}
   	\end{center}
   \end{figure}
@@ -266,9 +255,9 @@
   \end{equation}
   %
   Inne funkcje celu wykorzystywane podczas aproksymacji to np. œredni b³¹d bezwzglêdny - MAE (ang. \emph{mean absolute error}), pierwiastek œredniego b³êdu kwadratowego - RMSE (ang. \emph{root mean squared error}), œredni b³¹d kwadratowy z regularyzacj¹ - MSEREG (ang. \emph{mean squared error
-  	with regularization}) \cite*{masters:sieci,osowski:siecialg,jankowski:ontogeniczne,matlab:neural}.
+  	with regularization}) \cite{masters:sieci,osowski:siecialg,jankowski:ontogeniczne,matlab:neural}.
   %
-  \par Zalet¹ sieci neuronowej jest mo¿liwoœæ realizacji sieci aproksymuj¹cej z zadan¹ dok³adnoœci¹ prawie ka¿d¹ funkcjê ci¹g³¹ okreœlon¹ na zbiorze zwartym \cite*{hornik:networkuniversal,cybenko:approximation,kurkova:kolmogorov}. Nale¿y jednak zwróciæ uwagê, ¿e dok³adnoœæ aproksymacji za pomoc¹ sieci neuronowej zale¿y od liczby neuronów, rodzaju funkcji aktywacji neuronów w warstwach ukrytych, liczby próbek ucz¹cych, algorytmu doboru wag oraz architektury sieci. Ka¿de z tych zagadnieñ wymaga rozwa¿enia podczas projektowania sztucznej sieci neuronowej dla konkretnego zastosowania.
+  \par Zalet¹ sieci neuronowej jest mo¿liwoœæ realizacji sieci aproksymuj¹cej z zadan¹ dok³adnoœci¹ prawie ka¿d¹ funkcjê ci¹g³¹ okreœlon¹ na zbiorze zwartym \cite{hornik:networkuniversal,cybenko:approximation,kurkova:kolmogorov}. Nale¿y jednak zwróciæ uwagê, ¿e dok³adnoœæ aproksymacji za pomoc¹ sieci neuronowej zale¿y od liczby neuronów, rodzaju funkcji aktywacji neuronów w warstwach ukrytych, liczby próbek ucz¹cych, algorytmu doboru wag oraz architektury sieci. Ka¿de z tych zagadnieñ wymaga rozwa¿enia podczas projektowania sztucznej sieci neuronowej dla konkretnego zastosowania.
   %
   \section{Trenowanie sztucznej sieci neuronowej}
   %
@@ -279,7 +268,7 @@
   \subsection{Adaptacja wag sieci neuronowej}
   %
   Do minimalizacji funkcji celu (\ref{4.5.14}) mo¿na wykorzystaæ iteracyjne algorytmy rozwi¹zywania zadania programowania
-  nieliniowego bez ograniczeñ \cite*{findeisen:optymalizacja}. W przypadku sieci neuronowej jednokierunkowej wielowarstwowej zadanie to polega na znalezieniu wektora wag $\hat{W}$ spe³niaj¹cego zale¿noœæ
+  nieliniowego bez ograniczeñ \cite{findeisen:optymalizacja}. W przypadku sieci neuronowej jednokierunkowej wielowarstwowej zadanie to polega na znalezieniu wektora wag $\hat{W}$ spe³niaj¹cego zale¿noœæ
   %
   \begin{equation}\label{4.5.16}
   E(\hat{W})=\min_{W}E(W)
@@ -301,13 +290,11 @@
   %
   Minimum funkcji celu charakteryzuje siê zerow¹ wartoœci¹ gradientu funkcji celu.
   %
-  \par W celu okreœlenia w kolejnych iteracjach kierunku minimalizacji funkcji celu oraz wspó³czynnika kroku, w procesie trenowania sieci neuronowej, wykorzystuje siê tzw. \emph{metody kierunków poprawy} np. metodê najwiêkszego spadku, gradientów sprzê¿onych, \emph{Levenberga - Marquardta} \cite*{masters:sieci,osowski:siecialg,matlab:neural,findeisen:optymalizacja}.
+  \par W celu okreœlenia w kolejnych iteracjach kierunku minimalizacji funkcji celu oraz wspó³czynnika kroku, w procesie trenowania sieci neuronowej, wykorzystuje siê tzw. \emph{metody kierunków poprawy} np. metodê najwiêkszego spadku, gradientów sprzê¿onych, \emph{Levenberga - Marquardta} \cite{masters:sieci,osowski:siecialg,matlab:neural,findeisen:optymalizacja}.
   %
   \par Poniewa¿ liczba iteracji mo¿e byæ bardzo du¿a, w stosowanych algorytmach wyznaczania wag sieci neuronowej okreœla siê warunki zatrzymania dzia³ania algorytmu - tzw. warunki stopu. Zwykle podstawowymi wielkoœciami branymi pod uwagê jest za³o¿ona minimalna wartoœæ funkcji celu $E_{\mathrm{0}}$ oraz za³o¿ona maksymalna liczba iteracji treningowych $i_{\mathrm{max}}$.
   %
   \par Ogóln¹ postaæ gradientowego algorytmu trenowania sieci neuronowej mo¿na przedstawiæ nastêpuj¹co:
-  %
-  \cleardoublepage
   %
   \par \textbf{Algorytm 4.1. Gradientowy algorytm trenowania sieci neuronowej}
   \begin{enumerate}
@@ -369,17 +356,19 @@
   gdzie $R(W_{(i)})$ - reszta rozwiniêcia funkcji celu (\ref{4.5.14}) w szereg \emph{Taylora}, $\nabla E(W_{(i)})$ - wektor gradientu funkcji celu (\ref{4.5.14}) postaci
   %
   \begin{equation}\label{4.5.20}
-  \nabla E(W)=\left \frac{\partial E}{\partial W} \right|_{W=W(i)}=\left \left[\begin{array}{c}
+  \nabla E(W)=\left. \frac{\partial E}{\partial W} \right|_{W=W(i)}=  
+  \left. \left[\begin{array}{c}
   \frac{\partial E(W)}{\partial w_{1}}\\
   \vdots\\
   \frac{\partial E(W)}{\partial w_{n_{\mathrm{W}}}}
   \end{array}\right]_{n_{\mathrm{W}}\times n_{\mathrm{W}}} \right|_{W=W(i)}
-  \end{equation}
+\end{equation}
   %
   oraz $H(W_{(i)})$ - \emph{hesjan}, macierz drugich pochodnych funkcji celu (\ref{4.5.14}) wzglêdem wag sieci
   %
   \begin{equation}\label{4.5.27}
-  H(W_{(i)})=\left \frac{\partial^2 E}{\partial^2 W} \right|_{W=W(i)}=\left \left[\begin{array}{ccc}
+  H(W_{(i)})=\left. \frac{\partial^2 E}{\partial^2 W} \right|_{W=W(i)}=
+  \left. \left[\begin{array}{ccc}
   \frac{\partial^{2}E(W)}{\partial{w_{1}}\partial{w_{1}}} & \ldots & \frac{\partial^{2}E(W)}{\partial{w_{1}}\partial{w_{n_{\mathrm{W}}}}}\\
   \vdots & & \vdots\\
   \frac{\partial^{2}E(W)}{\partial{w_{n_{\mathrm{W}}}}\partial{w_{1}}} & \ldots & \frac{\partial^{2}E(W)}{\partial{w_{n_{\mathrm{W}}}}\partial{w_{n_{\mathrm{W}}}}}\\
@@ -391,44 +380,45 @@
   \subsubsection{Metoda wstecznej propagacji b³êdu}
   %
   Gradientowe metody optymalizacji stosowane do doboru wag $W$ sieci neuronowej w procesie trenowania wymagaj¹ znajomoœci wartoœci gradientu funkcji celu wzglêdem ka¿dej z wag sieci (\ref{4.5.20}). Do jego wyznaczenia w sieci wielowarstwowej wykorzystywany jest algorytm
-  \textbf{wstecznej propagacji b³êdu} (ang. \emph{error backpropagation}) \cite*{rumelhart:learning}. W algorytmie wstecznej propagacji b³êdu wartoœci szukanych elementów wektora gradientu $\nabla E(W)$ (\ref{4.5.20}) obliczane s¹ w kierunku od warstwy wyjœciowej do warstwy wejœciowej sieci neuronowej.
+  \textbf{wstecznej propagacji b³êdu} (ang. \emph{error backpropagation}) \cite{rumelhart:learning}. W algorytmie wstecznej propagacji b³êdu wartoœci szukanych elementów wektora gradientu $\nabla E(W)$ (\ref{4.5.20}) obliczane s¹ w kierunku od warstwy wyjœciowej do warstwy wejœciowej sieci neuronowej.
   %
-  \par W metodzie wstecznej propagacji b³êdu wymaga siê, aby funkcja aktywacji ka¿dego neuronu by³a ró¿niczkowalna i znana by³a wartoœæ jej pochodnej wzglêdem argumentu. Algorytm wstecznej propagacji b³êdów mo¿na zapisaæ nastêpuj¹co \cite*{masters:sieci,osowski:siecialg}.
+  \par W metodzie wstecznej propagacji b³êdu wymaga siê, aby funkcja aktywacji ka¿dego neuronu by³a ró¿niczkowalna i znana by³a wartoœæ jej pochodnej wzglêdem argumentu. Algorytm wstecznej propagacji b³êdów mo¿na zapisaæ nastêpuj¹co \cite{masters:sieci,osowski:siecialg}.
   %
   \par \textbf{Algorytm 4.2. Wyznaczanie wektora gradientu funkcji celu wielowarstwowej \\jednokierunkowej sieci neuronowej metod¹ wstecznej propagacji b³êdu}
+  %
   \begin{enumerate}
-  	\item
-  	{\emph{Dana jest próbka $s=\{ u, y \}$, liczba sygna³ów wejœciowych do sieci neuronowej $n^{(1)}=n$,
-  			liczba warstw sieci $L$, liczba neuronów w warstwach sieci $m^{(i)}, i=1,\ldots,L$, sygna³y wejœciowe do sieci
-  			$u^{(1)}_{j}=u_{j}, j=1,\ldots,n$, macierze wag i wektory przesuniêæ sygna³ów wyjœciowych sumatorów warstw sieci $W^{(i)}, b^{(i)}, i=1,\dots,L$, liczba sygna³ów wyjœciowych z sieci $m^{(L)}=m$, sygna³y wyjœciowe z sieci $y_{\mathrm{NN}}=[y_{\mathrm{NN}i}]_{m^{(L)}\times 1}$}}
-  	\item
-  	\emph{Obliczyæ $x^{(l)}, y^{(l)}$ wg (\ref{4.3.4}) dla $l=1,\ldots, L$.}
-  	\item
-  	\emph{Przyj¹æ l=L.}
-  	\item
-  	{
-  		\emph{Obliczyæ wartoœæ pochodnej funkcji celu sieci neuronowej wzglêdem sygna³ów wyjœciowych z sieci
-  			%
-  			\begin{equation}\label{4.5.10}
-  			E'_{y_{\mathrm{NN}i}}=\frac{\partial{E}}{\partial{y_{\mathrm{NN}i}}},\qquad i=1, \ldots, m^{(L)}
-  			\end{equation}
-  			%
-  		}
-  		\item{\emph{Wyznaczyæ wartoœæ pochodnej funkcji celu sieci neuronowej wzglêdem sygna³ów $x^{(l)}__{i}$\\
-  				Jeœli $l=L$
-  				%
-  				\begin{equation}\label{4.5.11}
-  				E'_{x^{(L)}_{i}}=\frac{\partial{E}}{\partial{x^{(L)}_{i}}}=\frac{\partial{f}^{(L)}_{i}(x^{(L)}_{i})}{\partial{x^{(L)}_{i}}}E'_{y_{\mathrm{NN}i}},
-  				\qquad i=1, \ldots ,m^{(L),}
-  				\end{equation}
-  				jeœli $l<L$ wyznaczyæ
-  				%
-  				\begin{equation}\label{4.5.12}
-  				E'_{x^{(l)}_{i}}=\frac{\partial{E}}{\partial{x^{(l)}_{i}}}=\frac{\partial{f}^{(l)}_{i}(x^{(l)}_{i})}{\partial{x^{(l)}_{i}}}\sum_{j=1}^{m^{(l+1)}}[{w^{(l+1)}_{j,i}}E'_{x^{(l+1)}_{j}}],\qquad i=1,\ldots,m^{(l)}
-  				\end{equation}
-  				%
-  			}
-  			\item{\emph{Wyznaczyæ pochodne funkcji celu sieci neuronowej wzglêdem wag i przesuniêæ sygna³ów wyjœciowych sumatorów warstwy $l$ sieci, bêd¹ce szukanymi elementami wektora gradientu $\nabla E(W)$ (\ref{4.5.20})}
+  %
+  	\item {\emph{Dana jest próbka $s=\{ u, y \}$, liczba sygna³ów wejœciowych do sieci neuronowej $n^{(1)}=n$,liczba warstw sieci $L$, liczba neuronów w warstwach sieci $m^{(i)}, i=1,\ldots,L$, sygna³y wejœciowe do sieci		$u^{(1)}_{j}=u_{j}, j=1,\ldots,n$, macierze wag i wektory przesuniêæ sygna³ów wyjœciowych sumatorów warstw sieci $W^{(i)}, b^{(i)}, i=1,\dots,L$, liczba sygna³ów wyjœciowych z sieci $m^{(L)}=m$, sygna³y wyjœciowe z sieci $y_{\mathrm{NN}}=[y_{\mathrm{NN}i}]_{m^{(L)}\times 1}$}}
+  	%
+  	\item {\emph{Obliczyæ $x^{(l)}, y^{(l)}$ wg (\ref{4.3.4}) dla $l=1,\ldots, L$.}}
+  	%
+  	\item {\emph{Przyj¹æ l=L.}}
+  	%
+  	\item {\emph{Obliczyæ wartoœæ pochodnej funkcji celu sieci neuronowej wzglêdem sygna³ów wyjœciowych z sieci}
+  	  			%
+  	\begin{equation}\label{4.5.10}
+  	E'_{y_{\mathrm{NN}i}}=\frac{\partial{E}}{\partial{y_{\mathrm{NN}i}}},\qquad i=1, \ldots, m^{(L)}
+  	\end{equation}
+  	%
+ 	}
+    \item {\emph{Wyznaczyæ wartoœæ pochodnej funkcji celu sieci neuronowej wzglêdem sygna³ów $x^{(l)}_{i}$}
+   	\\
+    	Jeœli $l=L$
+   	%
+	\begin{equation}\label{4.5.11}
+	E'_{x^{(L)}_{i}}=\frac{\partial{E}}{\partial{x^{(L)}_{i}}}=\frac{\partial{f}^{(L)}_{i}(x^{(L)}_{i})}{\partial{x^{(L)}_{i}}}E'_{y_{\mathrm{NN}i}},
+	\qquad i=1, \ldots ,m^{(L)},
+	\end{equation}    
+	%
+	jeœli $l<L$ wyznaczyæ
+	%
+	\begin{equation}\label{4.5.12}
+	E'_{x^{(l)}_{i}}=\frac{\partial{E}}{\partial{x^{(l)}_{i}}}=\frac{\partial{f}^{(l)}_{i}(x^{(l)}_{i})}{\partial{x^{(l)}_{i}}}\sum_{j=1}^{m^{(l+1)}}[{w^{(l+1)}_{j,i}}E'_{x^{(l+1)}_{j}}],\qquad i=1,\ldots,m^{(l)}
+	\end{equation}
+	%
+  	}
+  	%
+  	\item{\emph{Wyznaczyæ pochodne funkcji celu sieci neuronowej wzglêdem wag i przesuniêæ sygna³ów wyjœciowych sumatorów warstwy $l$ sieci, bêd¹ce szukanymi elementami wektora gradientu $\nabla E(W)$ (\ref{4.5.20})}
   				%
   				\begin{equation}\label{4.5.13}
   				E'_{w^{(l)}_{j,i}}=\frac{\partial{E}}{\partial{w^{(l)}_{j,i}}}=u^{(l)}_{i}E'_{x^{(l)}_{j}},\qquad i=1, \ldots, n^{(l)}, j=1, \ldots, m^{(l)}
@@ -437,11 +427,11 @@
   				E'_{b^{(l)}_{j}}=\frac{\partial{E}}{\partial{b^{(l)}_{j}}}=E'_{x^{(l)}_{j}}, \qquad j=1, \ldots, m^{(l)}
   				\end{equation}
   				%
-  			}
-  			\item{
-  				\emph{Przyj¹æ $l=l-1$, jeœli $l>0$ przejœæ do punktu} 4, \emph{w przeciwnym przypadku zakoñczyæ algorytm.}
-  			}
-  		\end{enumerate}
+  	}
+  		%
+  	\item{\emph{Przyj¹æ $l=l-1$, jeœli $l>0$ przejœæ do punktu 4, w przeciwnym przypadku zakoñczyæ algorytm.}}
+  	%
+  	\end{enumerate}
   		%
   		\begin{flushright}
   			\framebox[6pt][c]{}
@@ -467,11 +457,11 @@
   		\eta_{(i)}>0
   		\end{equation}
   		%
-  		W najprostszym przypadku metody najwiêkszego spadku przyjmowana jest odpowiednio ma³a sta³a wartoœæ $\eta_{(i)}$, jednak mo¿e to spowodowaæ, ¿e funkcja celu sieci neuronowej bêdzie wolno zbiega³a do optymalnego rozwi¹zania. W celu poprawy zbie¿noœci i szybszego znalezienia rozwi¹zania bliskiego optymalnemu, do wyznaczenia w kolejnych iteracjach wartoœci wspó³czynnika kroku $\eta_{(i)}$, wykorzystuje siê algorytmy minimalizacji funkcji celu wzd³u¿ wyznaczonego kierunku $p_{(i)}$ np. metod¹ z³otego podzia³u, interpolacji kwadratowej, \emph{Charalambousa}, \emph{Brenta } \cite*{findeisen:optymalizacja,matlab:neural}. Stosowane s¹ tak¿e inne modyfikacje algorytmu najwiêkszego spadku, do których nale¿¹ m.in. metoda najwiêkszego spadku z momentem \cite*{osowski:siecialg,osowski:sieci,matlab:neural}, metoda QUICKPROP (ang. \emph{quick backpropagation}) \cite*{fahlman:quickprop}, metoda RPROP (ang. \emph{resilent backpropagation}) \cite*{riedmiller:rprop}.
+  		W najprostszym przypadku metody najwiêkszego spadku przyjmowana jest odpowiednio ma³a sta³a wartoœæ $\eta_{(i)}$, jednak mo¿e to spowodowaæ, ¿e funkcja celu sieci neuronowej bêdzie wolno zbiega³a do optymalnego rozwi¹zania. W celu poprawy zbie¿noœci i szybszego znalezienia rozwi¹zania bliskiego optymalnemu, do wyznaczenia w kolejnych iteracjach wartoœci wspó³czynnika kroku $\eta_{(i)}$, wykorzystuje siê algorytmy minimalizacji funkcji celu wzd³u¿ wyznaczonego kierunku $p_{(i)}$ np. metod¹ z³otego podzia³u, interpolacji kwadratowej, \emph{Charalambousa}, \emph{Brenta } \cite{findeisen:optymalizacja,matlab:neural}. Stosowane s¹ tak¿e inne modyfikacje algorytmu najwiêkszego spadku, do których nale¿¹ m.in. metoda najwiêkszego spadku z momentem \cite{osowski:siecialg,osowski:sieci,matlab:neural}, metoda QUICKPROP (ang. \emph{quick backpropagation}) \cite{fahlman:quickprop}, metoda RPROP (ang. \emph{resilent backpropagation}) \cite{riedmiller:rprop}.
   		%
   		\subsubsection{Metoda gradientów sprzê¿onych}
   		%
-  		Metoda gradientów sprzê¿onych, w przypadku nieliniowego uk³adu równañ (np. sieci neuronowej), jest modyfikacj¹ metody gradientów sprzê¿onych dla uk³adu równañ liniowych \cite*{shewchuk:introduction94}. Wykorzystuje model kwadratowy funkcji celu sieci neuronowej $E(W)$ w otoczeniu wartoœci $W_{(i)}$, który otrzymuje siê w wyniku obciêcia rozwiniêcia (\ref{4.5.26}) do trzech pierwszych wyrazów.
+  		Metoda gradientów sprzê¿onych, w przypadku nieliniowego uk³adu równañ (np. sieci neuronowej), jest modyfikacj¹ metody gradientów sprzê¿onych dla uk³adu równañ liniowych \cite{shewchuk:introduction94}. Wykorzystuje model kwadratowy funkcji celu sieci neuronowej $E(W)$ w otoczeniu wartoœci $W_{(i)}$, który otrzymuje siê w wyniku obciêcia rozwiniêcia (\ref{4.5.26}) do trzech pierwszych wyrazów.
   		%
   		\par W pierwszej iteracji algorytmu gradientów sprzê¿onych obliczany jest kierunek poprawy
   		%
@@ -491,11 +481,11 @@
   		p_{(i)}=-\nabla E(W_{(i)})+\beta_{(i-1)}p_{(i-1)}
   		\end{equation}
   		%
-  		gdzie $\beta_{(i-1)}$ - wspó³czynnik obliczany wg odpowiednich formu³, do których nale¿¹ m.in. formu³a \emph{Fletchera-Reevesa} lub formu³a \emph{Polaka-Ribier\`{e}'a} \cite*{findeisen:optymalizacja,shewchuk:introduction94}.
+  		gdzie $\beta_{(i-1)}$ - wspó³czynnik obliczany wg odpowiednich formu³, do których nale¿¹ m.in. formu³a \emph{Fletchera-Reevesa} lub formu³a \emph{Polaka-Ribier\`{e}'a} \cite{findeisen:optymalizacja,shewchuk:introduction94}.
   		%
-  		\par Do wyznaczenia w kolejnych iteracjach wartoœci wspó³czynnika kroku $\eta_{(i)}$ wykorzystuje siê algorytmy minimalizacji funkcji celu wzd³u¿ wyznaczonego kierunku $p_{(i)}$ np. metoda \emph{Charalambous'a}, metoda \emph{Brendt'a}, metoda z³otego podzia³u \cite*{matlab:neural}.
+  		\par Do wyznaczenia w kolejnych iteracjach wartoœci wspó³czynnika kroku $\eta_{(i)}$ wykorzystuje siê algorytmy minimalizacji funkcji celu wzd³u¿ wyznaczonego kierunku $p_{(i)}$ np. metoda \emph{Charalambous'a}, metoda \emph{Brendt'a}, metoda z³otego podzia³u \cite{matlab:neural}.
   		%
-  		\par Algorytm gradientów sprzê¿onych charakteryzuje siê skoñczon¹ liczb¹ iteracji $n_{\mathrm{iter}}$ \cite*{shewchuk:introduction94,nocedal:numopt}, która jest ograniczona przez liczbê modyfikowanych parametrów (wag sieci) $n_{\mathrm{W}}$
+  		\par Algorytm gradientów sprzê¿onych charakteryzuje siê skoñczon¹ liczb¹ iteracji $n_{\mathrm{iter}}$ \cite{shewchuk:introduction94,nocedal:numopt}, która jest ograniczona przez liczbê modyfikowanych parametrów (wag sieci) $n_{\mathrm{W}}$
   		%
   		\begin{equation}\label{4.5.40}
   		n_{\mathrm{iter}}\leq n_{\mathrm{W}}
@@ -503,8 +493,8 @@
   		%
   		\subsubsection{Metoda \emph{Levenberga - Marquardta}}
   		%
-  		Metoda \emph{Levenberga - Marquardta} \cite*{levenberg:method,marquardt:algorithm,osowski:siecialg,osowski:sieci,matlab:neural} wykorzystuje do modyfikacji 
-  		wag sieci neuronowej trzy pierwsze wyrazy i oszacowanie reszty rozwiniêcia (\ref{4.5.26}) funkcji celu. W metodzie \emph{Levenberga - Marquardta} nie jest wyznaczany kierunek poprawy i wspó³czynnik kroku, tak jak ma to miejsce w metodach najwiêkszego spadku, lub gradientów sprzê¿onych. Metoda \emph{Levenberga - Marquardta} jest szczególnym przypadkiem \emph{metody zmiennej metryki} \cite*{findeisen:optymalizacja} gdzie zmiany wag $W$ sieci neuronowej w $i$-tej iteracji wyznacza siê wg zale¿noœci
+  		Metoda \emph{Levenberga - Marquardta} \cite{levenberg:method,marquardt:algorithm,osowski:siecialg,osowski:sieci,matlab:neural} wykorzystuje do modyfikacji 
+  		wag sieci neuronowej trzy pierwsze wyrazy i oszacowanie reszty rozwiniêcia (\ref{4.5.26}) funkcji celu. W metodzie \emph{Levenberga - Marquardta} nie jest wyznaczany kierunek poprawy i wspó³czynnik kroku, tak jak ma to miejsce w metodach najwiêkszego spadku, lub gradientów sprzê¿onych. Metoda \emph{Levenberga - Marquardta} jest szczególnym przypadkiem \emph{metody zmiennej metryki} \cite{findeisen:optymalizacja} gdzie zmiany wag $W$ sieci neuronowej w $i$-tej iteracji wyznacza siê wg zale¿noœci
   		%
   		\begin{equation}\label{4.5.34}
   		W_{(i+1)}=W_{(i)}-H(W_{(i)})^{-1}\nabla E(W_{(i)})
@@ -525,7 +515,7 @@
   		gdzie $K(W_{(i)})$ - \emph{jakobian}, macierz pochodnych elementów wektora b³êdu $e_{(i)}$ (\ref{4.4.5}) wzglêdem ka¿dej z wag sieci
   		%
   		\begin{equation}\label{4.5.35}
-  		K(W_{(i)})=\left \frac{\partial e}{\partial W}\right|_{W=W(i)}=\left \left[\begin{array}{cccc}
+  		K(W_{(i)})=\left. \frac{\partial e}{\partial W}\right|_{W=W(i)}=\left. \left[\begin{array}{cccc}
   		\frac{\partial e_{1}}{\partial w_{1}} & \frac{\partial e_{1}}{\partial w_{2}} & \ldots & \frac{\partial e_{1}}{\partial w_{n_{\mathrm{W}}}}\\
   		\frac{\partial e_{2}}{\partial w_{1}} & \frac{\partial e_{2}}{\partial w_{2}} & \ldots & \frac{\partial e_{2}}{\partial w_{n_{\mathrm{W}}}}\\
   		\ldots & \ldots & \ldots & \ldots\\
@@ -548,12 +538,12 @@
   		W_{(i+1)}=W_{(i)}-[K(W_{(i)})^{T}K(W_{(i)})+\mu_{(i)}\textbf{I}]^{-1}K(W_{(i)})^{T}e_{(i)}
   		\end{equation}
   		%
-  		Minimalizacja funkcji celu polega na zmianach wartoœci czynnika regularyzacyjnego $\mu_{(i)}$ i wag sieci neuronowej podczas kolejnych iteracji w zale¿noœci od wartoœci funkcji celu \cite*{osowski:sieci}.
+  		Minimalizacja funkcji celu polega na zmianach wartoœci czynnika regularyzacyjnego $\mu_{(i)}$ i wag sieci neuronowej podczas kolejnych iteracji w zale¿noœci od wartoœci funkcji celu \cite{osowski:sieci}.
   		%
   		\subsubsection{Sposoby prezentacji próbek i modyfikacji wag podczas trenowania sieci neuronowej}
   		%
   		W przypadku trenowania sieci neuronowej rozró¿nia siê dwie podstawowe metody prezentacji próbek
-  		ze zbioru treningowego i modyfikacji wag sieci \cite*{principe:neuralandadaptive}.
+  		ze zbioru treningowego i modyfikacji wag sieci \cite{principe:neuralandadaptive}.
   		%
   		\par Pierwsza metoda nazywana jest \textbf{trenowaniem przyrostowym}, inkrementalnym (ang. \emph{incremental
   			training}) lub trenowaniem w trybie \emph{on-line}. W tym przypadku wagi modyfikowane s¹ po
@@ -574,10 +564,10 @@
   		\par Na ogó³, gdy liczba próbek w zbiorze testowym i w zbiorze treningowym jest taka sama, b³¹d uogólniania $E_{\mathrm{test}}$ jest wiêkszy ni¿ b³¹d aproksymacji $E_{\mathrm{train}}$.
   		%
   		\par W³asnoœci aproksymacji i uogólniania sieci neuronowej œciœle zale¿¹ od jej budowy (liczby wag, neuronów i warstw) oraz liczby próbek
-  		w zbiorze treningowym. Jednymi z warunków uzyskania dobrego uogólniania jest odpowiednia liczebnoœæ i ró¿norodnoœæ zbioru treningowego. Liczebnoœæ zbioru treningowego mo¿na okreœliæ wykorzystuj¹c miarê \emph{Vapnika - Chervonenkisa} $\mathrm{VCdim}$ \cite*{vapnik:vc} dla danej struktury sieci neuronowej. Poniewa¿ jest to trudne zagadnienie, to w praktycznych rozwi¹zaniach stosuje siê oszacowanie wartoœci miary $\mathrm{VCdim}$. Granice miary $\mathrm{VCdim}$ zosta³y okreœlone dla ró¿nych struktur sieci neuronowych \cite*{osowski:siecialg,osowski:sieci}. W praktyce podczas trenowania sieci neuronowej nale¿y przyj¹æ zbiór treningowy, w którym liczba próbek bêdzie przewy¿sza³a wartoœæ $\mathrm{VCdim}$.
+  		w zbiorze treningowym. Jednymi z warunków uzyskania dobrego uogólniania jest odpowiednia liczebnoœæ i ró¿norodnoœæ zbioru treningowego. Liczebnoœæ zbioru treningowego mo¿na okreœliæ wykorzystuj¹c miarê \emph{Vapnika - Chervonenkisa} $\mathrm{VCdim}$ \cite{vapnik:vc} dla danej struktury sieci neuronowej. Poniewa¿ jest to trudne zagadnienie, to w praktycznych rozwi¹zaniach stosuje siê oszacowanie wartoœci miary $\mathrm{VCdim}$. Granice miary $\mathrm{VCdim}$ zosta³y okreœlone dla ró¿nych struktur sieci neuronowych \cite{osowski:siecialg,osowski:sieci}. W praktyce podczas trenowania sieci neuronowej nale¿y przyj¹æ zbiór treningowy, w którym liczba próbek bêdzie przewy¿sza³a wartoœæ $\mathrm{VCdim}$.
   		%
   		\par Sieci neuronowe wykorzystywane w pracy s¹ sieciami jednokierunkowymi wielowarstwowymi. W ich przypadku
-  		na podstawie znajomoœci granic miary $\mathrm{VCdim}$ \cite*{osowski:sieci} przyjmuje siê oszacowanie wartoœci $\mathrm{VCdim}$ jako
+  		na podstawie znajomoœci granic miary $\mathrm{VCdim}$ \cite{osowski:sieci} przyjmuje siê oszacowanie wartoœci $\mathrm{VCdim}$ jako
   		liczbê wszystkich wag sieci ($n_{\mathrm{W}}$), natomiast minimaln¹ liczbê próbek zbioru treningowego $N_{\mathrm{train}}$ jako
   		%
   		\begin{equation}\label{4.6.3}
