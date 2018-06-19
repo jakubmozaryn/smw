@@ -3,14 +3,196 @@
 \chapter{Opis mechanizmów wielocz³onowych - Janek+Kuba}
   W rozdziale przedstawiono podstawy matematyczne i fizyczne s³u¿¹ce do opisu
   robotów o wielu stopniach swobody (mechniazmów wielocz³onowych). Przedstawiono model robota w przestrzeni zmiennych stanu. Opisano sposób symulacji komputerowej dynamiki robota.	
+  
+  \subsubsection{Mechanizm wielocz³onowy}
+  Mechanizm jest to zespó³ wspó³pracuj¹cych ze sob¹ czêœci sk³adowych maszyny lub przyrz¹du spe³niaj¹cych okreœlone zadanie, jak np. przenoszenie ruchu, si³, sygna³ów[1].
+  Mechanizm wielocz³onowy jest to zespó³ po³¹czonych sztywnych lub elastycznych bry³. Po³¹czenia pozwalaj¹ na zmianê wzajemnego po³o¿enia pomiêdzy po³¹czonymi bry³ami.\footnote{\url{https://en.wikipedia.org/wiki/Multibody_system}}\\
+  \todo{Dodaæ przyk³ad z obrazkiem - 2-link planar robotic arm - rysunek, ewentualnie przenieœæ to jeszcze wczeœniej - Mo¿e daæ to jako element rozdzia³u "Wprowadzenie"?}
+  
+  
+  \section{Wprowadzenie matematyczne - Janek}
+  \todo{Przenieœæ to do za³¹cznika?}
+  
+  \subsubsection{Podstawowe pojêcia}
+  
+  Geometry is a branch of mathematics concerned with questions of shape, size, relative position of figures, and the properties of space. \footnote{https://en.wikipedia.org/wiki/Geometry}
+  
+  Kinematics is a branch of classical mechanics that describes the motion of points, bodies (objects), and systems of bodies (groups of objects) without considering the mass of each or the forces that caused the motion.[1][2][3] Kinematics, as a field of study, is often referred to as the "geometry of motion" and is occasionally seen as a branch of mathematics.[4][5][6] A kinematics problem begins by describing the geometry of the system and declaring the initial conditions of any known values of position, velocity and/or acceleration of points within the system. Then, using arguments from geometry, the position, velocity and acceleration of any unknown parts of the system can be determined. \footnote{\url{https://en.wikipedia.org/wiki/Kinematics}}
+  
+  Dynamika = Kinetyka. In classical mechanics, analytical dynamics, or more briefly dynamics, is concerned with the relationship between motion of bodies and its causes, namely the forces acting on the bodies and the properties of the bodies, particularly mass and moment of inertia. The foundation of modern-day dynamics is Newtonian mechanics and its reformulation as Lagrangian mechanics and Hamiltonian mechanics.[1][2] \footnote{\url{https://en.wikipedia.org/wiki/Kinetics_(physics)}}\footnote{\url{https://en.wikipedia.org/wiki/Analytical_dynamics}}\\
+  
+    
+  \subsubsection{Operacje macierzowe}
+  odwracanie\\
+  ortogonalnoœæ\\
+  niezale¿noœæ równañ\\
+  ró¿niczkowanie\\
+  pochodne cz¹stkowe\\
+  
+  \subsubsection{Podstawy geometrii analitycznej}
+    Analytic geometry is the study of geometry on a grid called the coordinate plane, or xyz-plane. \\
+    Uk³ad wspó³rzêdnych. W szczególnoœci kartezjañski.\\
+    Punkt. Wektor.\\
+    Powierzchnia. P³aszczyzna. Równanie precyzuje zwykle powierzchniê.\\
+    Linia.\\
+    Odleg³oœæ i k¹t.\\
+    Rzuty\\
+    , prostopad³oœæ, równoleg³oœæ, przeciêcia itp.\\
+    Bry³a sztywna = rigid body\\
+    Degree of freedom\\
+    The degrees of freedom denote the number of independent kinematical possibilities to move. In other words, degrees of freedom are the minimum number of parameters required to completely define the position of an entity in space.\\
+    A rigid body has six degrees of freedom in the case of general spatial motion, three of them translational degrees of freedom and three rotational degrees of freedom. In the case of planar motion, a body has only three degrees of freedom with only one rotational and two translational degrees of freedom.\\
+    
+  \subsubsection{Podstawowe transformacje uk³adów wspó³rzêdnych}
+  Elementarne macierze transformacji – macierze opisuj¹ce zale¿noœæ pomiêdzy wspó³rzêdnymi wskazanego punktu przed i po transformacji. Przez transformacjê rozumiemy w tym przypadku translacjê (czyli przesuniêcie), skalowanie oraz rotacjê (czyli obrót). W przypadku opisu mechanizmów wielocz³onych sens fizyczny maj¹ zazwyczaj tylko operacje translacji o rotacji - tylko one bêd¹ omawiane.
+
+  Transformacje maj¹ najczêœciej o jeden rz¹d wiêcej ni¿ wymiar wektora wspó³rzêdnych, a dok³adniej maj¹ rz¹d równy wymiarowi wspó³rzêdnych jednorodnych\todo{wyjasnic gdzies co to jest}. \footnote{\url{https://pl.wikipedia.org/wiki/Elementarne_macierze_transformacji}}
+    
+\textbf{Elementarne macierze translacji}\\
+W tym przypadku trzy przesuniêcia mog¹ zostaæ zapisane jako jedna macierz, poniewa¿ ró¿ni¹ siê tylko ostatni¹ kolumn¹.
+
+\begin{equation}
+Tran( a, b, c ) = \begin{bmatrix} 1 & 0 & 0 & a \\ 0 & 1 & 0 & b \\ 0 & 0 & 1 & c \\ 0 & 0 & 0 & 1 \end{bmatrix}
+\end{equation}
+gdzie: 
+$a, b, c$ - przesuniêcie wzd³u¿ osi $X, Y$ oraz $Z$
+
+Mo¿na tak¿e rozbiæ tê macierz na 3 osobne: $TranX(a)$, $TranY(b)$ oraz $TranZ(c)$.
+    
+\textbf{Elementarne macierze rotacji}\\
+Obroty przedstawiane s¹ w ró¿ny sposób, dlatego te¿ elementarne macierze rotacji musz¹ byæ przedstawiane oddzielnie.
+
+Dla osi X:
+\begin{equation}
+RotX(\alpha)=
+\begin{bmatrix}
+  1 & 0 & 0 & 0 \\
+  0 & \cos\alpha & -\sin\alpha & 0 \\
+  0 & \sin\alpha & \cos\alpha & 0 \\
+  0 & 0 & 0 & 1 \\
+\end{bmatrix}
+\end{equation}
+
+Dla osi Y:
+\begin{equation}
+RotY(\beta)=
+\begin{bmatrix}
+  \cos\beta & 0 & \sin\beta & 0 \\
+  0 & 1 & 0 & 0 \\
+  -\sin\beta & 0 & \cos\beta & 0 \\
+  0 & 0 & 0 & 1 \\
+\end{bmatrix}
+\end{equation}
+
+Dla osi Z:
+\begin{equation}
+RotZ(\gamma)=
+\begin{bmatrix}
+  \cos\gamma & -\sin\gamma & 0 & 0 \\
+  \sin\gamma & \cos\gamma & 0 & 0 \\
+  0 & 0 & 1 & 0 \\
+  0 & 0 & 0 & 1 \\
+\end{bmatrix}
+\end{equation}
+
+\textbf{Sk³adanie macierzy}\\
+Istnieje mo¿liwoœæ sk³adania transformacji. Wówczas obliczamy macierz wynikow¹ bêd¹c¹ iloczynem sk³adowych macierzy transformacji, któr¹ "dzia³amy" na dany punkt w przestrzeni.
+
+\begin{equation}
+\begin{bmatrix} x' \\ y' \\ z' \\ 1 \end{bmatrix} = 
+\begin{bmatrix} 1 & 0 & 0 & a \\ 0 & 1 & 0 & b \\ 0 & 0 & 1 & c \\ 0 & 0 & 0 & 1 \end{bmatrix}
+\begin{bmatrix}
+  \cos\gamma & -\sin\gamma & 0 & 0 \\
+  \sin\gamma & \cos\gamma & 0 & 0 \\
+  0 & 0 & 1 & 0 \\
+  0 & 0 & 0 & 1 \\
+\end{bmatrix}
+\begin{bmatrix} x \\ y \\ z \\ 1 \end{bmatrix}
+\end{equation}
+
+W powy¿szym przyk³adzie najpierw wykonujemy operacjê rotacji, nastêpnie translacji o wektor. Takich operacji mo¿e byæ wiêcej. Ka¿d¹ nastêpn¹ macierz transformacji dok³adamy po lewej stronie iloczynu macierzy, przy czym mno¿enie macierzy przez wektor wykonujemy od prawej strony do lewej.
+
+Mo¿emy tak¿e powy¿sz¹ operacjê zast¹piæ iloczynem macierzy wynikowej przez wektor. 
+
+\begin{equation}
+\begin{bmatrix} x' \\ y' \\ z' \\ 1 \end{bmatrix} = 
+M
+\begin{bmatrix} x \\ y \\ z \\ 1 \end{bmatrix}
+\end{equation},
+
+Macierz transformacji bêd¹c¹ z³o¿eniem poszczególnych transformacji sk³adowych otrzymamy ze wzoru.
+
+\begin{equation}
+M = 
+\begin{bmatrix} 1 & 0 & 0 & a \\ 0 & 1 & 0 & b \\ 0 & 0 & 1 & c \\ 0 & 0 & 0 & 1 \end{bmatrix}
+\begin{bmatrix}
+  \cos\gamma & -\sin\gamma & 0 & 0 \\
+  \sin\gamma & \cos\gamma & 0 & 0 \\
+  0 & 0 & 1 & 0 \\
+  0 & 0 & 0 & 1 \\
+\end{bmatrix}
+\end{equation},
+
+Gdy s¹ dane dwie (lub wiêcej) macierze przekszta³ceñ:
+\begin{itemize}
+\item $Rot^0_1$ - macierz przekszta³caj¹ca zerowy uk³ad wspó³rzêdnych w uk³ad o indeksie pierwszym.
+\item $Rot^1_2$ - macierz przekszta³caj¹ca uk³ad pierwszy w uk³ad drugi.
+\end{itemize}
+Obydwie macierze mo¿na z³o¿yæ w jedn¹ macierz przekszta³caj¹c¹ uk³ad zerowy w uk³ad drugi.
+$Rot^0_2=Rot^0_1*Rot^1_2$
+
+Macierze te oraz ich [[mno¿enie macierzy|iloczyn]] nale¿y do specjalnej grupy euklidesowej SE(3). 
+
+\textbf{Specjalna grupa euklidesowa}\\
+Specjalna grupa euklidesowa SE(3) to zbiór [[macierz]]y $\begin{bmatrix} R & T \\ 0 & 1 \end{bmatrix}$ (gdzie R to macierz opisuj¹ca obrót, a T to macierz opisuj¹ca [[translacja (matematyka)|translacjê]]), które spe³niaj¹ warunki:
+\begin{itemize}
+\item \begin{equation}\begin{bmatrix} R & T \\ 0 & 1 \end{bmatrix}^{-1} \begin{bmatrix} R & T \\ 0 & 1 \end{bmatrix} = I_4\end{equation}
+\item \begin{equation}\begin{bmatrix} R & T \\ 0 & 1 \end{bmatrix}^{-1} = \begin{bmatrix} R^T & -R^TT \\ 0 & 1 \end{bmatrix}\end{equation}
+\item \begin{equation}\begin{bmatrix} R_1 & T_1 \\ 0 & 1 \end{bmatrix}\begin{bmatrix} R_2 & T_2 \\ 0 & 1 \end{bmatrix} = \begin{bmatrix} R_1R_2 & R_1T_2+T_1 \\ 0 & 1 \end{bmatrix} \in SE(3)\end{equation}
+\end{itemize}
+
+Specjalna grupa euklidesowa mo¿e byæ tak¿e zapisana jako iloczyn [[wektor]]a oraz [[grupa obrotów|grupy obrotów]] tj. $SE(3) \cong R^3 \times SO(3)$.
+
+Macierze nale¿¹ce do SE(3) pozwalaj¹ opisaæ [[Ruch (fizyka)|ruch]] [[bry³a sztywna|cia³a sztywnego]]. Do ich konstrukcji wykorzystane mog¹ byæ elementarne macierze transformacji. Przy takim zapisie macierzy konieczne jest tak¿e stosowanie [[wspó³rzêdne jednorodne|wspó³rzêdnych jednorodnych]], ¿eby wymiar [[wektor]]a wspó³rzêdnych by³ równy liczbie kolumn macierzy. 
+
+\textbf{Interpretacje}\\
+Macierze nale¿¹ce do SE(3) pozwalaj¹:
+\begin{itemize}
+\item przekszta³ciæ punkt P w Q wzglêdem ustalonego [[uk³ad wspó³rzêdnych|uk³adu]] $(X_0,Y_0,Z_0)$
+\item przekszta³ciæ uk³ad $(X_0,Y_0,Z_0)$ w taki uk³ad $(X_1,Y_1,Z_1)$, ¿e wspó³rzêdne punktu $\begin{bmatrix} x & 1 \end{bmatrix}^T$ wzglêdem $(X_1,Y_1,Z_1)$ transformuj¹ siê do uk³adu $(X_0,Y_0,Z_0)$ jako:
+\begin{equation}\begin{bmatrix} R & T \\ 0 & 1 \end{bmatrix} \begin{bmatrix} x \\ 1 \end{bmatrix}\end{equation}
+\end{itemize}
+  
+  
   \section{Model geometrii, kinematyki i dynamiki mechanizmów wielocz³onowych.}
 
   \subsection{Model geometrii - Janek}
   W pracy rozwa¿any jest robot o pojedynczym ³añcuchu kinematycznym, sk³adaj¹cy
   siê z cz³onów po³¹czonych przegubami. Ka¿dy z przegubów posiada jeden stopieñ swobody. W dalszej czêœci pracy rozwa¿any bêdzie robot o $n$-stopniach swobody z przegubami typu obrotowego, gdy¿ tylko przeguby tego typu wystêpuj¹ w rozwa¿anym w pracy robocie PUMA 560. Przyjêto, ¿e dla robota o $n$-przegubach ponumerowanych od 1 do $n$ istnieje $n$+1 cz³onów ponumerowanych od 0 do $n$. Cz³on o numerze 0 nazywany jest cz³onem bazowym, natomiast cz³on $n$ jest cz³onem z elementem wykonawczym. Przegub i ³¹czy cz³ony o numerach $i$-1 i $i$. Z ka¿dym z cz³onów zwi¹zany jest uk³ad wspó³rzêdnych o tym samym numerze.
-  %
-  \subsection{Model kinematyki - Janek}
-  Dla okreœlenia uk³adów wspó³rzêdnych kartezjañskich, które bêd¹ przyporz¹dkowane
+  Rozwa¿amy mechanizm wielocz³onowy sk³adaj¹cy siê z cz³onów po³¹czonych stawami. Mog¹ wystêpowaæ cz³ony nieruchome.\\
+  
+  \subsubsection{Cz³on}
+  A body is usually considered to be a rigid or flexible part of a mechanical system. An example of a body is the arm of a robot, a wheel or axle in a car or the human forearm.\\
+  
+  \subsubsection{Staw, przegub}
+  A link is the connection of two or more bodies, or a body with the ground. The link is defined by certain (kinematical) constraints that restrict the relative motion of the bodies. Typical constraints are:\\
+    cardan joint or Universal Joint ; 4 kinematical constraints\\
+    prismatic joint; relative displacement along one axis is allowed, constrains relative rotation; implies 5 kinematical constraints\\
+    revolute joint; only one relative rotation is allowed; implies 5 kinematical constraints; see the example above\\
+    spherical joint; constrains relative displacements in one point, relative rotation is allowed; implies 3 kinematical constraints\\
+  Constraint condition\\
+ A constraint condition implies a restriction in the kinematical degrees of freedom of one or more bodies. The classical constraint is usually an algebraic equation that defines the relative translation or rotation between two bodies. There are furthermore possibilities to constrain the relative velocity between two bodies or a body and the ground. This is for example the case of a rolling disc, where the point of the disc that contacts the ground has always zero relative velocity with respect to the ground. In the case that the velocity constraint condition cannot be integrated in time in order to form a position constraint, it is called non-holonomic. This is the case for the general rolling constraint.  
+
+  \subsubsection{Mechanizm wielocz³onowy}
+  £añcuch kinematyczny jest to czêœæ mechanizmu w postaci kilku po³¹czonych ze sob¹ cz³onów (bry³) tworz¹cych jedn¹ lub wiele par kinematycznych, realizuj¹cy zdefiniowane przeniesienie ruchu.
+  Model geometrii - zestaw cz³onów i stawów. £añcuch kinematyczny.\\
+    Stopnie swobody i wiêzy w ujêciu mechanizmu wielocz³onowego, wiêzy bierne, nadmiarowe?\\
+    Ruchliwoœæ\\
+    Notacja DH.\\
+    Zadanie proste geometrii.\\
+    Zadanie odwrotne geometrii.\\
+    
+      Dla okreœlenia uk³adów wspó³rzêdnych kartezjañskich, które bêd¹ przyporz¹dkowane
   w odpowiedni sposób do cz³onów i przegubów przyjêto notacjê Denavita-Hartenberga
   \cite{hartenberg:1955}, której podstawy zamieszczono na Rys. \ref{fig:1}:
 
@@ -99,6 +281,10 @@
   1
   \end{array}\right]$ - jednorodny wektor wspó³rzêdnych punktu $A$ w $m$-tym uk³adzie wspó³rzêdnych
   %
+    
+  %
+  \subsection{Model kinematyki - Janek}
+
   
   \subsection{Model dynamiki - Kuba}
   %
