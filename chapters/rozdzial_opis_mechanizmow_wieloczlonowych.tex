@@ -1,10 +1,9 @@
 
 %ROZDZIA£ 1
 \chapter{Opis mechanizmów wielocz³onowych - Janek+Kuba}
-  W rozdziale przedstawiono podstawy matematyczne i fizyczne s³u¿¹ce do opisu robotów o wielu stopniach swobody (mechniazmów wielocz³onowych). Przedstawiono model robota w przestrzeni zmiennych stanu. Opisano sposób symulacji komputerowej dynamiki robota.	
+  W rozdziale przedstawiono podstawy matematyczne i fizyczne s³u¿¹ce do opisu robotów o wielu stopniach swobody (mechanizmów wielocz³onowych). Przedstawiono model robota w przestrzeni zmiennych stanu. Opisano sposób symulacji komputerowej dynamiki robota.	
   
-  Mechanizm jest to zespó³ wspó³pracuj¹cych ze sob¹ czêœci sk³adowych maszyny lub przyrz¹du spe³niaj¹cych okreœlone zadanie, jak np. przenoszenie ruchu, si³, sygna³ów[1].
-  Mechanizm wielocz³onowy jest to zespó³ po³¹czonych sztywnych lub elastycznych bry³. Po³¹czenia pozwalaj¹ na zmianê wzajemnego po³o¿enia pomiêdzy po³¹czonymi bry³ami.\footnote{\url{https://en.wikipedia.org/wiki/Multibody_system}}\\
+  W dalszej czêœci skryptu \textbf{mechanizm} bêdzie rozumiany jako zespó³ wspó³pracuj¹cych ze sob¹ elementów maszyny wykonuj¹cej okreœlone zadanie (np. poruszanie siê po zadanej trajektorii). W szczególnoœci \textbf{mechanizm wielocz³onowy} bêdzie rozumiany jako zespó³ po³¹czonych bry³ sztywnych (\textbf{cz³onów}). Po³¹czenia (lub \textbf{stawy}, \textbf{przeguby}) okreœlaj¹ w jaki sposób cz³ony mog¹ siê poruszaæ wzglêdem siebie.\footnote{\url{https://en.wikipedia.org/wiki/Multibody_system}}\\
   \todo{Dodaæ przyk³ad z obrazkiem - 2-link planar robotic arm - rysunek, ewentualnie przenieœæ to jeszcze wczeœniej - Mo¿e daæ to jako element rozdzia³u "Wprowadzenie"?}
   
   \section{Wprowadzenie matematyczne - Janek}
@@ -12,55 +11,146 @@
 
   \subsubsection{Podstawowe pojêcia}
   
-  Geometry is a branch of mathematics concerned with questions of shape, size, relative position of figures, and the properties of space. \footnote{https://en.wikipedia.org/wiki/Geometry}
+  \textbf{Geometria} jet to dziedzina matematyki badaj¹ca dla wybranych przekszta³ceñ ich niezmienniki (np. odleg³oœæ, pole powierzchni, miara k¹ta). W zale¿noœci od rodzaju przekszta³ceñ mówi siê o ró¿nych rodzajach geometrii. Na potrzeby opisu mechanizmów wielocz³onowych bêdziemy wykorzystywaæ g³ównie jej klasyczn¹ odmianê - geometriê euklidesow¹. Zajmuje siê ona przede wszystkim badaniem niezmienników (sta³ych) izometrii (zachowanie odleg³oœci) oraz podobieñstw (zachowanie k¹tów). 
   
-  Kinematics is a branch of classical mechanics that describes the motion of points, bodies (objects), and systems of bodies (groups of objects) without considering the mass of each or the forces that caused the motion.[1][2][3] Kinematics, as a field of study, is often referred to as the "geometry of motion" and is occasionally seen as a branch of mathematics.[4][5][6] A kinematics problem begins by describing the geometry of the system and declaring the initial conditions of any known values of position, velocity and/or acceleration of points within the system. Then, using arguments from geometry, the position, velocity and acceleration of any unknown parts of the system can be determined. \footnote{\url{https://en.wikipedia.org/wiki/Kinematics}}
+  \textbf{Kinematyka} jest to dziedzina fizyki, a w szczególnoœci mechaniki (czasem rozumiana jako dziedzina matematyki) zajmuj¹ca siê badaniem geometrycznych w³aœciwoœci ruchu cia³ bez uwzglêdniania ich cech fizycznych (np. masy) i dzia³aj¹cych na nie si³. Kinematyka obejmuje opis geometryczny sytemu uzupe³niony o prêdkoœci oraz przyspieszenia. W skrypcie bêdziemy zajmowali siê kinematyk¹ punktów materialnych i bry³ sztywnych.
   
-  Dynamika = Kinetyka. In classical mechanics, analytical dynamics, or more briefly dynamics, is concerned with the relationship between motion of bodies and its causes, namely the forces acting on the bodies and the properties of the bodies, particularly mass and moment of inertia. The foundation of modern-day dynamics is Newtonian mechanics and its reformulation as Lagrangian mechanics and Hamiltonian mechanics.[1][2] \footnote{\url{https://en.wikipedia.org/wiki/Kinetics_(physics)}}\footnote{\url{https://en.wikipedia.org/wiki/Analytical_dynamics}}\\
+  \textbf{Dynamika} jest to dziedzina fizyki, a w szczególnoœci mechaniki, zajmuj¹ca siê ruchem cia³ materialnych (z uwzglêdnieniem ich cech fizycznych - np. masy) pod dzia³aniem si³. W zakresie dynamiki bierze siê pod uwagê opis kinematyczny systemu uzupe³niony o dzia³aj¹ce si³y, momenty si³ oraz w³aœciwoœci fizyczne takie jak masa i momenty bezw³adnoœci. Dynamika czasem uto¿samiana jest z \textbf{kinetyk¹} - dzia³em dynamiki zajmuj¹cym siê, w przeciwieñstwie do statyki, zachowaniem cia³ fizycznych w ruchu. W zakresie sterowania mechanizmami wielocz³onowymi bêdziemy zajmowaæ siê klasyczn¹ dynamik¹ w ujêciu Newtona, oraz bardziej nowoczesn¹ w ujêciu Lagrange'a czy Euler'a.\footnote{\url{https://en.wikipedia.org}}
+   
+  \subsubsection{Notacja macierzowa} \todo{zmienic jakos tytul}
   
-    
-  \subsubsection{Operacje macierzowe}
-  odwracanie\\
-  ortogonalnoœæ\\
-  niezale¿noœæ równañ\\
-  ró¿niczkowanie\\
-  pochodne cz¹stkowe\\
+  Matematyczny opis mechanizmów wielocz³onowych wygodnie jest przestawiæ za pomoc¹ notacji macierzowej. W zwi¹zku z tym opiera siê on w znacznym stopniu  na \textbf{algebrze macierzy}. Jest to dziedzina matematyki zajmuj¹ca siê badaniem macierzy i zasad operowania na nich. Poni¿ej znajduje siê przypomnienie wybranych operacji i w³asnoœci macierzowych.
   
-  \subsubsection{Podstawy geometrii analitycznej}
-    Analytic geometry is the study of geometry on a grid called the coordinate plane, or xyz-plane. \\
-    Uk³ad wspó³rzêdnych. W szczególnoœci kartezjañski.\\
-    Punkt. Wektor.\\
-    Powierzchnia. P³aszczyzna. Równanie precyzuje zwykle powierzchniê.\\
-    Linia.\\
-    Odleg³oœæ i k¹t.\\
-    Rzuty\\
-    , prostopad³oœæ, równoleg³oœæ, przeciêcia itp.\\
-    Bry³a sztywna = rigid body\\
-    
-Degree of freedom\\
-    The degrees of freedom denote the number of independent kinematical possibilities to move. In other words, degrees of freedom are the minimum number of parameters required to completely define the position of an entity in space.\\
-    A rigid body has six degrees of freedom in the case of general spatial motion, three of them translational degrees of freedom and three rotational degrees of freedom. In the case of planar motion, a body has only three degrees of freedom with only one rotational and two translational degrees of freedom.\\
-    
-  \subsubsection{Podstawowe transformacje uk³adów wspó³rzêdnych}
-  Elementarne macierze transformacji – macierze opisuj¹ce zale¿noœæ pomiêdzy wspó³rzêdnymi wskazanego punktu przed i po transformacji. Przez transformacjê rozumiemy w tym przypadku translacjê (czyli przesuniêcie), skalowanie oraz rotacjê (czyli obrót). W przypadku opisu mechanizmów wielocz³onych sens fizyczny maj¹ zazwyczaj tylko operacje translacji o rotacji - tylko one bêd¹ omawiane.
+  W uproszczeniu \textbf{skalar} jest to element algebry linowej reprezentuj¹cy pojedyncz¹ wartoœæ liczbow¹. W skrypcie symbole skalarne bêd¹ przestawiane w postaci ma³ych liter, np. skalarne równanie liniowe mo¿e przyj¹æ postaæ:
+  
+  \begin{equation}
+    y = a*x+ b
+  \end{equation}
+  
+  Powy¿sze równanie przedstawia funkcjê o skalarnych parametrach $a$ i $b$, skalarnych argumentach $x$ oraz skalarnych wartoœciach $y$.
+  
+  Kontynuuj¹c uproszczenia \textbf{wektor} mo¿na rozumieæ jako seriê wartoœci skalarnych, notowan¹ w skrypcie wielk¹ liter¹:
+  
+  \begin{equation}
+    V =
+    \begin{bmatrix}
+      v_1 \\
+      v_2 \\
+      v_3 \\
+      v_4 \\
+    \end{bmatrix}
+  \end{equation}
+  
+  Jeœli dodamy do wektora jeszcze jeden wymiar otrzymamy \textbf{macierz}. Bêdziemy j¹ rozumieæ jako zestaw wartoœci skalarnych zorganizowany w postaci uk³adu prostok¹tnego, notowan¹ w skrypcie wielk¹ liter¹:
+  
+  \begin{equation}
+    A =
+    \begin{bmatrix}
+      a_{11} & a_{12} & a_{13} & a_{14} \\
+      a_{21} & a_{22} & a_{23} & a_{24} \\
+      a_{31} & a_{32} & a_{33} & a_{34} \\
+      a_{41} & a_{42} & a_{43} & a_{44} \\
+    \end{bmatrix}
+  \end{equation}
+  
+  Macierz mo¿na podzieliæ na wiersze i kolumny. Macierz podsiada równie¿ wymiary - szerokoœæ i wysokoœæ. W skrypcie wektory bêdziemy rozumieæ jako szczególny przypadek macierzy. Notacja macierzy i wektorów jest identyczna. W ogólnoœci macierze odpowiednio typu $m\times 1$ oraz $1\times n$ (jednokolumnowe i jednowierszowe) nazywa siê zwykle wektorami kolumnowymi i wektorami wierszowymi. W ujêciu ogólnym macierz o wymiarach $n$ na $m$ mo¿na zdefiniowaæ jako:
+  
+  \begin{equation}
+    A = 
+    \begin{bmatrix}
+      a_{ij} \\
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+      a_{11} & a_{12} & \dots & a_{1m} \\
+      a_{21} & a_{22} & \dots & a_{2m} \\
+      \dots \\
+      a_{n1} & a_{n2} & \dots & a_{nm} \\
+    \end{bmatrix}
+  \end{equation}
+  , gdzie $a_{ij}$ to element macierzy $A$ z wiersza $i$ oraz kolumny $j$.
+  
+  Podstawowe operacje na macierzach obejmuj¹ dodawanie, mno¿enie przez skalar, mno¿enie, transpozycjê i operacje elementarne. S¹ one na tyle proste, ¿e nie bêd¹ omawiane bli¿ej w tym opracowaniu.
+  
+\todo{wprowadzic takie pojecia jak rzad macierzy, diag, macierz zerow¹, jednostkow¹ i w³asnoœci podstawowych dzia³añ?}  
+  
+  \subsubsection{Przekszta³cenia liniowe}
+  
+  Notacjê macierzow¹ mo¿na wykorzystaæ do zapisu uk³adu równañ. Przyk³adowo uk³ad $n$ równañ liniowych o $m$ zmiennych postaci
+  
+  \begin{equation}
+  \label{eq:uklad_rownan_liniowych}
+    \begin{cases}
+      a_{11}x_1 + a_{12}x_2 + \cdots + a_{1m}x_m = b_1 \\ 
+      a_{21}x_1 + a_{22}x_2 + \cdots + a_{2m}x_m = b_2 \\ 
+      \vdots \\ 
+      a_{n1}x_1 + a_{n2} x_2 + \cdots + a_{nm}x_m = b_n 
+    \end{cases}
+  \end{equation}
 
-  Transformacje maj¹ najczêœciej o jeden rz¹d wiêcej ni¿ wymiar wektora wspó³rzêdnych, a dok³adniej maj¹ rz¹d równy wymiarowi wspó³rzêdnych jednorodnych\todo{wyjasnic gdzies co to jest}. \footnote{\url{https://pl.wikipedia.org/wiki/Elementarne_macierze_transformacji}}
-    
-\textbf{Elementarne macierze translacji}\\
-W tym przypadku trzy przesuniêcia mog¹ zostaæ zapisane jako jedna macierz, poniewa¿ ró¿ni¹ siê tylko ostatni¹ kolumn¹.
+  mo¿na zapisaæ w postaci równania macierzowego
 
-\begin{equation}
-Tran( a, b, c ) = \begin{bmatrix} 1 & 0 & 0 & a \\ 0 & 1 & 0 & b \\ 0 & 0 & 1 & c \\ 0 & 0 & 0 & 1 \end{bmatrix}
-\end{equation}
-gdzie: 
-$a, b, c$ - przesuniêcie wzd³u¿ osi $X, Y$ oraz $Z$
+  \begin{equation}
+  \label{eq:przeksztalcenie_liniowe}
+    \mathbf{AX} = \mathbf B,
+  \end{equation}
+  
+  dla danych macierzy $\mathbf A = [a_{ij}]$, nazywanej ''macierz¹ g³ówn¹'' uk³adu, $\mathbf X = [x_j]$ oraz $\mathbf B = [b_i]$. 
+  
+  Nawi¹zuj¹c do równania \ref{eq:przeksztalcenie_liniowe}, ka¿da macierz $A$ o wymiarach $m$ na $n$ opisuje pewne przekszta³cenie liniowe przestrzeni wspó³rzêdnych $K^{n}$ w $K^{m}$ odwzorowuj¹ce wektor $X$ w wektor $B$. Przekszta³ceniu temu odpowiada mno¿enie macierzy $A$ o wymiarach $m$ na $n$ przez macierz $X$ o wymiarach $n$ na $1$ daj¹c w wyniku macierz $AX$ o wymiarach $m$ na $1$. 
 
-Mo¿na tak¿e rozbiæ tê macierz na 3 osobne: $TranX(a)$, $TranY(b)$ oraz $TranZ(c)$.
+  %W ten sposób uk³ad równañ liniowych \ref{eq:uklad_rownan_liniowych} mo¿na traktowaæ jako problem opisu przekszta³cenia liniowego gdzie istnienie rozwi¹zañ jest to¿same z istnieniem wektora x spe³niaj¹cego $A ( x ) = b$ (czyli nale¿eniem $b$ do obrazu $A$ jednoznacznoœæ rozwi¹zañ jest równowa¿na ró¿nowartoœciowoœci przekszta³cenia $A$ (czyli trywialnoœci jego j¹dra).
+
+  \footnote{\url{https://en.wikipedia.org}}
+     
+  \subsubsection{Podstawowe przekszta³cenia przestrzeni}
+  
+  W zakresie opisu mechanizmów wielocz³onowych wykorzystuje siê wybrane przekszta³cenia liniowe. Elementarne (podstawowe) macierze transformacji (przekszta³cenia) s¹ to macierze opisuj¹ce zale¿noœæ pomiêdzy wspó³rzêdnymi wskazanego punktu przestrzeni przed i po transformacji. Przez transformacjê rozumiemy w tym przypadku translacjê (czyli przesuniêcie), skalowanie oraz rotacjê (czyli obrót). W przypadku opisu mechanizmów wielocz³onowych sens fizyczny maj¹ zazwyczaj tylko operacje translacji i rotacji.
+
+  Wygodnie jest przyj¹æ, ¿e macierze opisuj¹ce transformacje maj¹ o jeden rz¹d wiêcej ni¿ wymiar wektora wspó³rzêdnych, a dok³adniej maj¹ rz¹d równy wymiarowi wspó³rzêdnych jednorodnych\todo{wyjasnic gdzies co to jest}. \footnote{\url{https://pl.wikipedia.org/wiki/Elementarne_macierze_transformacji}} Oznacza to, ¿e równanie przekszta³caj¹ce przestrzeñ trójwymiarow¹ zgodnie z macierz¹ $T$ mo¿na przedstawiæ w postaci wzoru:
+  
+  \begin{equation}
+    \begin{bmatrix} 
+      x' \\ 
+      y' \\ 
+      z' \\ 
+      1 
+    \end{bmatrix} = 
+    T
+    \begin{bmatrix} 
+      x \\ 
+      y \\ 
+      z \\ 
+      1 
+    \end{bmatrix}
+  \end{equation}
+  gdzie: \\
+  $x, y, z$ - wspó³rzêdne punktu oryginalnego,\\
+  $x', y', z'$ - wspó³rzêdne punktu przekszta³conego,\\
+  $T$ - macierz przekszta³cenia.\\
     
-\textbf{Elementarne macierze rotacji}\\
+\textbf{Macierz przesuniêcia}\\
+  Przyk³adowo przesuniêcie (translacjê) w przestrzeni trójwymiarowej mo¿na zapisaæ jako:
+
+  \begin{equation}
+    T = Tran( a, b, c ) = 
+      \begin{bmatrix} 
+        1 & 0 & 0 & a \\ 
+        0 & 1 & 0 & b \\ 
+        0 & 0 & 1 & c \\ 
+        0 & 0 & 0 & 1 
+      \end{bmatrix}
+  \end{equation}
+  gdzie: \\
+  $T$ - macierz przekszta³cenia - translacji,\\
+  $a, b, c$ - przesuniêcie wzd³u¿ osi $X, Y$ oraz $Z$ przestrzeni trójwymiarowej.
+
+Mo¿na tak¿e rozbiæ tê macierz na 3 osobne: $TranX(a)$, $TranY(b)$ oraz $TranZ(c)$.\\
+    
+\textbf{Macierze obrotu}\\
 Obroty przedstawiane s¹ w ró¿ny sposób, dlatego te¿ elementarne macierze rotacji musz¹ byæ przedstawiane oddzielnie.
 
-Dla osi X:
+Dla obrotu wokó³ osi X:
 \begin{equation}
 RotX(\alpha)=
 \begin{bmatrix}
@@ -71,7 +161,7 @@ RotX(\alpha)=
 \end{bmatrix}
 \end{equation}
 
-Dla osi Y:
+Dla obrotu wokó³ osi Y:
 \begin{equation}
 RotY(\beta)=
 \begin{bmatrix}
@@ -82,7 +172,7 @@ RotY(\beta)=
 \end{bmatrix}
 \end{equation}
 
-Dla osi Z:
+Dla obrotu wokó³ osi Z:
 \begin{equation}
 RotZ(\gamma)=
 \begin{bmatrix}
@@ -94,42 +184,69 @@ RotZ(\gamma)=
 \end{equation}
 
 \textbf{Sk³adanie macierzy}\\
-Istnieje mo¿liwoœæ sk³adania transformacji. Wówczas obliczamy macierz wynikow¹ bêd¹c¹ iloczynem sk³adowych macierzy transformacji, któr¹ "dzia³amy" na dany punkt w przestrzeni.
+Istnieje mo¿liwoœæ sk³adania transformacji. Jest to realizowane przez mno¿enie macierzy sk³adanych przekszta³ceñ. Wówczas obliczamy macierz wynikow¹ z³o¿enia przekszta³ceñ jako iloczyn sk³adowych macierzy transformacji.
 
-\begin{equation}
-\begin{bmatrix} x' \\ y' \\ z' \\ 1 \end{bmatrix} = 
-\begin{bmatrix} 1 & 0 & 0 & a \\ 0 & 1 & 0 & b \\ 0 & 0 & 1 & c \\ 0 & 0 & 0 & 1 \end{bmatrix}
-\begin{bmatrix}
-  \cos\gamma & -\sin\gamma & 0 & 0 \\
-  \sin\gamma & \cos\gamma & 0 & 0 \\
-  0 & 0 & 1 & 0 \\
-  0 & 0 & 0 & 1 \\
-\end{bmatrix}
-\begin{bmatrix} x \\ y \\ z \\ 1 \end{bmatrix}
-\end{equation}
+  Przyk³adowo w równaniu \ref{eq:przyklad_skladania} mo¿emy najpierw wykonaæ operacjê rotacji, nastêpnie translacji o wektor. Takich operacji mo¿e byæ wiêcej. Ka¿d¹ nastêpn¹ macierz transformacji dok³adamy po lewej stronie iloczynu macierzy, przy czym mno¿enie macierzy przez wektor wykonujemy od prawej strony do lewej.
 
-W powy¿szym przyk³adzie najpierw wykonujemy operacjê rotacji, nastêpnie translacji o wektor. Takich operacji mo¿e byæ wiêcej. Ka¿d¹ nastêpn¹ macierz transformacji dok³adamy po lewej stronie iloczynu macierzy, przy czym mno¿enie macierzy przez wektor wykonujemy od prawej strony do lewej.
+  \begin{equation}
+  \label{eq:przyklad_skladania}
+    \begin{bmatrix} 
+      x' \\ 
+      y' \\ 
+      z' \\ 
+      1 
+    \end{bmatrix} = 
+    \begin{bmatrix} 
+      1 & 0 & 0 & a \\ 
+      0 & 1 & 0 & b \\ 
+      0 & 0 & 1 & c \\ 
+      0 & 0 & 0 & 1 
+    \end{bmatrix}
+    \begin{bmatrix}
+      \cos\gamma & -\sin\gamma & 0 & 0 \\
+      \sin\gamma & \cos\gamma & 0 & 0 \\
+      0 & 0 & 1 & 0 \\
+      0 & 0 & 0 & 1 \\
+    \end{bmatrix}
+    \begin{bmatrix} 
+      x \\ 
+      y \\ 
+      z \\ 
+      1 
+    \end{bmatrix}
+  \end{equation}
 
-Mo¿emy tak¿e powy¿sz¹ operacjê zast¹piæ iloczynem macierzy wynikowej przez wektor. 
+  Mo¿emy tak¿e powy¿sze operacje zast¹piæ iloczynem macierzy wynikowej przez wektor. 
 
-\begin{equation}
-\begin{bmatrix} x' \\ y' \\ z' \\ 1 \end{bmatrix} = 
-M
-\begin{bmatrix} x \\ y \\ z \\ 1 \end{bmatrix}
-\end{equation},
+  \begin{equation}
+    \begin{bmatrix} x' \\ y' \\ z' \\ 1 \end{bmatrix} = M
+    \begin{bmatrix} x \\ y \\ z \\ 1 \end{bmatrix}
+  \end{equation},
 
-Macierz transformacji bêd¹c¹ z³o¿eniem poszczególnych transformacji sk³adowych otrzymamy ze wzoru.
+  Macierz transformacji bêd¹c¹ z³o¿eniem poszczególnych transformacji sk³adowych otrzymamy ze wzoru:
 
-\begin{equation}
-M = 
-\begin{bmatrix} 1 & 0 & 0 & a \\ 0 & 1 & 0 & b \\ 0 & 0 & 1 & c \\ 0 & 0 & 0 & 1 \end{bmatrix}
-\begin{bmatrix}
-  \cos\gamma & -\sin\gamma & 0 & 0 \\
-  \sin\gamma & \cos\gamma & 0 & 0 \\
-  0 & 0 & 1 & 0 \\
-  0 & 0 & 0 & 1 \\
-\end{bmatrix}
-\end{equation},
+  \begin{equation}
+    M = 
+    \begin{bmatrix} 
+      1 & 0 & 0 & a \\ 
+      0 & 1 & 0 & b \\ 
+      0 & 0 & 1 & c \\ 
+      0 & 0 & 0 & 1 
+    \end{bmatrix}
+    \begin{bmatrix}
+      \cos\gamma & -\sin\gamma & 0 & 0 \\
+      \sin\gamma & \cos\gamma & 0 & 0 \\
+      0 & 0 & 1 & 0 \\
+      0 & 0 & 0 & 1 \\
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+      \cos\gamma & -\sin\gamma & 0 & a \\
+      \sin\gamma & \cos\gamma & 0 & b \\
+      0 & 0 & 1 & c \\
+      0 & 0 & 0 & 1 \\
+    \end{bmatrix}
+  \end{equation},
 
 Gdy s¹ dane dwie (lub wiêcej) macierze przekszta³ceñ:
 \begin{itemize}
@@ -161,6 +278,24 @@ Macierze nale¿¹ce do SE(3) pozwalaj¹:
 \begin{equation}\begin{bmatrix} R & T \\ 0 & 1 \end{bmatrix} \begin{bmatrix} x \\ 1 \end{bmatrix}\end{equation}
 \end{itemize}
   
+  
+  \todo{rozwin¹æ opis: macierzowe równania liniowe, niezale¿noœæ równañ, odwracanie, ortogonalnoœæ, ró¿niczkowanie, pochodne cz¹stkowe, pochodne po czasie}
+  
+  \subsubsection{Podstawy geometrii analitycznej}
+    Analytic geometry is the study of geometry on a grid called the coordinate plane, or xyz-plane. \\
+    Uk³ad wspó³rzêdnych. W szczególnoœci kartezjañski.\\
+    Punkt. Wektor.\\
+    Powierzchnia. P³aszczyzna. Równanie precyzuje zwykle powierzchniê.\\
+    Linia.\\
+    Odleg³oœæ i k¹t.\\
+    Rzuty\\
+    , prostopad³oœæ, równoleg³oœæ, przeciêcia itp.\\
+    Bry³a sztywna = rigid body\\
+    
+Degree of freedom\\
+    The degrees of freedom denote the number of independent kinematical possibilities to move. In other words, degrees of freedom are the minimum number of parameters required to completely define the position of an entity in space.\\
+    A rigid body has six degrees of freedom in the case of general spatial motion, three of them translational degrees of freedom and three rotational degrees of freedom. In the case of planar motion, a body has only three degrees of freedom with only one rotational and two translational degrees of freedom.\\
+ 
   
   \section{Model geometrii, kinematyki i dynamiki mechanizmów wielocz³onowych.}
   \todo{dodaæ rysunki jak w \url{http://web.eecs.umich.edu/~ocj/courses/autorob/autorob_10_ik_closedform.pdf}}
