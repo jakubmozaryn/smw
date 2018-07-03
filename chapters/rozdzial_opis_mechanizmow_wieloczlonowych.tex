@@ -395,7 +395,7 @@ Podstawy notacji zamieszczono na Rys. \ref{fig:1}:
   \end{array}\right] 
   \end{equation}\label{eq:5}
 
-\subsection{Przyk³ad - kinematyka nogi robota}
+\subsubsection{Przyk³ad - kinematyka nogi robota}
 Za³ó¿my, ¿e chcemy opracowaæ model nogi dla maszyny krocz¹cej przedstawionej schematycznie na rys. \ref{fig:szkic_robota}. Przyjmijmy dodatkowo, ¿e ka¿da noga ma cztery stopnie swobody i wszystkie przeguby s¹ obrotowe.
 
 \begin{figure}[htb!]
@@ -469,17 +469,17 @@ s_{4} & c_{4} & 0 & l_{3}s_{4}\\
 W powy¿szych równaniach w celu skrócenia zapisu, zastosowano nastêpuj¹c¹ konwencjê: $s_{n}=\sin(\theta_{n})$, $c_{n}=\cos(\theta_{n})$. Ten sposób notacji bêdzie obowi¹zywa³ w dalszej czêœci skryptu.\todo{przenieœæ to gdzieœ wczeœniej? Do wprowadzenia matematycznego?}
   %
   \subsection{Zadanie proste geometrii} 
-	Zadaniem prostym geometrii\footnote{w odniesieniu do mechanizmów wielocz³onowych} (czasem kinematyki) okreœla siê obliczenie wspó³rzêdnych kartezjañskich dowolnego punktu na mechaniŸnie wielocz³onowym znaj¹c jego wspó³rzêdne przegubowe (konfiguracyjne, maszynowe). Najwa¿niejszym punktem orientacyjnym jest zazwyczaj jeden z punktów ostatniego cz³onu maszyny. W wyniku zadania prostego wyznacza siê macierz transformacji uk³adu ostatniego w uk³ad bazowy. Wskazuje ona, jakie wspó³rzêdne w uk³adzie bazowym bêdzie mia³ ten punkt, gdy poszczególne k¹ty obrotu silników w przegubach bêd¹ mia³y zadane, znane wartoœci.
-Patrz¹c ogólnie, wykorzystuj¹c jednorodne macierze przekszta³ceñ mo¿na obliczyæ wspó³rzêdne punktu (np. koñcówka chwytaka) w $m$-tym uk³adzie (np. uk³ad zwi¹zany z nieruchom¹ podstaw¹ robota), znaj¹c wspó³rzêdne tego samego punktu w $k$-tym (dla $k>m$)  uk³adzie (np. uk³ad zwi¹zany z ostatnim cz³onem, do którego prztwierdzony jest chwytak). Zale¿noœæ opisuj¹c¹ zadanie proste wyznacza siê korzystaj¹c z wyra¿enia \cite{fu:1987}:
+	Zadaniem prostym geometrii\footnote{w odniesieniu do mechanizmów wielocz³onowych} (czasem kinematyki) okreœla siê obliczenie wspó³rzêdnych kartezjañskich dowolnego punktu na mechaniŸnie wielocz³onowym znaj¹c jego wspó³rzêdne przegubowe (konfiguracyjne, maszynowe). Najwa¿niejszym punktem orientacyjnym jest zazwyczaj jeden z punktów ostatniego cz³onu maszyny. W wyniku zadania prostego wyznacza siê macierz transformacji uk³adu ostatniego w uk³ad bazowy. Wskazuje ona, jakie wspó³rzêdne w uk³adzie bazowym bêdzie mia³ ten punkt, gdy poszczególne k¹ty obrotu silników w przegubach bêd¹ mia³y zadane, znane wartoœci.\\
+W ujêciu ogólnym, wykorzystuj¹c jednorodne macierze przekszta³ceñ mo¿na obliczyæ wspó³rzêdne punktu (np. koñcówka chwytaka) w $m$-tym uk³adzie (np. uk³ad zwi¹zany z nieruchom¹ podstaw¹ robota), znaj¹c wspó³rzêdne tego samego punktu w $k$-tym (dla $k>m$)  uk³adzie (np. uk³ad zwi¹zany z ostatnim cz³onem, do którego prztwierdzony jest chwytak). Zale¿noœæ \todo{odniesc sie do opisu przy sk³adaniu macierzy} opisuj¹c¹ zadanie proste wyznacza siê korzystaj¹c z wyra¿enia \cite{fu:1987}:
   %
   \begin{equation}
-  P_{Am}=^{m}T_{k}P_{Ak}, k>m
+  P_{Am}=T^{m}_{k}P_{Ak}, k>m
   \end{equation}\label{eq:6}
   %
   gdzie:
   %
   \begin{equation}
-  ^{m}T_{k}=^{m}T_{m+1}\quad ^{m+1}T_{m+2} \dots ^{k-1}T_{k}
+  T^{m}_{k}=T^{m}_{m+1}\quad T^{m+1}_{m+2} \dots T^{k-1}_{k}
   \end{equation}\label{eq:7}
   %
   $P_{Ak}=\left[\begin{array}{c}
@@ -495,10 +495,8 @@ Patrz¹c ogólnie, wykorzystuj¹c jednorodne macierze przekszta³ceñ mo¿na obliczyæ 
   z_{Am}\\ 
   1
   \end{array}\right]$ - jednorodny wektor wspó³rzêdnych punktu $A$ w $m$-tym uk³adzie wspó³rzêdnych
-
-\todo{Reprezentacja w postaci macierzy rotacji i translacji}
  
- \subsection{Przyk³ad - zadanie proste dla nogi robota} 
+ \subsubsection{Przyk³ad - zadanie proste dla nogi robota} 
 \todo{dodaæ przyk³ad w matlabie}
 Dla przyk³adowego modelu przedstawionego na Rys.\ref{fig:schemat_nogi}  Macierz transformacji z uk³adu 0 do uk³adu 4 jest równa:
 \begin{equation}
@@ -528,14 +526,15 @@ Wspó³rzêdne kartezjañskie koñca nogi wyra¿one w uk³adzie bazowym s¹ równe:\\
 
 
   \subsection{Zadanie odwrotne geometrii} 
-   Zadanie odwrotne kinematyki to problem wyznaczenia poszczególnych wartoœci elementów wykonawczych znaj¹c wspó³rzêdne koñca manipulatora. Wyznaczenie wspó³rzêdnych maszynowych na podstawie po³o¿enia w uk³adzie kartezjañskim. Rozwi¹zania:\\
+   Zadanie odwrotne geometrii (czasem rozumiane jako zadanie odwrotne kinematyki) zazwyczaj rozumiane jest jako problem wyznaczenia wspó³rzêdnych konfiguracyjnych (np. k¹tów pomiedzy kolejnymi cz³onami) znaj¹c wspó³rzêdne (np. w uk³adzie bazowym) wybranego punktu ostatniego cz³onu w ³añcuchu kinematycznym. Zadanie odwrotne mo¿na rozwi¹zaæ stosuj¹c metody:\\
 \begin{itemize}
-\item analityczne - wzory w zamkniêtej postaci. Pozwalaj¹ wyznaczyæ wiele rozwi¹zañ jednego zadania.
+\item analityczne - wzory w zamkniêtej postaci, pozwalaj¹ wyznaczyæ wiele rozwi¹zañ jednego zadania,
 \item iteracyjne - w szczególnosæi na podstawie Jakobianu.
 \end{itemize}
 
-\todo{przedstawiæ Rozwi¹zanie analityczne w postaci rozwi¹zanie uk³adu równañ. + Przyk³ad}
- Jesli nie ma mo¿liwoœci analitycznego wyznaczenia poszukiwanych wartoœci i trzeba skorzystaæ z metody numerycznej. Nale¿y zauwa¿yæ, ¿e istnieje nieskoñczona liczba rozwi¹zañ takiego równania i okreœlenie w³aœciwej konfiguracji nie jest trywialne.  
+\todo{czy to wyczerpuj¹cy podzia³? przedstawiæ Rozwi¹zanie analityczne w postaci rozwi¹zanie uk³adu równañ. + Przyk³ad}
+
+ Nale¿y zauwa¿yæ, ¿e zazwyczaj rozwi¹zanie zadania odwrotnego nie jest trywialne - tzn. istnieje nieskoñczona liczba rozwi¹zañ tego problemu. \todo{rysunek}  
   %
   \subsection{Model kinematyki}
 
