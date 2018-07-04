@@ -190,5 +190,90 @@ F_y=m_Pg-m_Pl\dot{\theta}^{2}\cos(\theta)-m_Pl\ddot{\theta}\sin(\theta)
   Wyznaczony model nieliniowy obiektu pozwala w pe³ni opisaæ zachowanie i ruch wahad³a. Jednak¿e zgodnie z za³o¿eniami z rozdzia³u 3 do wyznaczenia wybranego regulatora predykcyjnego wymagany jest model liniowy. Z tego powodu, wyznaczony model nieliniowy zosta³ zlinearyzowany w otoczeniu wybranego punktu pracy. Poniewa¿ celem regulatora jest utrzymanie wahad³a w pozycji pionowej górnej, przyjêto j¹ jako punkt pracy, czyli  $\theta=0$.
   %
   \section{Acrobot}
+  \todo{treœæ na podstawie Russ Tedrake 6-832-underactuated-robotics-spring-2009, przet³umaczyæ, sprawdziæ równania, napisaæ skrytpy w matlabie}
+  The Acrobot is a planar two-link robotic arm in the vertical plane (working against gravity), 
+with  an  actuator  at  the  elbow,  but  no  actuator  at  the  shoulder  (see  Figure  \ref{fig:acrobot}). 
+It  was 
+first described in detail in [61].  The companion system,  with an actuator at the shoulder 
+but  not  at  the  elbow,  is  known  as  the  Pendubot[76]. 
+The  Acrobot  is  so  named  because 
+of  its  resemblence  to  a  gymnist  (or  acrobat)  on  a  parallel  bar,  who  controls  his  motion 
+predominantly by effort at the waist (and not effort at the wrist). The most common control 
+task studied for the acrobot is the swing-up task, in which the system must use the elbow 
+(or waist) torque to move the system into a vertical configuration then balance. 
+The Acrobot is representative of the primary challenge in underactuated robots.  In 
+order  to  swing  up  and  balance  the  entire  system,  the  controller  must  reason  about  and 
+exploit the state-dependent coupling between the actuated degree of freedom and the un­
+actuated  degree  of  freedom.   It  is  also  an  important  system  because,  as  we  will  see,  it closely resembles one of the simplest models of a walking robot. 
+  \subsection{Equations of Motion}
+  
+  \begin{figure}[htb!]
+  	\begin{center}
+  		\includegraphics[width=0.5\linewidth]{figures/acrobot}
+  		%\\[1em]%
+  		\caption{acrobot} \label{fig:acrobot}
+  	\end{center}                                         
+  \end{figure}
+  
+  Figure \ref{fig:acrobot} illustrates the model parameters used in our analysis. $\theta_1$ is the shoulder joint angle, $\theta_2$ is the elbow (relative) joint angle, and we will use 
+$q = [\theta_1,\theta_2]^T, x=[q,\dot{q}]^T$. The zero state is the with both links pointed directly down.  The moments of inertia, $I_1,I_2$ are taken about the pivots1.The task is to stabilize the unstable fixed point $x=[\Pi,0,0,0]^T$. We  will  derive  the  equations  of  motion  for  the  Acrobot  using  the  method  of  Lagrange. The kinematics are given by: 
+
+    \begin{equation}
+        x_1 =
+        \begin{bmatrix}
+            l_1 s_1 \\
+            -l_1 c_1 \\
+        \end{bmatrix}
+        , x_2 = x_1 + 
+        \begin{bmatrix}
+            l_2 s_{12} \\
+            -l_2 c_{12} \\
+        \end{bmatrix}
+        .
+    \end{equation}
+    
+The energy2 is given by: 
+
+    \begin{align}
+        T = T_1 + T_2 \\
+        T_1 = \frac{1}{2}I_1\dot{q_1}^2 \\
+        T_2 = \frac{1}{2}(m_2 l_1^2 + I_2 + 2 m_2 l_1 l_{c2} c_2)\dot{q_1}^2 + \frac{1}{2}I_2\dot{q_2}^2 + (I_2 + m_2 l_1 l_{c2} c_2)\dot{q_1}\dot{q_2}\\
+        U = -m_1 g l_{c1} c_1 - m_2 g (l_1 c_1 + l_2 c_{12})
+    \end{align}
+
+Entering these quantities into the Lagrangian yields the equations of motion:
+
+    \begin{align}
+        \nonumber
+        (I_1 + I_2 + m_2 l_1^2 + 2 m_2 l_1 l_{c2} c_2) \ddot{q_1} + (I_2 + m_2 l_1 l_{c2} c_2) \ddot{q_2} - 2 m_2 l_1 l_{c2} s_2 \dot{q_1} \dot{q_2} \\
+        - m_2 l_1 l_{c2} s_2 \dot{q_2}^2 + (m_1 l_{c1} + m_2 l_1) g s_1 + m_2 g l_2 s_{12} = 0 \\
+        (I_2 + m_2 l_1 l_{c2} c_2)\ddot{q_1} + I_2 \ddot{q_2} + m_2 l_1 l_{c2} s_2 \dot{q_1}^2 + m_2 g l_2 s_{12} = \tau
+    \end{align}
+    
+In standard, manipulator equation form, we have:
+
+    \begin{align}
+        H(q) = 
+        \begin{bmatrix}
+            I_1 + I_2 + m_2 l_1^2 + 2 m_2 l_1 l_{c2} c_2    &   I_2 + m_2 l_1 l_{c2} c_2 \\
+            I_2 + m_2 l_1 l_{c2} c_2                        &   I_2 \\
+        \end{bmatrix} \\
+        C(q, \dot{q}) = 
+        \begin{bmatrix}
+            - 2 m_2 l_1 l_{c2} s_2 \dot{q_2}                &   - m_2 l_1 l_{c2} s_2 \dot{q_2} \\
+            m_2 l_1 l_{c2} s_2 \dot{q_1}                    &   0 \\
+        \end{bmatrix} \\
+        G(q) = 
+        \begin{bmatrix}
+            (m_1 l_{c1} + m_2 l_1) g s_1 + m_2 g l_2 s_{12} \\
+            m_2 g l_2 s_{12} \\
+        \end{bmatrix} \\
+        B = 
+        \begin{bmatrix}
+            0 \\
+            1 \\
+        \end{bmatrix}
+    \end{align}
+
   \section{Maszyny krocz¹ce}
 %-----
