@@ -1,0 +1,288 @@
+\documentclass[10pt, red]{beamer}
+\usetheme{Warsaw}
+\usepackage[MeX]{polski}
+\usepackage[cp1250]{inputenc}  % Polskie literki...
+\usepackage[polish]{babel}     %
+\usepackage{parskip}
+\usepackage{latexsym,gensymb,amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{url}
+%\setlength{\parindent}{0pt}
+%\setlength{\parskip}{1ex}
+\renewcommand{\qedsymbol}{$\square$}
+\newenvironment{dowod}{{\bf Dowód.}}{\hfill\rule[0.025cm]{0.21cm}{0.21cm}}
+\newtheorem{tw}{Twierdzenie}
+\newtheorem{fakt}{Fakt}
+\newtheorem{lemat}{Lemat}
+\newtheorem{wn}{Wniosek}
+
+\author{dr in¿. Jakub Mo¿aryn, mgr in¿. Jan Klimaszewski}
+\institute{Instytut Automatyki i Robotyki}
+\date{Warszawa, 2018}
+\title{Sterowanie mechanizmów wielocz³onowych}
+\subtitle{Wyk³ad 1 - opis mechanizmów wielocz³onowych}
+\begin{document}
+%
+\frame{
+\titlepage
+}
+%
+\section{Wprowadzenie}
+%
+\frame{
+    \frametitle{Co to jest mechanizm wielocz³onowy?}
+    \begin{center}
+        \textbf{Mechanizm} - zespó³ wspó³pracuj¹cych ze sob¹ elementów maszyny wykonuj¹cej okreœlone zadanie (np. poruszanie siê po zadanej trajektorii). 
+    \end{center}
+    \begin{center}
+        \textbf{Mechanizm wielocz³onowy (MW)} - zespó³ po³¹czonych bry³ sztywnych (\textbf{cz³onów}). Po³¹czenia (lub \textbf{stawy}, \textbf{przeguby}) okreœlaj¹ w jaki sposób cz³ony mog¹ siê poruszaæ wzglêdem siebie.
+    \end{center}
+}
+%
+\frame{
+    \frametitle{Geometria, kinematyka, dynamika}
+    \begin{center}
+        \textbf{Geometria} - dziedzina matematyki badaj¹ca w³asnoœci niezmienników typu odleg³oœæ, pole powierzchni, czy np. miara k¹ta. Do opisu MW najbardziej przydatna jest geometria euklidesowa. 
+    \end{center}
+    \begin{center}
+        \textbf{Kinematyka} - dziedzina fizyki (mechaniki, matematyki) zajmuj¹ca siê badaniem geometrycznych w³aœciwoœci ruchu cia³ bez uwzglêdniania ich cech fizycznych (np. masy) i dzia³aj¹cych na nie si³.
+    \end{center}
+    \begin{center}
+        \textbf{Dynamika} - dziedzina fizyki (mechaniki) zajmuj¹ca siê ruchem cia³ materialnych (z uwzglêdnieniem ich cech fizycznych - np. masy) pod dzia³aniem si³. Czasem uto¿samiana z \textbf{kinetyk¹} - badaniem zachowania cia³ fizycznych w ruchu.
+    \end{center}
+}
+%
+\frame{
+    \frametitle{Notacja - skalar i wektor}
+    W uproszczeniu \textbf{skalar} - pojedyncza wartoœæ liczbowa.
+    \begin{equation}
+        y = a*x+ b
+    \end{equation}
+    
+    W uproszczeniu \textbf{wektor} - seria wartoœci skalarnych.
+    \begin{equation}
+        V =
+        \begin{bmatrix}
+            v_1 \\
+            v_2 \\
+            v_3 \\
+            v_4 \\
+        \end{bmatrix}
+    \end{equation}
+}
+%
+\frame{
+\frametitle{Notacja - macierz }
+    W uproszczeniu \textbf{Macierz} - zestaw wartoœci skalarnych zorganizowany w postaci uk³adu prostok¹tnego (wiersze i kolumny).
+    \begin{equation}
+        A =
+        \begin{bmatrix}
+            a_{11} & a_{12} & a_{13} & a_{14} \\
+            a_{21} & a_{22} & a_{23} & a_{24} \\
+            a_{31} & a_{32} & a_{33} & a_{34} \\
+            a_{41} & a_{42} & a_{43} & a_{44} \\
+        \end{bmatrix}
+    \end{equation}
+}
+%
+\frame{
+\frametitle{Macierzowe przekszta³cenia liniowe}
+    Uk³ad $n$ równañ liniowych o $m$ zmiennych postaci
+    
+    \begin{equation}
+    \label{eq:uklad_rownan_liniowych}
+        \begin{cases}
+            a_{11}x_1 + a_{12}x_2 + \cdots + a_{1m}x_m = b_1 \\ 
+            a_{21}x_1 + a_{22}x_2 + \cdots + a_{2m}x_m = b_2 \\ 
+            \vdots \\ 
+            a_{n1}x_1 + a_{n2} x_2 + \cdots + a_{nm}x_m = b_n 
+        \end{cases}
+    \end{equation}
+    
+    mo¿na zapisaæ w postaci równania macierzowego
+    
+    \begin{equation}
+    \label{eq:przeksztalcenie_liniowe}
+        \mathbf{AX} = \mathbf B,
+    \end{equation}
+    gdzie:
+    $\mathbf A = [a_{ij}]$ to macierz g³ówna uk³adu,  \\
+    $\mathbf X = [x_j]$, oraz \\
+    $\mathbf B = [b_i]$. 
+}
+%
+\frame{
+\frametitle{Macierzowe przekszta³cenia w przestrzeni 3D}
+    Ka¿da macierz $A$ o wymiarach $m$ na $n$ opisuje pewne przekszta³cenie liniowe odwzorowuj¹ce wektor $X$ o wymiarach $n$ na $1$ w wektor $B$ o wymiarach $n$ na $1$. \\
+    Wygodnie jest stosowaæ wspó³rzêdne jednorodne, wtedy:  
+  
+    \begin{equation}
+    \label{eq:wzor_przeksztalcenie}
+        \begin{bmatrix} 
+            x' \\ 
+            y' \\ 
+            z' \\ 
+            1 
+        \end{bmatrix} = 
+        T
+        \begin{bmatrix} 
+            x \\ 
+            y \\ 
+            z \\ 
+            1 
+        \end{bmatrix}
+    \end{equation}
+    gdzie: \\
+    $x, y, z$ - wspó³rzêdne punktu oryginalnego,\\
+    $x', y', z'$ - wspó³rzêdne punktu przekszta³conego,\\
+    $T$ - macierz przekszta³cenia.\\
+}
+%
+\frame{
+\frametitle{Macierz przesuniêcia w przestrzeni 3D}
+Macierz przesuniêcia (translacji):
+
+  \begin{equation}
+    T = Tran( a, b, c ) = 
+      \begin{bmatrix} 
+        1 & 0 & 0 & a \\ 
+        0 & 1 & 0 & b \\ 
+        0 & 0 & 1 & c \\ 
+        0 & 0 & 0 & 1 
+      \end{bmatrix}
+  \end{equation}
+  gdzie: \\
+  $T$ - macierz przekszta³cenia - translacji,\\
+  $a, b, c$ - przesuniêcie wzd³u¿ osi $X, Y$ oraz $Z$ przestrzeni trójwymiarowej.
+}
+%
+\frame{
+\frametitle{Macierz obrotu w przestrzeni 3D}
+    Macierze obrotu wokó³ osi odpowiednio X, Y, Z:
+
+    \begin{equation}
+        T=RotX(\alpha)=
+        \begin{bmatrix}
+            1 & 0 & 0 & 0 \\
+            0 & \cos\alpha & -\sin\alpha & 0 \\
+            0 & \sin\alpha & \cos\alpha & 0 \\
+            0 & 0 & 0 & 1 \\
+        \end{bmatrix}
+    \end{equation}
+
+    \begin{equation}
+        T=RotY(\beta)=
+        \begin{bmatrix}
+            \cos\beta & 0 & \sin\beta & 0 \\
+            0 & 1 & 0 & 0 \\
+            -\sin\beta & 0 & \cos\beta & 0 \\
+            0 & 0 & 0 & 1 \\
+        \end{bmatrix}
+    \end{equation}
+
+    \begin{equation}
+        T=RotZ(\gamma)=
+        \begin{bmatrix}
+            \cos\gamma & -\sin\gamma & 0 & 0 \\
+            \sin\gamma & \cos\gamma & 0 & 0 \\
+            0 & 0 & 1 & 0 \\
+            0 & 0 & 0 & 1 \\
+        \end{bmatrix}
+    \end{equation}
+}
+%
+\frame{
+\frametitle{Sk³adanie macierzy przekszta³ceñ}
+Sk³adanie transformacji - macierz wynikowa z³o¿enia przekszta³ceñ to iloczyn sk³adowych macierzy transformacji.
+\begin{equation}
+  \label{eq:przyklad_skladania}
+    \begin{bmatrix} 
+      x' \\ 
+      y' \\ 
+      z' \\ 
+      1 
+    \end{bmatrix} = 
+    \begin{bmatrix} 
+      1 & 0 & 0 & a \\ 
+      0 & 1 & 0 & b \\ 
+      0 & 0 & 1 & c \\ 
+      0 & 0 & 0 & 1 
+    \end{bmatrix}
+    \begin{bmatrix}
+      \cos\gamma & -\sin\gamma & 0 & 0 \\
+      \sin\gamma & \cos\gamma & 0 & 0 \\
+      0 & 0 & 1 & 0 \\
+      0 & 0 & 0 & 1 \\
+    \end{bmatrix}
+    \begin{bmatrix} 
+      x \\ 
+      y \\ 
+      z \\ 
+      1 
+    \end{bmatrix}
+  \end{equation}
+
+  Mo¿emy tak¿e powy¿sze operacje zast¹piæ iloczynem macierzy wynikowej przez wektor. 
+
+  \begin{equation}
+    \begin{bmatrix} x' \\ y' \\ z' \\ 1 \end{bmatrix} = M
+    \begin{bmatrix} x \\ y \\ z \\ 1 \end{bmatrix}
+    = 
+    \begin{bmatrix}
+      \cos\gamma & -\sin\gamma & 0 & a \\
+      \sin\gamma & \cos\gamma & 0 & b \\
+      0 & 0 & 1 & c \\
+      0 & 0 & 0 & 1 \\
+    \end{bmatrix}
+    \begin{bmatrix} x \\ y \\ z \\ 1 \end{bmatrix}
+  \end{equation},
+}
+%
+\section{Model geometrii mechanizmów wielocz³onowych}
+%
+\frame{
+\frametitle{Cz³ony, stawy i wiêzy}
+    \textbf{Model geometrii} MW - matematyczny opis uwzglêdniaj¹cy kszta³ty, rozmiary i po³o¿enia elementów sk³adowych mechanizmu. Bez prêdkosci, si³ oraz momentów bezwladnosci. \\
+    \textbf{Cz³on} - bry³a sztywna, bêd¹ca czêci¹ mechanizmu. \\
+    \textbf{Staw lub przegub} - po³¹czenie dwóch lub wiêcej cz³onów, np.:
+    \begin{itemize}
+        \item prismatic joint; relative displacement along one axis is allowed, constrains relative rotation; implies 5 kinematical constraints
+        \item revolute joint; only one relative rotation is allowed; implies 5 kinematical constraints; see the example above
+    \end{itemize}
+    The \textbf{degrees of freedom} denote the number of independent kinematical possibilities to move. In other words, degrees of freedom are the minimum number of parameters required to completely define the position of an entity in space. Np. bry³a sztywna w przestrzeni 3D ma 6 st. swobody - trzy przemieszczenia i trzy rotacje.
+}
+%
+\frame{
+\frametitle{Wiêzy jako ograniczenia}
+A constraint condition implies a restriction in the kinematical degrees of freedom of one or more bodies. The classical constraint is usually an algebraic equation that defines the relative translation or rotation between two bodies. There are furthermore possibilities to constrain the relative velocity between two bodies or a body and the ground. This is for example the case of a rolling disc, where the point of the disc that contacts the ground has always zero relative velocity with respect to the ground. In the case that the velocity constraint condition cannot be integrated in time in order to form a position constraint, it is called non-holonomic.\todo{rozszerzyæ ten opis dot holonomicznosci?} This is the case for the general rolling constraint. 
+}
+%
+\frame{
+\frametitle{Notacja DH (1)}
+}
+%
+\frame{
+\frametitle{Naotacja DH (2)}
+}
+%
+\frame{
+\frametitle{Parametry DH dla manipulatora RR w przestrzeni 2D}
+}
+%
+\frame{
+\frametitle{Zadanie proste geometrii}
+}
+%
+\frame{
+\frametitle{Zadanie odwrotne geometrii}
+}
+%
+\section{Model kinematyki mechanizmów wielocz³onowych}
+%
+\frame{
+\frametitle{Opis}
+}
+%
+
+\end{document}
