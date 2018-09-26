@@ -239,7 +239,7 @@ Sk³adanie transformacji - macierz wynikowa z³o¿enia przekszta³ceñ to iloczyn sk³
   \end{equation},
 }
 %
-\section{Model kinematyki mechanizmów wielocz³onowych}
+\section{Kinematyka mechanizmów wielocz³onowych}
 %
 \frame{
 \frametitle{Cz³ony, stawy i wiêzy}
@@ -394,7 +394,29 @@ Sk³adanie transformacji - macierz wynikowa z³o¿enia przekszta³ceñ to iloczyn sk³
 }
 %
 \frame{
-\frametitle{Zadanie proste kinematyki po³o¿enia}
+\frametitle{Zadanie proste kinematyki - ujêcie ogólne}
+
+    Maj¹c dane wspó³rzêdne maszynowe $q_1,\cdots,q_n$ wyznacz po³o¿enie i rotacjê koñcówki robota
+    
+    \begin{equation}
+        H = 
+        \begin{bmatrix}
+            R & o \\
+            0 & 1 \\
+        \end{bmatrix}
+    \end{equation}
+    
+    gdzie
+    
+    \begin{equation}
+        H = \mathbf{T}{}_{n}^{0}(q_1,\cdots,q_n) = A_1(q_1)\cdots A_n(q_n)
+    \end{equation}
+    
+    Zawsze istnieje rozwi¹zanie.
+}
+%
+\frame{
+\frametitle{Zadanie proste kinematyki}
     Zadanie proste kinematyki MW - obliczenie wspó³rzêdnych kartezjañskich punktu na MW znaj¹c jego wspó³rzêdne przegubowe (konfiguracyjne, maszynowe). Zazwyczaj chodzi o jeden z punktów ostatniego cz³onu maszyny w uk³adzie bazowym. \\
     %
     \begin{equation}
@@ -423,7 +445,7 @@ Sk³adanie transformacji - macierz wynikowa z³o¿enia przekszta³ceñ to iloczyn sk³
 }
 %
 \frame{
-\frametitle{Zadanie proste kinematyki po³o¿enia - przyk³ad}
+\frametitle{Zadanie proste kinematyki - przyk³ad}
     Dla omawianego modelu macierz transformacji z uk³adu 0 do uk³adu 4 jest równa:
     \begin{equation}
         \mathbf{T}{}_{4}^{0}=\mathbf{T}{}_{1}^{0}\cdot\mathbf{T}{}_{2}^{1}\cdot\mathbf{T}_{3}^{2}\cdot\mathbf{T}_{4}^{3}	
@@ -450,14 +472,70 @@ Sk³adanie transformacji - macierz wynikowa z³o¿enia przekszta³ceñ to iloczyn sk³
 }
 %
 \frame{
-\frametitle{Zadanie odwrotne kinematyki po³o¿enia}
-    Opis ogólny problemu:
+\frametitle{Zadanie odwrotne kinematyki - ujêcie ogólne}
+
+    Maj¹c dane po³o¿enie i rotacjê koñcówki robota w postaci transformacji
+    
+    \begin{equation}
+        H = 
+        \begin{bmatrix}
+            R & o \\
+            0 & 1 \\
+        \end{bmatrix}
+    \end{equation}
+    
+    rozwi¹¿ równanie (znajdŸ $q_1,\cdots,q_n$)
+    
+    \begin{equation}
+        \mathbf{T}{}_{n}^{0}(q_1,\cdots,q_n) = A_1(q_1)\cdots A_n(q_n) = H
+    \end{equation}
+    
+    Otrzymujemy wiêc uk³ad równañ skalarnych:
+    
+    \begin{equation}
+        \mathbf{T}{}_{ij}(q_1,\cdots,q_n) =h_{ij}, i = 1, 2, 3, j = 1,\cdots, 4
+    \end{equation}
+    
+    Uk³ad mo¿e mieæ wiele rozwi¹zañ lub ¿andego.
+    
 }
 %
-\section{Model kinematyki mechanizmów wielocz³onowych}
+\frame{
+\frametitle{Zadanie odwrotne kinematyki - metody upraszczaj¹ce}
+
+    \begin{itemize}
+        \item Rozwi¹zanie analityczne w formie zamkniêtej ($q_k =f_k(h_{11},\cdots, h_{34}), k=1,\cdots, n$) jest lepsze ni¿ numeryczne.
+        \item Uk³ad równañ mo¿na rozwi¹zaæ stosuj¹c klasyczne metody, ale jest to trudne. 
+        \item Wybrane metody upraszczaj¹ce:
+            \begin{itemize}
+                \item Kinematic decoupling - dla manipulatorów o 6-ciu stawach, jeœli osie 3 ostatnich przecinaj¹ siê w jednym punkie, mo¿liwe jest rozdzielenie problemu na dwa prostrze: zadanie odwrotnej kinematyki pozycji i zadanie odwrotnej kinematyki orientacji 
+                \item Podejœcie geometryczne do zadania odwrotnej kinematyki pozycji
+                \item Rozwi¹zanie numeryczne na podstawie Jakobianu ($\begin{bmatrix}v\\ \omega\end{bmatrix}=\mathbf{J}\cdot\dot{q}$)
+            \end{itemize}
+    \end{itemize}
+    
+}
 %
 \frame{
-\frametitle{Opis}
+\frametitle{Zadanie odwrotne kinematyki - wybrana metoda dok³adniej?}
+}
+%
+\section{Kinematyka prêdkosci mechanizmów wielocz³onowych}
+%
+\frame{
+\frametitle{Jakobian}
+    \begin{equation}
+        \begin{bmatrix}
+            v\\
+            \omega
+        \end{bmatrix}
+        =\mathbf{J}\cdot\dot{q}
+    \label{eq:v_jac}
+    \end{equation}
+    
+    gdzie \\
+    $v$ - prêdkoœæ liniowa \\
+    $\omega$ - prêdkoœæ k¹towa 
 }
 %
 
