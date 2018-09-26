@@ -45,23 +45,26 @@
 \contentsline {chapter}{\numberline {7}Sterowanie optymalne i sterowanie odporne - Kuba}{31}
 \contentsline {section}{\numberline {7.1}Sterowanie o zmiennej strukturze mechanizmów wielocz³onowych}{31}
 \contentsline {subsection}{\numberline {7.1.1}Wst?p do sterowania ?lizgowego}{31}
-\contentsline {section}{\numberline {7.2}Sterowanie predykcyjne mechanizmów wielocz³onowych}{32}
-\contentsline {section}{\numberline {7.3}Sterowanie LQR/LQG mechanizmów wielocz³onowych}{32}
-\contentsline {chapter}{\numberline {8}Metody sztucznej inteligencji w sterowaniu mechanizmów wielocz³onowych - Janek+Kuba}{35}
-\contentsline {section}{\numberline {8.1}Sieci neuronowe do modelowania mechanizmów wielocz³onowych}{35}
-\contentsline {subsection}{\numberline {8.1.1}Model neuronu}{35}
-\contentsline {subsection}{\numberline {8.1.2}Modele sztucznych sieci neuronowych}{37}
-\contentsline {subsection}{\numberline {8.1.3}Sieæ jednowarstwowa jednokierunkowa}{37}
-\contentsline {subsection}{\numberline {8.1.4}Sieæ wielowarstwowa jednokierunkowa}{38}
-\contentsline {subsection}{\numberline {8.1.5}Aproksymacja funkcji za pomoc¹ sieci neuronowej}{40}
-\contentsline {section}{\numberline {8.2}Trenowanie sztucznej sieci neuronowej}{41}
-\contentsline {subsection}{\numberline {8.2.1}Adaptacja wag sieci neuronowej}{42}
-\contentsline {subsubsection}{Metoda wstecznej propagacji b³êdu}{43}
-\contentsline {subsubsection}{Metoda najwiêkszego spadku}{45}
-\contentsline {subsubsection}{Metoda gradientów sprzê¿onych}{45}
-\contentsline {subsubsection}{Metoda \emph {Levenberga - Marquardta}}{46}
-\contentsline {subsubsection}{Sposoby prezentacji próbek i modyfikacji wag podczas trenowania sieci neuronowej}{46}
-\contentsline {subsection}{\numberline {8.2.2}Zdolnoœæ uogólniania sieci neuronowej}{47}
-\contentsline {section}{\numberline {8.3}Regulator stanu mechanizmu wielocz³oowego oparty o sieci neuronowe}{48}
-\contentsline {section}{\numberline {8.4}Logika rozmyta w sterowaniu mechanizmów wieloczlonowych}{48}
-\contentsline {section}{\numberline {8.5}Sterowanie ze wzmocnieniem mechanizmów wielocz³onowych}{48}
+\contentsline {subsection}{\numberline {7.1.2}Projektowanie funkcji prze??czaj?cej dla mechanizmu wielocz?onowego}{32}
+\contentsline {subsection}{\numberline {7.1.3}Sterowanie równowa?ne}{34}
+\contentsline {subsection}{\numberline {7.1.4}Algorytm sterowania ?lizgowego}{35}
+\contentsline {section}{\numberline {7.2}Sterowanie predykcyjne mechanizmów wielocz³onowych}{36}
+\contentsline {section}{\numberline {7.3}Sterowanie LQR/LQG mechanizmów wielocz³onowych}{36}
+\contentsline {chapter}{\numberline {8}Metody sztucznej inteligencji w sterowaniu mechanizmów wielocz³onowych - Janek+Kuba}{37}
+\contentsline {section}{\numberline {8.1}Sieci neuronowe do modelowania mechanizmów wielocz³onowych}{37}
+\contentsline {subsection}{\numberline {8.1.1}Model neuronu}{37}
+\contentsline {subsection}{\numberline {8.1.2}Modele sztucznych sieci neuronowych}{39}
+\contentsline {subsection}{\numberline {8.1.3}Sieæ jednowarstwowa jednokierunkowa}{39}
+\contentsline {subsection}{\numberline {8.1.4}Sieæ wielowarstwowa jednokierunkowa}{40}
+\contentsline {subsection}{\numberline {8.1.5}Aproksymacja funkcji za pomoc¹ sieci neuronowej}{42}
+\contentsline {section}{\numberline {8.2}Trenowanie sztucznej sieci neuronowej}{43}
+\contentsline {subsection}{\numberline {8.2.1}Adaptacja wag sieci neuronowej}{44}
+\contentsline {subsubsection}{Metoda wstecznej propagacji b³êdu}{45}
+\contentsline {subsubsection}{Metoda najwiêkszego spadku}{47}
+\contentsline {subsubsection}{Metoda gradientów sprzê¿onych}{47}
+\contentsline {subsubsection}{Metoda \emph {Levenberga - Marquardta}}{48}
+\contentsline {subsubsection}{Sposoby prezentacji próbek i modyfikacji wag podczas trenowania sieci neuronowej}{48}
+\contentsline {subsection}{\numberline {8.2.2}Zdolnoœæ uogólniania sieci neuronowej}{49}
+\contentsline {section}{\numberline {8.3}Regulator stanu mechanizmu wielocz³oowego oparty o sieci neuronowe}{50}
+\contentsline {section}{\numberline {8.4}Logika rozmyta w sterowaniu mechanizmów wieloczlonowych}{50}
+\contentsline {section}{\numberline {8.5}Sterowanie ze wzmocnieniem mechanizmów wielocz³onowych}{50}

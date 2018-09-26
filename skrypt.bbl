@@ -666,4 +666,10 @@ M.M. Polycarpou and P.A. Ioannou.
 \newblock Technical Report 91-09-01, Departement of Electrical Egineering and
   Engineering Systems, Univeristy of Southern California, 1991.
 
+\bibitem{young:controller}
+Young K.~K. D.
+\newblock Controller design for a manipulator using theory of variable
+  structure systems.
+\newblock {\em IEEE Trans. Sys. Man. And Cyb.}, SMC-8:101--109, 1978.
+
 \end{thebibliography}
