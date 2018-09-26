@@ -474,7 +474,7 @@ Sk³adanie transformacji - macierz wynikowa z³o¿enia przekszta³ceñ to iloczyn sk³
 \frame{
 \frametitle{Zadanie odwrotne kinematyki - ujêcie ogólne}
 
-    Maj¹c dane po³o¿enie i rotacjê koñcówki robota w postaci transformacji
+    Maj¹c dane po³o¿enie i rotacjê koñcówki MW w postaci transformacji
     
     \begin{equation}
         H = 
@@ -523,7 +523,37 @@ Sk³adanie transformacji - macierz wynikowa z³o¿enia przekszta³ceñ to iloczyn sk³
 \section{Kinematyka prêdkosci mechanizmów wielocz³onowych}
 %
 \frame{
-\frametitle{Jakobian}
+\frametitle{Prêdkoœæ cia³a sztywnego}
+    Ka¿dy cz³on MW posiada prêdkoœæ k¹tow¹ $\omega$ i prêdkoœæ liniow¹ $v$. Prêdkoœæ k¹tow¹ cz³onu $i$ mo¿na wyraziæ jako
+    \begin{equation}
+        {}_0^0\omega_i=\sum_{j=1}^{i}{}_{j-1}^0\omega_j
+    \end{equation}
+    
+    gdzie
+    
+    \begin{equation}
+        {}_{j-1}^0\omega_j=
+        \begin{cases}
+            \dot{\theta}_j^0 \hat{k}_{j-1}  & \quad \text{je¿eli staw } j \text{ jest obrotowy}\\
+            0                               & \quad \text{je¿eli staw } j \text{ jest translacyjny}
+        \end{cases}
+    \end{equation}
+    
+    Prêdkoœæ liniowa œrodka uk³adu wspó³rzêdnych cz³onu $i$ wynosi:
+    
+    \begin{equation}
+        {}_{i-1}^0\dot{d}_i=
+        \begin{cases}
+            {}_0^0\omega_i x {}_{i-1}^0 d_i                                 & \quad \text{je¿eli staw } i \text{ jest obrotowy}\\
+            \dot{d}_i^0 \hat{k}_{i-1} +  {}_0^0\omega_i x {}_{i-1}^0 d_i    & \quad \text{je¿eli staw } i \text{ jest translacyjny}
+        \end{cases}
+    \end{equation}
+    
+}
+%
+\frame{
+\frametitle{Zadanie proste kinematyki prêdkoœci - jakobian}
+    Wyznaczenie prêdkoœci $v$ i $\omega$ koñcówki MW na podstawie znanych prêdkoœci wspó³rzêdnych maszynowych $\dot{q}_1,\cdots,\dot{q}_n$.
     \begin{equation}
         \begin{bmatrix}
             v\\
@@ -534,8 +564,43 @@ Sk³adanie transformacji - macierz wynikowa z³o¿enia przekszta³ceñ to iloczyn sk³
     \end{equation}
     
     gdzie \\
+    $J$ - jakobian \\
     $v$ - prêdkoœæ liniowa \\
     $\omega$ - prêdkoœæ k¹towa 
+    
+    Równanie \ref{eq:v_jac} mo¿na przedstawiæ jako
+    
+    \begin{equation}
+        \begin{bmatrix}
+            v\\
+            \omega
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            \mathbf{J_D}\\
+            \mathbf{J_R}
+        \end{bmatrix}\cdot\dot{q}
+    \end{equation}
+    
+    gdzie \\
+    $J_D$ - jakobian przemieszczenia, \\
+    $J_R$ - jakobian obrotu.
+}
+%
+\frame{
+\frametitle{Zadanie proste kinematyki prêdkoœci - jakobian przemieszczenia}
+    Wyznaczenie prêdkoœci $v$ i $\omega$ koñcówki MW na podstawie znanych prêdkoœci wspó³rzêdnych maszynowych $\dot{q}_1,\cdots,\dot{q}_n$.
+    \begin{equation}
+        v =
+        \mathbf{J_D}\cdot\dot{q} = 
+        \frac{\partial T(q)}{\partial q}
+    \end{equation}
+    
+    \begin{equation}
+        \omega =
+        \mathbf{J_R}\cdot\dot{q} = 
+        \frac{\partial \omega}{\partial q}
+    \end{equation}
 }
 %
 
