@@ -1,4 +1,4 @@
-\documentclass[10pt, red]{beamer}
+\documentclass[10pt, brown]{beamer}
 \usetheme{Warsaw}
 \usepackage[MeX]{polski}
 \usepackage[cp1250]{inputenc}  % Polskie literki...
@@ -6,7 +6,8 @@
 \usepackage{parskip}
 \usepackage{latexsym,gensymb,amsmath,amssymb,amsthm}
 \usepackage{graphicx}
-\usepackage{verbatim}
+%\usepackage{verbatim}
+\usepackage{ragged2e}
 \usepackage{url}
 %\setlength{\parindent}{0pt}
 %\setlength{\parskip}{1ex}
@@ -611,7 +612,7 @@ Sk³adanie transformacji - macierz wynikowa z³o¿enia przekszta³ceñ to iloczyn sk³
 \frametitle{Zadanie odwrotne kinematyki prêdkoœci}
     Wyznaczenie prêdkoœci wspó³rzêdnych maszynowych $\dot{q}_1,\cdots,\dot{q}_n$ na podstawie znanych prêdkoœci $v$ i $\omega$ koñcówki MW.
     \begin{equation}
-        \cdot\dot{q}
+        \dot{q}
         =\mathbf{J}^{-1}
         \begin{bmatrix}
             v\\
