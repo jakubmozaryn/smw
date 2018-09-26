@@ -706,6 +706,63 @@ Do weryfikacji przedstawionych obliczeñ wykorzystano symulacjê w Simulinku, któr
   Wyznaczona tym sposobem postaæ równañ dynamiki \ref{eq:10} pozwala na ³atw¹ analizê w³aœciwoœci robota, zaprojektowania uniwersalnego algorytmu do jego symulacji, oraz
   syntezê uk³adu sterowania.
   %
+  \subsubsection{Model tarcia}
+  %
+  W uk?adach mechanicznych wyrózniamy rózne rodzaje si?. Pierwsze z nich, to \textbf{si?y zachowawcze}, dla których której praca wykonana przy przemieszczeniu cia?a po torze zamkni?tym o dowolnym kszta?cie równa jest zeru. Si?y nie spe?niaj?ce tego warunku to tzw \textbf{si?y dyssypatywne}, inaczej nazywane \textbf{si?ami rozpraszaj?cymi}.
+  
+  Si?y tarcia, wystepuj?ce w uk?adach mechanicznych, mo?emy zaliczy? do si? dyssypatywnych. Wyst?puj?ce w uk?adach mechanicznych tarcie jest nieliniowym i niestacjonarnym zjawiskiem o parametrach roz?o?onych. W systemach mechatronicznych zmniejsza ono dok?adno?? oraz pogarsza jako?? przebiegów dynamicznych. 
+  
+  Modele tarcia najogólniej mo?na podzieli? na trzy grupy [21]:  
+  \begin{itemize}
+  \item white-box - wykorzystuj? podstawy fizyczne badanego zjawiska i dzieli si? je na statyczne oraz dynamiczne.
+  \item black-box - modele parametryczne, bazuj?ce na danych eksperymentalnych.  
+  \item grey-box - ??cz? cechy modeli white-box i black-box.	
+  \end{itemize}
+
+  W modelowaniu fizycznym przy modelowaniu mechanizmów wielocz?oowych stosuje si? zwykle statyczne modele typu white-box, które przy pomocy równa? algebraicznych, opisuj? podstawowe w?asno?ci tarcia. Wyró?nia sie w?ród nich modele klasyczne uwzgl?dniaj?ce ró?ne kombinacje tarcia \textit{Coulomba} (parametr $F_c$), wiskotycznego (parametr $F_v$), statycznego (parametr $F_s$) oraz efektu \textit{Stribecka}. Na rys. \ref{fig:1_2} przedstawiono ró?ne modele tarcia statycznego.
+  
+  \begin{figure}[htb!]
+  	\begin{center}
+  		\includegraphics[width=1\linewidth]{figures/fig1_2}
+  		%\\[1em]%
+  		\caption{Modele tarcia statycznego}
+  	\end{center}                                         
+  \end{figure}\label{fig:1_2}
+  %
+  Modele tarcia, przedstawione na  rys. \ref{fig:1_2} opisywane s? nast?puj?cymi zale?no?ciami:
+  %
+  \begin{itemize}
+  	\item Model (a)
+  	%
+  	\begin{equation}
+  		\tau_{f}(\dot{q})=F_{v}\dot{q}+F_{C}\text{sign}{\dot{q}}
+  	\end{equation}
+  	\item Model (b)
+	%
+	\begin{equation}
+		\tau_{f}(\dot{q})=\left\{\begin{array}{lcl}
+		\pm  F_{s} & \text{dla} & \dot{q}=0\\
+		F_{v}\dot{q}+F_{C}\text{sign}{\dot{q}} & \text{dla} & \dot{q}\neq 0
+		\end{array}\right.
+	\end{equation}
+	\item Model (c)
+	%
+	\begin{equation}
+	\tau_{f}(\dot{q})=\left\{\begin{array}{lcl}
+	\pm  F_{s} & \text{dla} & \dot{q}=0\\
+	F_{v}\dot{q}+\left( F_{C}+(F_{s}-F_{C})\exp{\left(-\dfrac{\dot{q}}{\dot{q_{s}}}\right)^{2}} \right) \text{sign}({\dot{q}}) & \text{dla} & \dot{q}\neq 0
+	\end{array}\right.0
+	\end{equation}
+	\item Model (d) - w którym zdefiniowano niewielkie otoczenie, wewn?trz którego przyjmuje si? zerow? warto?? pr?dko?ci. W tym przypadku tarcie dla jest zale?ne od zewn?trznych si? ($F_{e}$) utrzymuj?cych uk?ad w spoczynku, za? poza przyj?tym otoczeniem jest zazwyczaj opisywane w funkcji pr?dko?ci (Model (a), (b), lub (c))
+	%
+	\begin{equation}
+	\tau_{f}(\dot{q},F_{e})=\left\{\begin{array}{lcl}
+	\tau_{f}(\dot{q}) & \text{dla} & |\dot{q}|\geq \beta\\
+	\tau_{f}(\dot{F_{e}}) & \text{dla} & |\dot{q}|\geq \beta
+	\end{array}\right.
+	\end{equation}
+   \end{itemize}
+  %
   \subsection{W³aœciwoœci strukturalne modelu dynamiki}
   %
   \par Model matematyczny robota (\ref{eq:10}) posiada charakterystyczne w³asnoœci strukturalne. S¹ one czêsto wykorzystywane podczas weryfikacji poprawnoœci modeli otrzymanych ró¿nymi metodami w trakcie projektowania i analizy uk³adów sterowania robotów. Podstawowe w³asnoœci, które bêd¹ wykorzystywane w pracy, s¹ nastêpuj¹ce \cite{tourassis:properties,swider:phd,morecki:podstawy,lewis:neuralcontrol}
