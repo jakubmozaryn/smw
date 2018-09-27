@@ -29,22 +29,176 @@
 \titlepage
 }
 %
-\section{Manipulator RRR}
+\section{Manipulator RR}
 %
 \frame{
-    \frametitle{Model kinematyki}
+    \frametitle{Model kinematyki - notacja DH}
+    \begin{columns}[T] % align columns
+        \begin{column}{.48\textwidth}
+            \begin{figure}[htb!]
+                \begin{center}
+                    \includegraphics[width=0.9\linewidth]{../../figures/planar_manipulator_DH}
+                    %\\[1em]%
+                    \caption{manipulator RR} 
+                \end{center}                                         
+            \end{figure}
+        \end{column}%
+        
+        \hfill%
+        
+        \begin{column}{.48\textwidth}
+            \begin{table}[htb!]
+            \centering
+            \begin{tabular}{|c|c|c|c|c|}
+            \hline 
+            i & $a_{i}$ & $\alpha_{i}$ & $d_{i}$ & $\theta_{i}$\tabularnewline[0.3em]
+            \hline 
+            \hline 
+            1 & $a_1$ & $0$ & $0$ & $\theta_{1}$\tabularnewline[0.3em]
+            \hline 
+            2 & $a_2$ & $0$ & $0$ & $\theta_{2}$\tabularnewline[0.3em]
+            \hline 
+            \end{tabular}
+            \caption{Parametry DH.}
+            \label{tab:par_przek}
+            \end{table}
+            
+            Dla prostego modelu mo¿emy napisaæ od razu równanie po³o¿enia koñcówki:
+            \begin{equation}
+                \begin{cases}
+                    d_x =a_1 \cdot \cos \theta_1  a_2 \cdot \cos ( \theta_1   \theta_2 ) \\
+                    d_y =a_1 \cdot \sin \theta_1  a_2 \cdot \sin ( \theta_1   \theta_2 )
+                \end{cases}
+            \end{equation}
+        \end{column}%
+    \end{columns}
 }
 %
 \frame{
-    \frametitle{Zadanie proste kinematyki}
+    \frametitle{Zadanie proste kinematyki - notacja DH}
+    Korzystaj¹c z notacji DH:
+    \begin{equation}
+        T _ { 0 } ^ { 1 } = \left[ \begin{array} { c c c c } { \cos \theta _ { 1 } } & { - \sin \theta _ { 1 } } & { 0 } & { a _ { 1 } \cdot \cos \theta _ { 1 } } \\ { \sin \theta _ { 1 } } & { \cos \theta _ { 1 } } & { 0 } & { a _ { 1 } \cdot \sin \theta _ { 1 } } \\ { 0 } & { 0 } & { 1 } & { 0 } \\ { 0 } & { 0 } & { 0 } & { 1 } \end{array} \right]
+    \end{equation}
+    \begin{equation}
+        T _ { 1 } ^ { 2 } = \left[ \begin{array} { c c c c } { \cos \theta _ { 2 } } & { - \sin \theta _ { 2 } } & { 0 } & { a _ { 2 } \cdot \cos \theta _ { 2 } } \\ { \sin \theta _ { 2 } } & { \cos \theta _ { 2 } } & { 0 } & { a _ { 2 } \cdot \sin \theta _ { 2 } } \\ { 0 } & { 0 } & { 1 } & { 0 } \\ { 0 } & { 0 } & { 0 } & { 1 } \end{array} \right]
+    \end{equation}
+    czyli
+    {\small
+    \begin{equation}
+        T _ { 0 } ^ { 2 } = T _ { 0 } ^ { 1 } \cdot T _ { 1 } ^ { 2 } = 
+        \left[ \begin{array} { c c c c } 
+            { \cos (\theta_1 + \theta_2) } & { -\sin (\theta_1 + \theta_2) } & { 0 } & { a_1 \cdot \cos \theta_1 + a_2 \cdot \cos (\theta_1 + \theta_2) } \\ 
+            { \sin (\theta_1 + \theta_2) } & { \cos (\theta_1 + \theta_2) } & { 0 } & { a_1 \cdot \sin \theta_1 + a_2 \cdot \sin (\theta_1 + \theta_2) } \\ 
+            { 0 } & { 0 } & { 1 } & { 0 } \\ 
+            { 0 } & { 0 } & { 0 } & { 1 } 
+        \end{array} \right]
+    \end{equation}
+    }
 }
 %
 \frame{
-    \frametitle{Zadanie odwrotne kinematyki}
+    \frametitle{Zadanie odwrotne kinematyki - podejœcie geometryczne}
+    \begin{columns}[T] % align columns
+        \begin{column}{.4\textwidth}
+            \begin{figure}[htb!]
+                \begin{center}
+                    \includegraphics[width=1.0\linewidth]{../../figures/planar_manipulator_inverse_kinematics_ageometric}
+                    %\\[1em]%
+                    \caption{kinematyka odwrotna geometrycznie} 
+                \end{center}                                         
+            \end{figure}
+        \end{column}%
+        
+        \hfill%
+        
+        \begin{column}{.6\textwidth}
+            Najpierw wyznaczamy k¹t $\theta_2$:
+            \begin{equation}
+                \begin{split}
+                    d _ { x } ^ { 2 } + d _ { y } ^ { 2 } = a _ { 1 } ^ { 2 } + a _ { 2 } ^ { 2 } - 2 \cdot a _ { 1 } \cdot a _ { 2 } \cdot \cos ( \pi - \theta _ { 2 } ) \\
+                    d _ { x } ^ { 2 } + d _ { y } ^ { 2 } = a _ { 1 } ^ { 2 } + a _ { 2 } ^ { 2 } + 2 \cdot a _ { 1 } \cdot a _ { 2 } \cdot \cos \theta _ { 2 } \\
+                    \cos \theta _ { 2 } = \frac { d _ { x } ^ { 2 } + d _ { y } ^ { 2 } - a _ { 1 } ^ { 2 } - a _ { 2 } ^ { 2 } } { 2 \cdot a _ { 1 } \cdot a _ { 2 } } = L \\
+                    \sin \theta _ { 2 } = \pm \sqrt { 1 - L ^ { 2 } } \\
+                    \theta _ { 2 } = \operatorname { arctg } \frac { \pm \sqrt { 1 - L ^ { 2 } } } { L }
+                \end{split}
+            \end{equation}
+            Dalej wyznaczamy k¹t $\theta_1$:
+            \begin{equation}
+                \begin{split}
+                    \theta _ { 1 } = \beta - \gamma \\
+                    \theta _ { 1 } = \operatorname { arctg } \frac { d _ { y } } { d _ { x } } - \operatorname { arctg } \frac { a _ { 2 } \cdot \sin \theta _ { 2 } } { a _ { 1 } + a _ { 2 } \cdot \cos \theta _ { 2 } }
+                \end{split}
+            \end{equation}
+        \end{column}%
+    \end{columns}
 }
 %
 \frame{
     \frametitle{Zadanie proste kinematyki prêdkoœci}
+    \begin{equation}
+        \begin{cases}
+            d _ { x } = a _ { 1 } \cdot \cos \theta _ { 1 } + a _ { 2 } \cdot \cos ( \theta _ { 1 } + \theta _ { 2 } ) \\
+            d _ { y } = a _ { 1 } \cdot \sin \theta _ { 1 } + a _ { 2 } \cdot \sin ( \theta _ { 1 } + \theta _ { 2 } )
+        \end{cases}
+    \end{equation}
+    \begin{equation}
+        \begin{cases}
+            \dot { d } _ { x } = v _ { x } = - a _ { 1 } \cdot \sin \theta _ { 1 } \cdot \dot { \theta } _ { 1 } - a _ { 2 } \cdot \sin ( \theta _ { 1 } + \theta _ { 2 } )\dot( \dot { \theta } _ { 1 } + \dot { \theta } _ { 2 } ) \\
+            \dot { d } _ { y } = v _ { y } = a _ { 1 } \cdot \cos \theta _ { 1 } \cdot \hat { \theta _ { 1 } } + a _ { 2 } \cdot \cos ( \theta _ { 1 } + \theta _ { 2 } )\dot( \dot { \theta } _ { 1 } + \dot { \theta } _ { 2 } )
+        \end{cases}
+    \end{equation}
+    {\small
+    \begin{equation}
+        \left[ \begin{array} { c } 
+            { \dot { d } _ { x } } \\ 
+            { \dot { d } _ { y } } 
+        \end{array} \right] 
+        = 
+        \left[ \begin{array} { c } 
+            { v _ { x } } \\ 
+            { v _ { y } } 
+        \end{array} \right] 
+        =
+        \left[ \begin{array} { c c } 
+            { - a _ { 1 } \cdot \sin \theta _ { 1 } - a _ { 2 } \cdot \sin ( \theta _ { 1 } + \theta _ { 2 } ) } & { - a _ { 2 } \cdot \sin ( \theta _ { 1 } + \theta _ { 2 } ) } \\ 
+            { a _ { 1 } \cdot \cos \theta _ { 1 } + a _ { 2 } \cdot \cos ( \theta _ { 1 } + \theta _ { 2 } ) } & { a _ { 2 } \cdot \cos ( \theta _ { 1 } + \theta _ { 2 } ) } 
+        \end{array} \right] 
+        \cdot 
+        \left[ \begin{array} { c } 
+            { \dot { \theta } _ { 1 } } \\ 
+            { \dot { \theta } _ { 2 } } 
+        \end{array} \right]
+    \end{equation}
+    }
+    Mo¿na zauwa¿yæ, ¿e:
+    \begin{equation}
+        J_D
+        =
+        \left[ \begin{array} { c c } 
+            { - a _ { 1 } \cdot \sin \theta _ { 1 } - a _ { 2 } \cdot \sin ( \theta _ { 1 } + \theta _ { 2 } ) } & { - a _ { 2 } \cdot \sin ( \theta _ { 1 } + \theta _ { 2 } ) } \\ 
+            { a _ { 1 } \cdot \cos \theta _ { 1 } + a _ { 2 } \cdot \cos ( \theta _ { 1 } + \theta _ { 2 } ) } & { a _ { 2 } \cdot \cos ( \theta _ { 1 } + \theta _ { 2 } ) } 
+        \end{array} \right]
+    \end{equation}
+    wtedy
+    \begin{equation}
+        \left[ \begin{array} { c } 
+            { \dot { d } _ { x } } \\ 
+            { \dot { d } _ { y } } 
+        \end{array} \right] 
+        = 
+        \left[ \begin{array} { c } 
+            { v _ { x } } \\ 
+            { v _ { y } } 
+        \end{array} \right] 
+        =
+        J_D
+        \cdot 
+        \left[ \begin{array} { c } 
+            { \dot { \theta } _ { 1 } } \\ 
+            { \dot { \theta } _ { 2 } } 
+        \end{array} \right]
+    \end{equation}
 }
 %
 \frame{
