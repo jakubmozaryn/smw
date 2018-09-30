@@ -211,8 +211,8 @@
 %
 \frame{
 	\frametitle{Macierzowe przekszta³cenia w przestrzeni 3D}
-	Ka¿da macierz $\mathbf A$ o wymiarach $m$ na $n$ opisuje pewne przekszta³cenie liniowe odwzorowuj¹ce wektor $X$ o wymiarach $m$ na $1$ w wektor $B$ o wymiarach $n$ na $1$. Wygodnie jest stosowaæ wspó³rzêdne jednorodne, wtedy:  
-	%kiedy jest wygodnie stosowaæ to przekszta³cenie?
+	Ka¿da macierz $\mathbf A$ o wymiarach $m$ na $n$ opisuje pewne przekszta³cenie liniowe odwzorowuj¹ce wektor $X$ o wymiarach $m$ na $1$ w wektor $B$ o wymiarach $n$ na $1$. \\
+	Wygodnie jest stosowaæ wspó³rzêdne jednorodne poniewa¿ mo¿na wtedy ³atwo zapisaæ obroty i przemieszczenia w postaci jednej macierzy. W takim przyoadku:  
 	\begin{equation}
 	\label{eq:wzor_przeksztalcenie}
 	\begin{bmatrix} 
@@ -247,13 +247,13 @@
 	\end{equation}
 	gdzie: \\
 	$\mathbf T$ - macierz przekszta³cenia - translacji,	$a, b, c$ - przesuniêcie wzd³u¿ osi $X, Y$ oraz $Z$ przestrzeni trójwymiarowej.
-	%przyda³by siê rysunek
+	%todo dodaæ rysunek
 }
 %
 \frame{
 	\frametitle{Macierz obrotu w przestrzeni 3D}
 	Macierze obrotu wokó³ osi odpowiednio X, Y, Z:
-	%przyda³by siê rysunek, brakuje opisu zmiennych alpha, \beta, \gamma
+	%todo dodaæ rysunek
 	\begin{equation}
 	\mathbf T_{\alpha}=RotX(\alpha)=
 	\begin{bmatrix}
@@ -283,12 +283,14 @@
 	0 & 0 & 0 & 1 \\
 	\end{bmatrix}
 	\end{equation}
+	gdzie: \\
+	$\alpha, \beta, \gamma$ - k¹t obrotu woków osi odpowiednio $X, Y$ oraz $Z$ przestrzeni 3D.
 }
 %
 \frame{
 	\frametitle{Sk³adanie macierzy przekszta³ceñ}
-\textbf{Sk³adanie transformacji} - macierz wynikowa z³o¿enia przekszta³ceñ to iloczyn sk³adowych macierzy transformacji.
-	%opisaæ przyk³ad
+        \textbf{Sk³adanie transformacji} - macierz wynikowa z³o¿enia przekszta³ceñ to iloczyn sk³adowych macierzy transformacji. Kolejnoœæ mno¿enia ma znaczenie.\\
+        Przyk³adowo z³o¿enie obrotu $T_{\gamma}$, a nastêpnie przesuniêcia $T_{abc}$ mo¿na zapisaæ nastêpuj¹co:
 	\begin{equation}
 	\label{eq:przyklad_skladania}
 	\begin{bmatrix} 
@@ -316,9 +318,9 @@
 	1 
 	\end{bmatrix}
 	\end{equation}
-	Mo¿emy te operacje zast¹piæ iloczynem macierzy wynikowej przez wektor. 
+	Macierz wynikowa $T_{\gamma abc}$ jest z³o¿eniem dwóch powy¿dzych przekszta³ceñ. 
 	\begin{equation}
-	\begin{bmatrix} x' \\ y' \\ z' \\ 1 \end{bmatrix} = M
+	\begin{bmatrix} x' \\ y' \\ z' \\ 1 \end{bmatrix} = T_{\gamma abc}
 	\begin{bmatrix} x \\ y \\ z \\ 1 \end{bmatrix}
 	= 
 	\begin{bmatrix}
@@ -334,31 +336,32 @@
 \section{Kinematyka mechanizmów wielocz³onowych}
 %
 \frame{
-	\frametitle{Cz³ony, stawy i wiêzy}
-	\begin{block}{Model geometrii}
-	\textbf{Model geometrii} MW - matematyczny opis uwzglêdniaj¹cy kszta³ty, rozmiary i po³o¿enia elementów sk³adowych MW. Bez prêdkosci, si³ oraz momentów bezwladnosci.
+	\frametitle{Model kinematyki i stopnie swobody}
+        \begin{block}{Model kinematyki}
+	\textbf{Model kinematyki} MW - matematyczny opis uwzglêdniaj¹cy kszta³ty, rozmiary i po³o¿enia elementów sk³adowych MW. Bez prêdkosci, si³ oraz momentów bezwladnosci.
 	\end{block}
+	\begin{block}{Stopnie swobody}
+	Stopnie swobody okreœlaj¹ niezale¿ne mo¿liwoœci ruchu MW. \textbf{Liczba stopni swobody} okreœla minimaln¹ liczbê wspó³rzêdnych pozwalaj¹cych jednoznacznie okreœliæ po³o¿enie MW wzglêdem okreœlonego uk³adu odniesienia. Np. bry³a sztywna w przestrzeni 3D ma 6 st. swobody - trzy przemieszczenia i trzy rotacje.
+	\end{block}
+}
+%
+\frame{
+	\frametitle{Cz³ony, stawy i wiêzy}
 	\begin{block}{Cz³on}
 	\textbf{Cz³on} - bry³a sztywna, bêd¹ca czêci¹ MW.
 	\end{block}
-	\begin{block}{Staw / przegub}
-	\textbf{Staw lub przegub} - po³¹czenie dwóch lub wiêcej cz³onów, np.:
+	\begin{block}{Para kinematyczna}
+	\textbf{Para kinematyczna} - po³¹czenie dwóch cz³onów ograniczaj¹ce ich mo¿liwoœci ruchu wzglêdnego. Klasa pary kinematycznej okreœla liczbê st. swobody, któr¹ ogranicza para.
+	\end{block}
+	\begin{block}{Staw / przegub / po³¹czenie}
+	\textbf{Staw / przegub / po³¹czenie} - para kinematyczna okreœlonej klasy, zazwyczaj w MW wystêpuj¹:
 		\begin{itemize}
-		\item prismatic joint; relative displacement along one axis is allowed, constrains relative rotation; implies 5 kinematical constraints
-		%przet³umaczyæ
-		\item revolute joint; only one relative rotation is allowed; implies 5 kinematical constraints; see the example above
-		%przet³umaczyæ
+		\item po³¹czenia przesuwne klasy 5 - mo¿liwy jest ruch wzglêdny wzd³u¿ jednej osi uk³adu wspó³rzêdnych,
+		\item stawy obrotowe klasy 5 - mo¿liwe s¹ tylko wzglêdne obroty wokó³ jednej osi uk³adu wspó³rzêdnych.
 	\end{itemize}
 	\end{block}
     \footnotesize
 
-}
-%
-\frame{
-	\frametitle{Stopnie swobody}
-	\begin{block}{Stopnie swobody}
-	The \textbf{degrees of freedom} denote the number of independent kinematical possibilities to move. In other words, degrees of freedom are the minimum number of parameters required to completely define the position of an entity in space. Np. bry³a sztywna w przestrzeni 3D ma 6 st. swobody - trzy przemieszczenia i trzy rotacje.
-	\end{block}
 }
 %
 \frame{
