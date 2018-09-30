@@ -550,49 +550,32 @@
 	\begin{equation}
             \mathbf H = 
             \begin{bmatrix}
-            \mathbf R & o \\
-            0 & 1 \\
+                \mathbf R & o \\
+                0 & 1 \\
             \end{bmatrix}
 	\end{equation}
 	rozwi¹¿ równanie (znajdŸ wspó³rzêdne wewnêtrzne $q_1,\cdots,q_n$)
 	\begin{equation}
-            \mathbf{T}{}_{n}^{0}(q_1,\cdots,q_n) = A_1(q_1)\cdots A_n(q_n) = \mathbf H
+            \mathbf{T}{}_{n}^{0}(q_1,\cdots,q_n) = \mathbf{T}{}_{1}^{0}(q_1)\mathbf{T}{}_{2}^{1}(q_2) \cdots \mathbf{T}{}_{n}^{n-1}(q_n) = \mathbf H
 	\end{equation}
-	Otrzymujemy wiêc uk³ad równañ skalarnych:
+	Otrzymujemy uk³ad równañ skalarnych:
 	\begin{equation}
             \mathbf{T}{}_{ij}(q_1,\cdots,q_n) =h_{ij}, i = 1, 2, 3, j = 1,\cdots, 4
 	\end{equation}
-	Uk³ad mo¿e mieæ wiele rozwi¹zañ lub ¿andego.
+	Uk³ad mo¿e mieæ wiele rozwi¹zañ lub nie mieæ ¿andego.
 }
 %
-%\frame{
-%\frametitle{Zadanie odwrotne kinematyki - metody}
-%czy to zostawiæ? mo¿e zintegorwaæ z nstêpnym slajdem?
-%    \begin{itemize}
-%        \item metody analityczne
-%            \begin{itemize}
-%                \item algebraiczna
-%                \item geometryczna
-%            \end{itemize}
-%        \item metody numeryczne
-%    \end{itemize}
-%}
-%
 \frame{
-	\frametitle{Zadanie odwrotne kinematyki - metody upraszczaj¹ce}
-	
-	\begin{itemize}
-		\item Rozwi¹zanie analityczne w formie zamkniêtej ($q_k =f_k(h_{11},\cdots, h_{34}), k=1,\cdots, n$) jest lepsze ni¿ numeryczne.
-		\item Uk³ad równañ mo¿na rozwi¹zaæ stosuj¹c klasyczne metody, ale jest to trudne. 
-		\item Wybrane metody upraszczaj¹ce:
-		\begin{itemize}
-			%czy ma to swoje polskie okreœlenie- np. odsprzeganie kinematyczne
-			\item Kinematic decoupling  - dla manipulatorów o 6-ciu stawach, jeœli osie 3 ostatnich przecinaj¹ siê w jednym punkcie, mo¿liwe jest rozdzielenie problemu na dwa prostsze: zadanie odwrotnej kinematyki pozycji i zadanie odwrotnej kinematyki orientacji 
-			\item Podejœcie geometryczne do zadania odwrotnej kinematyki pozycji
-			\item Rozwi¹zanie numeryczne na podstawie Jakobianu ($\begin{bmatrix}v\\ \omega\end{bmatrix}=\mathbf{J}\cdot\dot{q}$)
-		\end{itemize}
-	\end{itemize}
-	
+    \frametitle{Zadanie odwrotne kinematyki - metody}
+    \begin{itemize}
+        \item Rozwi¹zanie analityczne w formie zamkniêtej ($q_k =f_k(h_{11},\cdots, h_{34}), k=1,\cdots, n$). Jest lepsze ni¿ numeryczne, ale trudne do otrzymania. 
+            \begin{itemize}
+                \item Rozwi¹zanie algebraiczne.
+                \item Rozwi¹zanie geometryczne.
+            \end{itemize}
+        \item Rozwi¹zanie numeryczne. Np. stosuj¹c równanie ró¿niczkowe $\begin{bmatrix}v\\ \omega\end{bmatrix}=\mathbf{J}\cdot\dot{Q}$, gdzie $\dot{Q} = [\dot{q}_1,\cdots,\dot{q}_n]^{T}$,  $J$ - Jakobian.
+    \end{itemize}
+    %todo wrzuciæ gdzieœ t¹ linijke?: Kinematic decoupling  - dla manipulatorów o 6-ciu stawach, jeœli osie 3 ostatnich przecinaj¹ siê w jednym punkcie, mo¿liwe jest rozdzielenie problemu na dwa prostsze: zadanie odwrotnej kinematyki pozycji i zadanie odwrotnej kinematyki orientacji 
 }
 %
 \section{Kinematyka prêdkosci mechanizmów wielocz³onowych}
@@ -608,8 +591,7 @@
 	{}_{j-1}^0\omega_j=
 	\begin{cases}
 	\dot{\theta}_j^0 \hat{k}_{j-1}  & \quad \text{je¿eli staw } j \text{ jest obrotowy}\\
-	0                               & \quad \text{je¿eli staw } j \text{ jest translacyjny}
-	%proponujê zamiast translacyjny stosowaæ okreœlenie przesuwny
+	0                               & \quad \text{je¿eli staw } j \text{ jest przesuwny}
 	\end{cases}
 	\end{equation}
 	Prêdkoœæ liniowa œrodka uk³adu wspó³rzêdnych cz³onu $i$ wynosi:
@@ -620,21 +602,20 @@
 	\dot{d}_i^0 \hat{k}_{i-1} +  {}_0^0\omega_i x {}_{i-1}^0 d_i    & \quad \text{je¿eli staw } i \text{ jest translacyjny}
 	\end{cases}
 	\end{equation}
-	
+	%todo co to jest d
 }
 %
 \frame{
 	\frametitle{Zadanie proste kinematyki prêdkoœci - jakobian}
-	Wyznaczenie prêdkoœci $v$ i $\omega$ koñcówki MW na podstawie znanych prêdkoœci wspó³rzêdnych maszynowych $\dot{q}_1,\cdots,\dot{q}_n$.
+	Wyznaczenie prêdkoœci $v$ i $\omega$ ostatniego cz³onu MW na podstawie znanych prêdkoœci wspó³rzêdnych wewnêtrznych $\dot{Q} = [\dot{q}_1,\cdots,\dot{q}_n]^{T}$.
 	\begin{equation}
 	\begin{bmatrix}
 	v\\
 	\omega
 	\end{bmatrix}
-	=\mathbf{J}\cdot\dot{q}
+	=\mathbf{J}\cdot\dot{Q}
 	\label{eq:v_jac}
 	\end{equation}
-		%q i q_{i} to s¹ skalary, czy wektory - jaka jest miêdzy nimi zale¿noœæ - jeœli q to wektor to mo¿e lepiej Q
 	gdzie: $\mathbf J$ - jakobian, $v$ - prêdkoœæ liniowa, 	$\omega$ - prêdkoœæ k¹towa .
 	
 	Równanie (\ref{eq:v_jac}) mo¿na przedstawiæ jako
@@ -647,35 +628,30 @@
 	\begin{bmatrix}
 	\mathbf{J_D}\\
 	\mathbf{J_R}
-	\end{bmatrix}\cdot\dot{q}
+	\end{bmatrix}\cdot\dot{Q}
 	\end{equation}
 	gdzie: $\mathbf J_D$ - jakobian przemieszczenia, $\mathbf J_R$ - jakobian obrotu.
 }
 %
 \frame{
 	\frametitle{Jakobian przemieszczenia i obrotu}
-	Wyznaczenie prêdkoœci $v$ i $\omega$ koñcówki MW na podstawie znanych prêdkoœci wspó³rzêdnych maszynowych $\dot{q}_1,\cdots,\dot{q}_n$.
+	Wyznaczenie prêdkoœci $v$ i $\omega$ ostatniego cz³onu MW na podstawie znanych prêdkoœci wspó³rzêdnych wewnêtrznych $\dot{Q} = [\dot{q}_1,\cdots,\dot{q}_n]^{T}$.
 	\begin{equation}
 	v =
-	\mathbf{J_D}\cdot\dot{q} = 
+	\mathbf{J_D}\cdot\dot{Q} = 
 	\frac{\partial \mathbf T(q)}{\partial q}
 	\end{equation}
 %
 	\begin{equation}
 	\omega =
-	\mathbf{J_R}\cdot\dot{q} = 
+	\mathbf{J_R}\cdot\dot{Q} = 
 	\frac{\partial \omega}{\partial q}
 	\end{equation}
 }
 %
 \frame{
-	\frametitle{Jakobian geometryczy i analityczny}
-	%brakuje opisu - mo¿e dodaæ do rozdzia³u o planowaniu?
-}
-%
-\frame{
 	\frametitle{Zadanie odwrotne kinematyki prêdkoœci}
-	Wyznaczenie prêdkoœci wspó³rzêdnych maszynowych $\dot{q}_1,\cdots,\dot{q}_n$ na podstawie znanych prêdkoœci $v$ i $\omega$ koñcówki MW.
+	Wyznaczenie prêdkoœci wspó³rzêdnych wewnêtrznych $\dot{q}_1,\cdots,\dot{q}_n$ na podstawie znanych prêdkoœci $v$ i $\omega$ koñcówki MW.
 	\begin{equation}
 	\dot{q}
 	=\mathbf{J}^{-1}
@@ -684,9 +660,10 @@
 	\omega
 	\end{bmatrix}
 	\end{equation}
-	todo Osobliwoœæ - $det(\mathbf J)=0$ \\
-	%brakuje opisu
+	%todo Osobliwoœæ - $det(\mathbf J)=0$ \\
 }
+%
+\section{Dynamika mechanizmów wielocz³onowych}
 %
 \frame{
 	\frametitle{Model dynamiki mechanizmów wielocz³onowych (K)}
