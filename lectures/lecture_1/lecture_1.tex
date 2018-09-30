@@ -367,7 +367,7 @@
 \frame{
 	\frametitle{Cztery parametry notacji DH}
 	Istnieje wiele sposobów na przypisanie uk³adów wspó³rzêdnych do cz³onów mechanizmu. Powszechnie stosuje siê system okreœlany jako \textbf{notacja Denavita-Hartenberga} (DH). \\
-	%todo dodaæ rysunek
+	%todo dodaæ rysunek i podzieliæ na dwa slajdy
 	\begin{itemize}
 		\item Ka¿da transformacja pomiêdzy s¹siednimi uk³adami wspó³rzêdnych opisana jest jako z³o¿enie czterech podstawowych transformacji:\\
 		\begin{equation}
@@ -376,7 +376,7 @@
 		gdzie: \\
 		$\alpha_i$ - k¹t skrêcenia cz³onu, $a_i$ - d³ugoœæ cz³onu, $d_i$ - odsuniêcie przegubu, $\theta_i$ - k¹t przegubu.
 		\item Parametry $\theta_i,d_i,a_i,\alpha_i$ zwi¹zane z cz³onem oraz po³¹czeniem $i$ opisuj¹ przekszta³cenie miêdzy uk³adem $i-1$, a uk³adem $i$.
-		\item Macierz $\mathbf T_{i}^{i-1}$ jest zwykle funkcj¹ zmiennych $\theta_i$ lub $d_i$ - w zale¿noœci od rodzaju po³¹czenia (obrotowe lub przesuwne).
+		\item Macierz $\mathbf T_{i}^{i-1}$ jest zwykle funkcj¹ zmiennych $\theta_i$ lub $d_i$ - w zale¿noœci od rodzaju po³¹czenia (obrotowe lub przesuwne). Zestaw wszystkich zmiennych parametrów MW pozwalaj¹cy jednoznacznie okreœliæ jego po³o¿enie nazywamy wspó³rzêdnymi uogólnionymi, wewnêtrznymi lub konfiguracyjnymi. 
 	\end{itemize}
 }
 %
@@ -481,8 +481,7 @@
 %
 \frame{
 	\frametitle{Zadanie proste kinematyki - ujêcie ogólne}
-	Maj¹c dane wspó³rzêdne maszynowe $q_1,\cdots,q_n$ nale¿y wyznaczyæ po³o¿enie i rotacjê koñcówki MW
-	%co to s¹ wspó³rzêdne maszynowe?
+	Maj¹c dane wspó³rzêdne wewnêtrzne $q_1,\cdots,q_n$ nale¿y wyznaczyæ po³o¿enie i orientacjê ostatniego cz³onu MW
 	\begin{equation}
 	\mathbf H = 
 	\begin{bmatrix}
@@ -491,15 +490,15 @@
 	\end{bmatrix}
 	\end{equation}
 	gdzie
+	%todo poni¿ej mno¿enie ma w³aœciw¹ kolejnoœæ?
 	\begin{equation}
-	\mathbf H = \mathbf{T}{}_{n}^{0}(q_1,\cdots,q_n) = A_1(q_1)\cdots A_n(q_n)
+	\mathbf H = \mathbf{T}{}_{n}^{0}(q_1,\cdots,q_n) = \mathbf{T}{}_{1}^{0}(q_1)\mathbf{T}{}_{2}^{1}(q_2) \cdots \mathbf{T}{}_{n}^{n-1}(q_n)
 	\end{equation}
-	Zawsze istnieje rozwi¹zanie.
-	%co to jest A_1 do A_n?
+	Dla zadania prostego kinematyki zawsze istnieje rozwi¹zanie.
 }
 \frame{
 	\frametitle{Zadanie proste kinematyki}
-	Zadanie proste kinematyki MW - obliczenie wspó³rzêdnych kartezjañskich punktu na MW znaj¹c jego wspó³rzêdne przegubowe (konfiguracyjne, maszynowe). Zazwyczaj chodzi o jeden z punktów ostatniego cz³onu MW w uk³adzie bazowym. 
+	Zadanie proste kinematyki MW - obliczenie wspó³rzêdnych kartezjañskich (zewnêtrznych) punktu na MW znaj¹c jego wspó³rzêdne wewnêtrzne (konfiguracyjne). Zazwyczaj chodzi o jeden z punktów ostatniego cz³onu MW w uk³adzie bazowym. 
 	%
 	\begin{equation}
 	P_{Am}=\mathbf T^{m}_{k}P_{Ak}, k>m
@@ -508,7 +507,7 @@
 	gdzie:
 	%
 	\begin{equation}
-	\mathbf T^{m}_{k}=\mathbf T^{m}_{m+1}\quad \mathbf T^{m+1}_{m+2} \dots \mathbf T^{k-1}_{k}
+	\mathbf T^{m}_{k}=\mathbf{T}^{m}_{m+1} \mathbf{T}^{m+1}_{m+2} \dots \mathbf{T}^{k-1}_{k}
 	\end{equation}\label{eq:7}
 	%
 	$P_{Ak}=\left[\begin{array}{c}
@@ -528,62 +527,56 @@
 %
 \frame{
 	\frametitle{Zadanie proste kinematyki - przyk³ad}
-	Dla omawianego modelu macierz transformacji z uk³adu 0 do uk³adu 4 jest równa:
+	Dla omawianego modelu z rys. \ref{fig:schemat_nogi_DH} macierz transformacji z uk³adu 0 do uk³adu 2 jest równa:
 	\begin{equation}
-	\mathbf{T}{}_{4}^{0}=\mathbf{T}{}_{1}^{0}\cdot\mathbf{T}{}_{2}^{1}\cdot\mathbf{T}_{3}^{2}\cdot\mathbf{T}_{4}^{3}	
+	\mathbf{T}{}_{2}^{0}=\mathbf{T}{}_{1}^{0}\cdot\mathbf{T}{}_{2}^{1}	
 	\end{equation}
 	%
-	przyjmuj¹c oznaczenie $s_{nm}=\sin(\theta_{n}+\theta_{m})$
-	\tiny
-	\[
-	\mathbf{T}{}_{4}^{0}=\begin{bmatrix}-c_{4}(s_{1}s_{3}-c_{1}c_{2}c_{3})-s_{4}(c_{3}s_{1}+c_{1}c_{2}s_{3}) & s_{4}(s_{1}s_{3}-c_{1}c_{2}c_{3})-c_{4}(c_{3}s_{1}+c_{1}c_{2}s_{3}) & -c_{1}s_{2} & o_{4x}\\
-	c_{4}(c_{1}s_{3}+c_{2}c_{3}s_{1})+s_{4}(c_{1}c_{3}-c_{2}s_{1}s_{3}) & c_{4}(c_{1}c_{3}-c_{2}s_{1}s_{3})-s_{4}(c_{1}s_{3}+c_{2}c_{3}s_{1}) & -s_{1}s_{2} & o_{4y}\\
-	c_{34}s_{2} & -s_{34}s_{2} & c_{2} & o_{4z}\\
-	0 & 0 & 0 & 1
-	\end{bmatrix}\]
-	%coœ pokrzaczone z wzorami
+	przyjmuj¹c oznaczenie $s_{nm}=\sin(\theta_{n}+\theta_{m})$ otrzymujemy:
 	\begin{equation}
-	\mathbf{o_{4}}=\begin{bmatrix}40s_{1}+22.5c_{1}c_{2}-67.5s_{1}s_{3}-53.7c_{4}(s_{1}s_{3}-c_{1}c_{2}c_{3})-53.7s_{4}(c_{3}s_{1}+c_{1}c_{2}s_{3})+67.5c_{1}c_{2}c_{3}\\
-	-40c_{1}+22.5c_{2}s_{1}+67.5c_{1}s_{3}+53.7c_{4}(c_{1}s_{3}+s_{1}c_{2}c_{3})+53.7s_{4}(c_{3}c_{1}+s_{1}c_{2}s_{3})+67.5s_{1}c_{2}c_{3}\\
-	22.5s_{2}+67.5c_{3}s_{2}-53.7s_{2}s_{3}s_{4}+53.7c_{3}c_{4}s_{2}+41.5
-	\end{bmatrix}
+            \mathbf{T}{}_{4}^{0}=
+            \begin{bmatrix}
+                c_{12} & -s_{12} & 0 & l_1 c_1 + l_2 c_{12}\\
+                s_{12} & c_{12} & 0 & l_1 s_1 + l_2 s_{12}\\
+                0 & 0 & 1 & 0\\
+                0 & 0 & 0 & 1
+            \end{bmatrix}
 	\end{equation}
 }
 %
 \frame{
 	\frametitle{Zadanie odwrotne kinematyki - ujêcie ogólne}
-	Maj¹c dane po³o¿enie i rotacjê koñcówki MW w postaci transformacji
+	Maj¹c dane po³o¿enie i orientacjê ostatniego cz³onu MW w postaci transformacji
 	\begin{equation}
-	\mathbf H = 
-	\begin{bmatrix}
-	\mathbf R & o \\
-	0 & 1 \\
-	\end{bmatrix}
+            \mathbf H = 
+            \begin{bmatrix}
+            \mathbf R & o \\
+            0 & 1 \\
+            \end{bmatrix}
 	\end{equation}
-	rozwi¹¿ równanie (znajdŸ $q_1,\cdots,q_n$)
+	rozwi¹¿ równanie (znajdŸ wspó³rzêdne wewnêtrzne $q_1,\cdots,q_n$)
 	\begin{equation}
-	\mathbf{T}{}_{n}^{0}(q_1,\cdots,q_n) = A_1(q_1)\cdots A_n(q_n) = \mathbf H
+            \mathbf{T}{}_{n}^{0}(q_1,\cdots,q_n) = A_1(q_1)\cdots A_n(q_n) = \mathbf H
 	\end{equation}
 	Otrzymujemy wiêc uk³ad równañ skalarnych:
 	\begin{equation}
-	\mathbf{T}{}_{ij}(q_1,\cdots,q_n) =h_{ij}, i = 1, 2, 3, j = 1,\cdots, 4
+            \mathbf{T}{}_{ij}(q_1,\cdots,q_n) =h_{ij}, i = 1, 2, 3, j = 1,\cdots, 4
 	\end{equation}
 	Uk³ad mo¿e mieæ wiele rozwi¹zañ lub ¿andego.
 }
 %
-\frame{
-\frametitle{Zadanie odwrotne kinematyki - metody}
+%\frame{
+%\frametitle{Zadanie odwrotne kinematyki - metody}
 %czy to zostawiæ? mo¿e zintegorwaæ z nstêpnym slajdem?
-    \begin{itemize}
-        \item metody analityczne
-            \begin{itemize}
-                \item algebraiczna
-                \item geometryczna
-            \end{itemize}
-        \item metody numeryczne
-    \end{itemize}
-    
-}
+%    \begin{itemize}
+%        \item metody analityczne
+%            \begin{itemize}
+%                \item algebraiczna
+%                \item geometryczna
+%            \end{itemize}
+%        \item metody numeryczne
+%    \end{itemize}
+%}
 %
 \frame{
 	\frametitle{Zadanie odwrotne kinematyki - metody upraszczaj¹ce}
@@ -600,11 +593,6 @@
 		\end{itemize}
 	\end{itemize}
 	
-}
-%
-\frame{
-	\frametitle{Zadanie odwrotne kinematyki - wybrana metoda dok³adniej?}
-	%nie ma w tym wyk³adzie - mo¿e opisaæ to dok³adniej przy wyk³adzie o planowaniu?
 }
 %
 \section{Kinematyka prêdkosci mechanizmów wielocz³onowych}
