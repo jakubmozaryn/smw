@@ -39,7 +39,7 @@
 			\item{Prowadz¹cy}
 			\begin{itemize}
 				\item \textbf{dr in¿. Jakub Mo¿aryn},  Gmach Mechatroniki, p. 346, e-mail: j.mozaryn@mchtr.pw.edu.pl,
-				\item \textbf{mgr in¿. Jan Klimaszewski},  Gmach Mechatroniki, p. 307, e-mail: klima@mchtr.pw.edu.pl
+				\item \textbf{mgr in¿. Jan Klimaszewski},  Gmach Mechatroniki, p. 307, e-mail: j.klimaszewski@mchtr.pw.edu.pl
 			\end{itemize}		 
 			\item{Strona www przedmiotu: http://jakubmozaryn.esy.es}
 		\end{itemize}
@@ -320,16 +320,16 @@
 	\end{equation}
 	Macierz wynikowa $T_{\gamma abc}$ jest z³o¿eniem dwóch powy¿dzych przekszta³ceñ. 
 	\begin{equation}
-	\begin{bmatrix} x' \\ y' \\ z' \\ 1 \end{bmatrix} = T_{\gamma abc}
+	\begin{bmatrix} x' \\ y' \\ z' \\ 1 \end{bmatrix} = 
+	T_{\gamma abc}
 	\begin{bmatrix} x \\ y \\ z \\ 1 \end{bmatrix}
-	= 
+	, T_{\gamma abc} =
 	\begin{bmatrix}
 	\cos\gamma & -\sin\gamma & 0 & a \\
 	\sin\gamma & \cos\gamma & 0 & b \\
 	0 & 0 & 1 & c \\
 	0 & 0 & 0 & 1 \\
 	\end{bmatrix}
-	\begin{bmatrix} x \\ y \\ z \\ 1 \end{bmatrix}
 	\end{equation},
 }
 %
@@ -341,8 +341,24 @@
 	\textbf{Model kinematyki} MW - matematyczny opis uwzglêdniaj¹cy kszta³ty, rozmiary i po³o¿enia elementów sk³adowych MW. Bez prêdkosci, si³ oraz momentów bezwladnosci.
 	\end{block}
 	\begin{block}{Stopnie swobody}
-	Stopnie swobody okreœlaj¹ niezale¿ne mo¿liwoœci ruchu MW. \textbf{Liczba stopni swobody} okreœla minimaln¹ liczbê wspó³rzêdnych pozwalaj¹cych jednoznacznie okreœliæ po³o¿enie MW wzglêdem okreœlonego uk³adu odniesienia. Np. bry³a sztywna w przestrzeni 3D ma 6 st. swobody - trzy przemieszczenia i trzy rotacje.
+	Stopnie swobody okreœlaj¹ niezale¿ne mo¿liwoœci ruchu MW. \textbf{Liczba stopni swobody} okreœla minimaln¹ liczbê wspó³rzêdnych pozwalaj¹cych jednoznacznie okreœliæ po³o¿enie MW wzglêdem okreœlonego uk³adu odniesienia. Np. bry³a sztywna w przestrzeni 3D ma 6 st. swobody - trzy przemieszczenia i trzy rotacje. Zestaw wszystkich niezale¿nych zmiennych pozwalaj¹cy jednoznacznie okreœliæ po³o¿enie MW nazywamy wspó³rzêdnymi uogólnionymi.
 	\end{block}
+}
+%
+\frame{
+	\frametitle{Wspó³rzêdne uogólnione - definicja}
+        Dla uk³adu $n$ cz¹stek w przestrzeni ich po³o¿enie w chwili $t$ mo¿na opisaæ za pomoc¹ $3 n$ wspó³rzêdnych kartezjañskich $ X = [x_{1},x_{2},...,x_{3n}] $. Je¿eli jednak wprowadziny $r$ wiêzów opisanych za pomoc¹ $r$ równañ:
+        \begin{equation}
+            \varphi _{i}(X,t)=0,\quad i=1,...,r
+        \end{equation}
+        %
+        Wtedy zamiast wspó³rzêdnych $X$ mo¿na wprowadziæ $ f = 3 n ? r $ nowych wspó³rzêdnych $ Q = [q_{1},q_{2},\dots ,q_{f}] $ zadanych za pomoc¹ $f$ niezale¿nych funkcji wspó³rzêdnych $ X $ oraz czasu $t$:
+
+        \begin{equation}
+            q_{i}=q_{i}(X,t),\quad i=1,...,f
+        \end{equation}
+
+        Wspó³rzêdne $ Q $ nazywa siê wspó³rzêdnymi uogólnionymi. Wielkoœæ $Q$ oznacza po³o¿enie uk³adu w przestrzeni konfiguracyjnej, w której wprowadzono wspó³rzêdne uogólnione. 
 }
 %
 \frame{
@@ -353,11 +369,11 @@
 	\begin{block}{Para kinematyczna}
 	\textbf{Para kinematyczna} - po³¹czenie dwóch cz³onów ograniczaj¹ce ich mo¿liwoœci ruchu wzglêdnego. Klasa pary kinematycznej okreœla liczbê st. swobody, któr¹ ogranicza para.
 	\end{block}
-	\begin{block}{Staw / przegub / po³¹czenie}
-	\textbf{Staw / przegub / po³¹czenie} - para kinematyczna okreœlonej klasy, zazwyczaj w MW wystêpuj¹:
+	\begin{block}{Przegub / staw / po³¹czenie}
+	\textbf{Przegub / staw / po³¹czenie} - para kinematyczna okreœlonej klasy, zazwyczaj w MW wystêpuj¹:
 		\begin{itemize}
-		\item po³¹czenia przesuwne klasy 5 - mo¿liwy jest ruch wzglêdny wzd³u¿ jednej osi uk³adu wspó³rzêdnych,
-		\item stawy obrotowe klasy 5 - mo¿liwe s¹ tylko wzglêdne obroty wokó³ jednej osi uk³adu wspó³rzêdnych.
+		\item przeguby przesuwne klasy 5 - mo¿liwy jest ruch wzglêdny wzd³u¿ jednej osi uk³adu wspó³rzêdnych,
+		\item przeguby obrotowe klasy 5 - mo¿liwe s¹ tylko wzglêdne obroty wokó³ jednej osi uk³adu wspó³rzêdnych.
 	\end{itemize}
 	\end{block}
     \footnotesize
@@ -376,14 +392,14 @@
 		gdzie: \\
 		$\alpha_i$ - k¹t skrêcenia cz³onu, $a_i$ - d³ugoœæ cz³onu, $d_i$ - odsuniêcie przegubu, $\theta_i$ - k¹t przegubu.
 		\item Parametry $\theta_i,d_i,a_i,\alpha_i$ zwi¹zane z cz³onem oraz po³¹czeniem $i$ opisuj¹ przekszta³cenie miêdzy uk³adem $i-1$, a uk³adem $i$.
-		\item Macierz $\mathbf T_{i}^{i-1}$ jest zwykle funkcj¹ zmiennych $\theta_i$ lub $d_i$ - w zale¿noœci od rodzaju po³¹czenia (obrotowe lub przesuwne). Zestaw wszystkich zmiennych parametrów MW pozwalaj¹cy jednoznacznie okreœliæ jego po³o¿enie nazywamy wspó³rzêdnymi uogólnionymi, wewnêtrznymi lub konfiguracyjnymi. 
+		\item Macierz $\mathbf T_{i}^{i-1}$ jest zwykle funkcj¹ zmiennych $\theta_i$ lub $d_i$ - w zale¿noœci od rodzaju przegubu (obrotowe lub przesuwne). Zestaw wszystkich zmiennych parametrów MW mo¿na nazywamy wspó³rzêdnymi uogólnionymi, wewnêtrznymi, z³¹czowymi lub konfiguracyjnymi. 
 	\end{itemize}
 }
 %
 \frame{
 	\frametitle{Przypisanie uk³adów w notacji DH (1)}
 	\begin{enumerate}
-		\item Ustalamy osie $z_i$ jako osie ruchu stawów $i+1$. W przypadku stawu obrotowego - oœ obrotu, staw przesuwny - oœ translacji.
+		\item Ustalamy osie $z_i$ jako osie ruchu przegubów $i+1$. W przypadku przegubu obrotowego - oœ obrotu, a przegubu przesuwnego - oœ translacji.
 		\item Ustalamy œrodek uk³adu bazowego jako dowolny punkt na $z_0$. Nastêpnie ustalamy w dowolny sposób osie $x_0, y_0$ - uk³ad musi byæ prawoskrêtny.
 		\item Dla ka¿dego kolejnego uk³adu zaczynaj¹c od $1$ ustalamy jego po³o¿enie i orientacjê na podstawie uk³adu poprzedniego.
 		\item Jeœli osie $z_{i-1}, z_i$ nie s¹ wspó³p³aszczyznowe:
@@ -534,7 +550,7 @@
 	%
 	przyjmuj¹c oznaczenie $s_{nm}=\sin(\theta_{n}+\theta_{m})$ otrzymujemy:
 	\begin{equation}
-            \mathbf{T}{}_{4}^{0}=
+            \mathbf{T}{}_{2}^{0}=
             \begin{bmatrix}
                 c_{12} & -s_{12} & 0 & l_1 c_1 + l_2 c_{12}\\
                 s_{12} & c_{12} & 0 & l_1 s_1 + l_2 s_{12}\\
@@ -573,9 +589,10 @@
                 \item Rozwi¹zanie algebraiczne.
                 \item Rozwi¹zanie geometryczne.
             \end{itemize}
-        \item Rozwi¹zanie numeryczne. Np. stosuj¹c równanie ró¿niczkowe $\begin{bmatrix}v\\ \omega\end{bmatrix}=\mathbf{J}\cdot\dot{Q}$, gdzie $\dot{Q} = [\dot{q}_1,\cdots,\dot{q}_n]^{T}$,  $J$ - Jakobian.
+        \item Rozwi¹zanie numeryczne. Np. ca³kuj¹c równanie ró¿niczkowe $\begin{bmatrix}v\\ \omega\end{bmatrix}=\mathbf{J}(Q)\cdot\dot{Q}$, gdzie $\dot{Q} = [\dot{q}_1,\cdots,\dot{q}_n]^{T}$,  $J$ - Jakobian.
     \end{itemize}
-    %todo wrzuciæ gdzieœ t¹ linijke?: Kinematic decoupling  - dla manipulatorów o 6-ciu stawach, jeœli osie 3 ostatnich przecinaj¹ siê w jednym punkcie, mo¿liwe jest rozdzielenie problemu na dwa prostsze: zadanie odwrotnej kinematyki pozycji i zadanie odwrotnej kinematyki orientacji 
+    
+    \textit{Istniej¹ metody upraszczaj¹ce rozwi¹zywanie zadania odwrotnego. Np. odsprzêganie kinematyczne - dla manipulatorów o 6-ciu stawach, jeœli osie 3 ostatnich przecinaj¹ siê w jednym punkcie, mo¿liwe jest rozdzielenie problemu na dwa prostsze: zadanie odwrotnej kinematyki pozycji i zadanie odwrotnej kinematyki orientacji.}
 }
 %
 \section{Kinematyka prêdkosci mechanizmów wielocz³onowych}
@@ -590,16 +607,16 @@
 	\begin{equation}
 	{}_{j-1}^0\omega_j=
 	\begin{cases}
-	\dot{\theta}_j^0 \hat{k}_{j-1}  & \quad \text{je¿eli staw } j \text{ jest obrotowy}\\
-	0                               & \quad \text{je¿eli staw } j \text{ jest przesuwny}
+	\dot{\theta}_j^0 \hat{k}_{j-1}  & \quad \text{je¿eli przegub } j \text{ jest obrotowy}\\
+	0                               & \quad \text{je¿eli przegub } j \text{ jest przesuwny}
 	\end{cases}
 	\end{equation}
 	Prêdkoœæ liniowa œrodka uk³adu wspó³rzêdnych cz³onu $i$ wynosi:
 	\begin{equation}
 	{}_{i-1}^0\dot{d}_i=
 	\begin{cases}
-	{}_0^0\omega_i x {}_{i-1}^0 d_i                                 & \quad \text{je¿eli staw } i \text{ jest obrotowy}\\
-	\dot{d}_i^0 \hat{k}_{i-1} +  {}_0^0\omega_i x {}_{i-1}^0 d_i    & \quad \text{je¿eli staw } i \text{ jest translacyjny}
+	{}_0^0\omega_i x {}_{i-1}^0 d_i                                 & \quad \text{je¿eli przegub } i \text{ jest obrotowy}\\
+	\dot{d}_i^0 \hat{k}_{i-1} +  {}_0^0\omega_i x {}_{i-1}^0 d_i    & \quad \text{je¿eli przegub } i \text{ jest przesuwny}
 	\end{cases}
 	\end{equation}
 	%todo co to jest d
@@ -613,10 +630,10 @@
 	v\\
 	\omega
 	\end{bmatrix}
-	=\mathbf{J}\cdot\dot{Q}
+	=\mathbf{J}(Q)\cdot\dot{Q}
 	\label{eq:v_jac}
 	\end{equation}
-	gdzie: $\mathbf J$ - jakobian, $v$ - prêdkoœæ liniowa, 	$\omega$ - prêdkoœæ k¹towa .
+	gdzie: $\mathbf J$ - jakobian, $v$ - prêdkoœæ liniowa, 	$\omega$ - prêdkoœæ k¹towa.
 	
 	Równanie (\ref{eq:v_jac}) mo¿na przedstawiæ jako
 	\begin{equation}
@@ -626,8 +643,8 @@
 	\end{bmatrix}
 	=
 	\begin{bmatrix}
-	\mathbf{J_D}\\
-	\mathbf{J_R}
+	\mathbf{J_D}(Q)\\
+	\mathbf{J_R}(Q)
 	\end{bmatrix}\cdot\dot{Q}
 	\end{equation}
 	gdzie: $\mathbf J_D$ - jakobian przemieszczenia, $\mathbf J_R$ - jakobian obrotu.
@@ -638,29 +655,74 @@
 	Wyznaczenie prêdkoœci $v$ i $\omega$ ostatniego cz³onu MW na podstawie znanych prêdkoœci wspó³rzêdnych wewnêtrznych $\dot{Q} = [\dot{q}_1,\cdots,\dot{q}_n]^{T}$.
 	\begin{equation}
 	v =
-	\mathbf{J_D}\cdot\dot{Q} = 
-	\frac{\partial \mathbf T(q)}{\partial q}
+	\mathbf{J_D}(Q)\cdot\dot{Q} = 
+	\frac{\partial \mathbf T(Q)}{\partial Q}
 	\end{equation}
 %
 	\begin{equation}
 	\omega =
-	\mathbf{J_R}\cdot\dot{Q} = 
-	\frac{\partial \omega}{\partial q}
+	\mathbf{J_R}(Q)\cdot\dot{Q} = 
+	\frac{\partial \omega}{\partial Q}
+	\end{equation}
+}
+%
+\frame{
+	\frametitle{Zadanie proste kinematyki prêdkoœci - przyk³ad}
+	Dla omawianego modelu z rys. \ref{fig:schemat_nogi_DH} po³o¿enie ostatniego uk³adu wspó³rzêdnych:
+	\begin{equation}
+            \begin{cases}
+                o_x = l_1 c_1 + l_2 c_{12} \\ 
+                o_y = l_1 c_1 + l_2 c_{12} 
+            \end{cases}	
+	\end{equation}
+	ró¿niczkuj¹c po czasie otrzymujemy
+	\begin{equation}
+            \begin{cases}
+                v_x = \dot{o_x} = -l_1 s_1 \dot{\theta_1} - l_2 s_{12} (\dot{\theta_1} + \dot{\theta_2}) \\ 
+                v_y = \dot{o_y} =  l_1 c_1 \dot{\theta_1} + l_2 c_{12} (\dot{\theta_1} + \dot{\theta_2})
+            \end{cases}	
+	\end{equation}
+	ostatecznie:
+	\begin{equation}
+            v =
+            \begin{bmatrix}
+                v_x\\
+                v_y
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+                \dot{o_x}\\
+                \dot{o_y}
+            \end{bmatrix}
+            \begin{bmatrix}
+                -l_1 s_1 - l_2 s_{12} & - l_2 s_{12} \\
+                l_1 c_1 + l_2 c_{12} & l_2 c_{12} 
+            \end{bmatrix}
+            \begin{bmatrix}
+                \dot{\theta_1}\\
+                \dot{\theta_2}
+            \end{bmatrix}
+            =
+            \mathbf{J}_v(\theta) 
+            \begin{bmatrix}
+                \dot{\theta_1}\\
+                \dot{\theta_2}
+            \end{bmatrix}
 	\end{equation}
 }
 %
 \frame{
 	\frametitle{Zadanie odwrotne kinematyki prêdkoœci}
-	Wyznaczenie prêdkoœci wspó³rzêdnych wewnêtrznych $\dot{q}_1,\cdots,\dot{q}_n$ na podstawie znanych prêdkoœci $v$ i $\omega$ koñcówki MW.
+	Wyznaczenie prêdkoœci wspó³rzêdnych wewnêtrznych $\dot{Q} = [\dot{q}_1,\cdots,\dot{q}_n]^{T}$ na podstawie znanych prêdkoœci $v$ i $\omega$ koñcówki MW.
 	\begin{equation}
-	\dot{q}
-	=\mathbf{J}^{-1}
+	\dot{Q}
+	=[\mathbf{J}(Q)]^{-1}
 	\begin{bmatrix}
 	v\\
 	\omega
 	\end{bmatrix}
 	\end{equation}
-	%todo Osobliwoœæ - $det(\mathbf J)=0$ \\
+	Rozwi¹zanie takiego problemu wystêpuje tylko, gdy $\mathbf{J}$ jest macierz¹ nieosobliw¹, tzn. $det(\mathbf{J}(Q))\neq0$ \\
 }
 %
 \section{Dynamika mechanizmów wielocz³onowych}
