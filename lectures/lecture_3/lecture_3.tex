@@ -1,0 +1,138 @@
+\documentclass[10pt, brown]{beamer}
+\usetheme{Warsaw}
+\usepackage[MeX]{polski}
+\usepackage[cp1250]{inputenc}  % Polskie literki...
+\usepackage[polish]{babel}     %
+\usepackage{parskip}
+\usepackage{latexsym,gensymb,amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+%\usepackage{verbatim}
+\usepackage{ragged2e}
+\usepackage{url}
+%\setlength{\parindent}{0pt}
+%\setlength{\parskip}{1ex}
+\renewcommand{\qedsymbol}{$\square$}
+\newenvironment{dowod}{{\bf Dowód.}}{\hfill\rule[0.025cm]{0.21cm}{0.21cm}}
+\newtheorem{tw}{Twierdzenie}
+\newtheorem{fakt}{Fakt}
+\newtheorem{lemat}{Lemat}
+\newtheorem{wn}{Wniosek}
+
+\author{dr in¿. Jakub Mo¿aryn, mgr in¿. Jan Klimaszewski}
+\institute{Instytut Automatyki i Robotyki}
+\date{Warszawa, 2018}
+\title{Sterowanie mechanizmów wielocz³onowych}
+\subtitle{Wyk³ad 3 - Planowanie trajektorii ruchu}
+\begin{document}
+%
+\frame{
+\titlepage
+}
+%
+\section{Wprowadzenie do planowania trajektorii ruchu robota}
+%
+\frame{
+    \frametitle{Intuicja i przyk³ady}
+        Planowanie g³ównie odnosi siê do przestrzeni dyskretnej \\%(1.1)\\
+        Przyk³ady %(1.2)
+}
+%
+\frame{
+    \frametitle{Podstawowy opis planowania: stan, czas, akcja, cel itp.}
+        Stan\\
+        Czas\\
+        Akcja\\
+        Stan pocz¹tkowy i cel\\
+        Wykonalnoœæ planu\\
+        Oprymalnoœæ planu%(r. 1.3) 
+}
+%
+\frame{
+    \frametitle{Algorytmy, plannery i plany}
+        Planer - opracowuje plan\\
+        Algotyrm planowania = planer automatyczny\\ %(r. 1.4.1)\\
+        Plan %(r. 1.4.3)
+}
+%
+\section{Planowanie dyskretne}
+%
+\frame{
+    \frametitle{Planowanie wykonalne (?) - definicja}
+    %(r. 2.1)
+}
+%
+\frame{
+    \frametitle{Szukanie planów wykonalnych - przeszukiwanie w przód}
+    przeszukiwanie w przód - opis algorytmu %(r. 2.2.1)
+}
+%
+\frame{
+    \frametitle{Szukanie planów wykonalnych - przeszukiwanie wszerz}
+    przeszukiwanie wszerz - opis algorytmu %(r. 2.2.2)
+}
+%
+\frame{
+    \frametitle{Szukanie planów wykonalnych - przeszukiwanie w g³¹b}
+    przeszukiwanie w g³¹b - opis algorytmu %(r. 2.2.2)
+}
+%
+\frame{
+    \frametitle{Dyskretne planowanie optymalne}
+    Dyskretne planowanie optymalne
+        Optimal Fixed-Length Plans\\
+        Optimal Plans of Unspecified Lengths%(r. 2.3)
+        Dijkstra
+    Logic-Based
+}
+\iffalse
+%
+\section{Planowanie ci¹g³e - planowanie ruchu}
+%
+\frame{
+    \frametitle{Wprowadzenie - rozmaitoœci}
+    Rozmaitoœæ n-wymiarowa – zbiór punktów, wyposa¿ony w geometriê, która ma lokalnie w³asnoœci geometrii znanej z $n$-wymiarowej przestrzeni euklidesowej. Wyposa¿enie w geometriê jest kluczowe – oznacza bowiem, ¿e podane zosta³y wzory na obliczanie odleg³oœci miêdzy punktami, k¹ty miêdzy prostymi, pola powierzchni itp., przy czym lokalnie odleg³oœci miêdzy punktami s¹ dane wzorami takimi jak w przestrzeni euklidesowej itd. Rozmaitoœæ jest wiêc lokalnie identyczna z przestrzeni¹ euklidesow¹. Lokalnoœæ zdefiniowana precyzyjnie oznacza, ¿e ka¿dy punkt rozmaitoœci ma otoczenie, nawet niewielkiego rozmiaru, które jest homeomorficzne z przestrzeni¹ euklidesow¹ $\mathbb {R} ^{n}$.\\
+    Wyró¿nia siê rozmaitoœci:\\
+    \begin{itemize}
+        \item jednowymiarowe: np. okrêgi, elipsy, parabole,
+        \item dwuwymiarowe: np. p³aszczyzna, sfera, torus,
+        \item wielowymiarowe, np. hiperpowierzchnie w przestrzeni euklidesowej $n$-wymiarowej (czyli przestrzenie o wymiarze $n-1$).
+    \end{itemize}
+}
+%
+\frame{
+    \frametitle{Przestrzeñ konfiguracyjna w przestrzeni 2D SE(2)}
+    Since any $x_t, y_t \in \mathbf{R}^2$ can be selected for translation, this alone yields a manifold $M_1 = \mathbf{R}^2$. Independently, any rotation, $\theta \in [0, 2\pi)$, can be applied. Since $2\pi$ yields the same rotation as $0$, they can be identified, which makes the set of 2D rotations into a manifold,$M_2 = \mathbf{S}^1$. To obtain the manifold that corresponds to all rigid-body motions, simply take $C = M_1 x M_2 = \mathbf{R}^2 x \mathbf{S}^1$. The answer to the question is that the C-space is a kind of cylinder.
+}
+%
+\frame{
+    \frametitle{Przestrzeñ konfiguracyjna w przestrzeni 3D SE(3)}
+    $C = \mathbf{R}^3 x \mathbf{R}\mathbf{P}^3$
+}
+%
+\frame{
+    \frametitle{Otwarte i zamkniête ³añcuchy kinematyczne}
+}
+%
+\frame{
+    \frametitle{Koordynacja ruchu robotów w przestrzeni zadañ}
+}
+%
+\frame{
+    \frametitle{Sampling based planning}
+    %(r. 5)
+}
+%
+\frame{
+    \frametitle{Combinatorial Motion Planning}
+    %(r. 6)
+}
+%
+\section{Wspó³praca robotów, manipulacja, itp. }
+%
+\frame{
+    \frametitle{Wspó³praca robotów, manipulacja}
+    %(r. 7)
+}
+%
+\fi
+\end{document}
