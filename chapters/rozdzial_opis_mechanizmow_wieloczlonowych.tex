@@ -1,30 +1,355 @@
 
 %ROZDZIA£ 1
 \chapter{Opis mechanizmów wielocz³onowych - Janek+Kuba}
-  W rozdziale przedstawiono podstawy matematyczne i fizyczne s³u¿¹ce do opisu
-  robotów o wielu stopniach swobody (mechniazmów wielocz³onowych). Przedstawiono model robota w przestrzeni zmiennych stanu. Opisano sposób symulacji komputerowej dynamiki robota.	
-  \section{Model geometrii, kinematyki i dynamiki mechanizmów wielocz³onowych.}
+  W rozdziale przedstawiono podstawy matematyczne i fizyczne s³u¿¹ce do opisu robotów o wielu stopniach swobody (mechanizmów wielocz³onowych). Przedstawiono model robota w przestrzeni zmiennych stanu. Opisano sposób symulacji komputerowej dynamiki robota.	
+  
+  W dalszej czêœci skryptu \textbf{mechanizm} bêdzie rozumiany jako zespó³ wspó³pracuj¹cych ze sob¹ elementów maszyny wykonuj¹cej okreœlone zadanie (np. poruszanie siê po zadanej trajektorii). W szczególnoœci \textbf{mechanizm wielocz³onowy} bêdzie rozumiany jako zespó³ po³¹czonych bry³ sztywnych (\textbf{cz³onów}). Po³¹czenia (lub \textbf{stawy}, \textbf{przeguby}) okreœlaj¹ w jaki sposób cz³ony mog¹ siê poruszaæ wzglêdem siebie.\footnote{\url{https://en.wikipedia.org/wiki/Multibody_system}}\\
+  \todo{Dodaæ przyk³ad z obrazkiem - 2-link planar robotic arm - rysunek, ewentualnie przenieœæ to jeszcze wczeœniej - Mo¿e daæ to jako element rozdzia³u "Wprowadzenie"?}
+  
+  \section{Wprowadzenie matematyczne - Janek}
+  \todo{Przenieœæ to do za³¹cznika?}
 
-  \subsection{Model geometrii - Janek}
-  W pracy rozwa¿any jest robot o pojedynczym ³añcuchu kinematycznym, sk³adaj¹cy
-  siê z cz³onów po³¹czonych przegubami. Ka¿dy z przegubów posiada jeden stopieñ swobody. W dalszej czêœci pracy rozwa¿any bêdzie robot o $n$-stopniach swobody z przegubami typu obrotowego, gdy¿ tylko przeguby tego typu wystêpuj¹ w rozwa¿anym w pracy robocie PUMA 560. Przyjêto, ¿e dla robota o $n$-przegubach ponumerowanych od 1 do $n$ istnieje $n$+1 cz³onów ponumerowanych od 0 do $n$. Cz³on o numerze 0 nazywany jest cz³onem bazowym, natomiast cz³on $n$ jest cz³onem z elementem wykonawczym. Przegub i ³¹czy cz³ony o numerach $i$-1 i $i$. Z ka¿dym z cz³onów zwi¹zany jest uk³ad wspó³rzêdnych o tym samym numerze.
-  %
-  \subsection{Model kinematyki - Janek}
-  Dla okreœlenia uk³adów wspó³rzêdnych kartezjañskich, które bêd¹ przyporz¹dkowane
-  w odpowiedni sposób do cz³onów i przegubów przyjêto notacjê Denavita-Hartenberga
-  \cite{hartenberg:1955}, której podstawy zamieszczono na Rys. \ref{fig:1}:
+  \subsubsection{Podstawowe pojêcia}
+  
+  \textbf{Geometria} jet to dziedzina matematyki badaj¹ca dla wybranych przekszta³ceñ ich niezmienniki (np. odleg³oœæ, pole powierzchni, miara k¹ta). W zale¿noœci od rodzaju przekszta³ceñ mówi siê o ró¿nych rodzajach geometrii. Na potrzeby opisu mechanizmów wielocz³onowych bêdziemy wykorzystywaæ g³ównie jej klasyczn¹ odmianê - geometriê euklidesow¹. Zajmuje siê ona przede wszystkim badaniem niezmienników (sta³ych) izometrii (zachowanie odleg³oœci) oraz podobieñstw (zachowanie k¹tów). 
+  
+  \textbf{Kinematyka} jest to dziedzina fizyki, a w szczególnoœci mechaniki (czasem rozumiana jako dziedzina matematyki) zajmuj¹ca siê badaniem geometrycznych w³aœciwoœci ruchu cia³ bez uwzglêdniania ich cech fizycznych (np. masy) i dzia³aj¹cych na nie si³. Kinematyka obejmuje opis geometryczny sytemu uzupe³niony o prêdkoœci oraz przyspieszenia. W skrypcie bêdziemy zajmowali siê kinematyk¹ punktów materialnych i bry³ sztywnych.
+  
+  \textbf{Dynamika} jest to dziedzina fizyki, a w szczególnoœci mechaniki, zajmuj¹ca siê ruchem cia³ materialnych (z uwzglêdnieniem ich cech fizycznych - np. masy) pod dzia³aniem si³. W zakresie dynamiki bierze siê pod uwagê opis kinematyczny systemu uzupe³niony o dzia³aj¹ce si³y, momenty si³ oraz w³aœciwoœci fizyczne takie jak masa i momenty bezw³adnoœci. Dynamika czasem uto¿samiana jest z \textbf{kinetyk¹} - dzia³em dynamiki zajmuj¹cym siê, w przeciwieñstwie do statyki, zachowaniem cia³ fizycznych w ruchu. W zakresie sterowania mechanizmami wielocz³onowymi bêdziemy zajmowaæ siê klasyczn¹ dynamik¹ w ujêciu Newtona, oraz bardziej nowoczesn¹ w ujêciu Lagrange'a czy Euler'a.\footnote{\url{https://en.wikipedia.org}}
+   
+  \subsubsection{Notacja macierzowa} \todo{zmienic jakos tytul}
+  
+  Matematyczny opis mechanizmów wielocz³onowych wygodnie jest przestawiæ za pomoc¹ notacji macierzowej. W zwi¹zku z tym opiera siê on w znacznym stopniu  na \textbf{algebrze macierzy}. Jest to dziedzina matematyki zajmuj¹ca siê badaniem macierzy i zasad operowania na nich. Poni¿ej znajduje siê przypomnienie wybranych operacji i w³asnoœci macierzowych.
+  
+  W uproszczeniu \textbf{skalar} jest to element algebry linowej reprezentuj¹cy pojedyncz¹ wartoœæ liczbow¹. W skrypcie symbole skalarne bêd¹ przestawiane w postaci ma³ych liter, np. skalarne równanie liniowe mo¿e przyj¹æ postaæ:
+  
+  \begin{equation}
+    y = a*x+ b
+  \end{equation}
+  
+  Powy¿sze równanie przedstawia funkcjê o skalarnych parametrach $a$ i $b$, skalarnych argumentach $x$ oraz skalarnych wartoœciach $y$.
+  
+  Kontynuuj¹c uproszczenia \textbf{wektor} mo¿na rozumieæ jako seriê wartoœci skalarnych, notowan¹ w skrypcie wielk¹ liter¹:
+  
+  \begin{equation}
+    V =
+    \begin{bmatrix}
+      v_1 \\
+      v_2 \\
+      v_3 \\
+      v_4 \\
+    \end{bmatrix}
+  \end{equation}
+  
+  Jeœli dodamy do wektora jeszcze jeden wymiar otrzymamy \textbf{macierz}. Bêdziemy j¹ rozumieæ jako zestaw wartoœci skalarnych zorganizowany w postaci uk³adu prostok¹tnego, notowan¹ w skrypcie wielk¹ liter¹:
+  
+  \begin{equation}
+    A =
+    \begin{bmatrix}
+      a_{11} & a_{12} & a_{13} & a_{14} \\
+      a_{21} & a_{22} & a_{23} & a_{24} \\
+      a_{31} & a_{32} & a_{33} & a_{34} \\
+      a_{41} & a_{42} & a_{43} & a_{44} \\
+    \end{bmatrix}
+  \end{equation}
+  
+  Macierz mo¿na podzieliæ na wiersze i kolumny. Macierz podsiada równie¿ wymiary - szerokoœæ i wysokoœæ. W skrypcie wektory bêdziemy rozumieæ jako szczególny przypadek macierzy. Notacja macierzy i wektorów jest identyczna. W ogólnoœci macierze odpowiednio typu $m\times 1$ oraz $1\times n$ (jednokolumnowe i jednowierszowe) nazywa siê zwykle wektorami kolumnowymi i wektorami wierszowymi. W ujêciu ogólnym macierz o wymiarach $n$ na $m$ mo¿na zdefiniowaæ jako:
+  
+  \begin{equation}
+    A = 
+    \begin{bmatrix}
+      a_{ij} \\
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+      a_{11} & a_{12} & \dots & a_{1m} \\
+      a_{21} & a_{22} & \dots & a_{2m} \\
+      \dots \\
+      a_{n1} & a_{n2} & \dots & a_{nm} \\
+    \end{bmatrix}
+  \end{equation}
+  , gdzie $a_{ij}$ to element macierzy $A$ z wiersza $i$ oraz kolumny $j$.
+  
+  Macierz jednostkowa, jest to macierz kwadratowa o dowolnym rozmiarze, któr¹ definiuje siê nastêpuj¹co:
+  \begin{equation}
+    I =
+    \begin{bmatrix}
+      1 & 0 & \dots & 0 \\
+      0 & 1 & \dots & 0 \\
+      \dots \\
+      0 & 0 & \dots & 1 \\
+    \end{bmatrix}
+  \end{equation}
+  Dodatkowo macierz jednostkowa typu $4 x 4$ mo¿e byæ zapisana jako $I_4$.
+  
+  Podstawowe operacje na macierzach obejmuj¹ dodawanie, mno¿enie przez skalar, mno¿enie, transpozycjê i operacje elementarne. S¹ one na tyle proste, ¿e nie bêd¹ omawiane bli¿ej w tym opracowaniu.
+  
+\todo{wprowadzic takie pojecia jak rzad macierzy, diag, macierz zerow¹, jednostkow¹ i w³asnoœci podstawowych dzia³añ?}  
+  
+  \subsubsection{Przekszta³cenia liniowe}
+  
+  Notacjê macierzow¹ mo¿na wykorzystaæ do zapisu uk³adu równañ. Przyk³adowo uk³ad $n$ równañ liniowych o $m$ zmiennych postaci
+  
+  \begin{equation}
+  \label{eq:uklad_rownan_liniowych}
+    \begin{cases}
+      a_{11}x_1 + a_{12}x_2 + \cdots + a_{1m}x_m = b_1 \\ 
+      a_{21}x_1 + a_{22}x_2 + \cdots + a_{2m}x_m = b_2 \\ 
+      \vdots \\ 
+      a_{n1}x_1 + a_{n2} x_2 + \cdots + a_{nm}x_m = b_n 
+    \end{cases}
+  \end{equation}
+
+  mo¿na zapisaæ w postaci równania macierzowego
+
+  \begin{equation}
+  \label{eq:przeksztalcenie_liniowe}
+    \mathbf{AX} = \mathbf B,
+  \end{equation}
+  
+  dla danych macierzy $\mathbf A = [a_{ij}]$, nazywanej ''macierz¹ g³ówn¹'' uk³adu, $\mathbf X = [x_j]$ oraz $\mathbf B = [b_i]$. 
+  
+  Nawi¹zuj¹c do równania \ref{eq:przeksztalcenie_liniowe}, ka¿da macierz $A$ o wymiarach $m$ na $n$ opisuje pewne przekszta³cenie liniowe przestrzeni wspó³rzêdnych $K^{n}$ w $K^{m}$ odwzorowuj¹ce wektor $X$ w wektor $B$. Przekszta³ceniu temu odpowiada mno¿enie macierzy $A$ o wymiarach $m$ na $n$ przez macierz $X$ o wymiarach $n$ na $1$ daj¹c w wyniku macierz $AX$ o wymiarach $m$ na $1$. 
+
+  %W ten sposób uk³ad równañ liniowych \ref{eq:uklad_rownan_liniowych} mo¿na traktowaæ jako problem opisu przekszta³cenia liniowego gdzie istnienie rozwi¹zañ jest to¿same z istnieniem wektora x spe³niaj¹cego $A ( x ) = b$ (czyli nale¿eniem $b$ do obrazu $A$ jednoznacznoœæ rozwi¹zañ jest równowa¿na ró¿nowartoœciowoœci przekszta³cenia $A$ (czyli trywialnoœci jego j¹dra).
+
+  \footnote{\url{https://en.wikipedia.org}}
+  
+  \todo{rozwin¹æ opis: niezale¿noœæ równañ}
+     
+  \subsubsection{Podstawowe przekszta³cenia przestrzeni}
+  
+  W zakresie opisu mechanizmów wielocz³onowych wykorzystuje siê wybrane przekszta³cenia liniowe. Elementarne (podstawowe) macierze transformacji (przekszta³cenia) s¹ to macierze opisuj¹ce zale¿noœæ pomiêdzy wspó³rzêdnymi wskazanego punktu przestrzeni przed i po transformacji. Przez transformacjê rozumiemy w tym przypadku translacjê (czyli przesuniêcie), skalowanie oraz rotacjê (czyli obrót). W przypadku opisu mechanizmów wielocz³onowych sens fizyczny maj¹ zazwyczaj tylko operacje translacji i rotacji.
+
+  Wygodnie jest przyj¹æ, ¿e macierze opisuj¹ce transformacje maj¹ o jeden rz¹d wiêcej ni¿ wymiar wektora wspó³rzêdnych, a dok³adniej maj¹ rz¹d równy wymiarowi wspó³rzêdnych jednorodnych\todo{wyjasnic gdzies co to jest}. \footnote{\url{https://pl.wikipedia.org/wiki/Elementarne_macierze_transformacji}} Oznacza to, ¿e równanie przekszta³caj¹ce przestrzeñ trójwymiarow¹ zgodnie z macierz¹ $T$ mo¿na przedstawiæ w postaci wzoru:
+  
+  \begin{equation}
+  \label{eq:wzor_przeksztalcenie}
+    \begin{bmatrix} 
+      x' \\ 
+      y' \\ 
+      z' \\ 
+      1 
+    \end{bmatrix} = 
+    T
+    \begin{bmatrix} 
+      x \\ 
+      y \\ 
+      z \\ 
+      1 
+    \end{bmatrix}
+  \end{equation}
+  gdzie: \\
+  $x, y, z$ - wspó³rzêdne punktu oryginalnego,\\
+  $x', y', z'$ - wspó³rzêdne punktu przekszta³conego,\\
+  $T$ - macierz przekszta³cenia.\\
+    
+\textbf{Macierz przesuniêcia}\\
+  Przyk³adowo przesuniêcie (translacjê) w przestrzeni trójwymiarowej mo¿na zapisaæ jako:
+
+  \begin{equation}
+    T = Tran( a, b, c ) = 
+      \begin{bmatrix} 
+        1 & 0 & 0 & a \\ 
+        0 & 1 & 0 & b \\ 
+        0 & 0 & 1 & c \\ 
+        0 & 0 & 0 & 1 
+      \end{bmatrix}
+  \end{equation}
+  gdzie: \\
+  $T$ - macierz przekszta³cenia - translacji,\\
+  $a, b, c$ - przesuniêcie wzd³u¿ osi $X, Y$ oraz $Z$ przestrzeni trójwymiarowej.
+
+Mo¿na tak¿e rozbiæ tê macierz na 3 osobne: $TranX(a)$, $TranY(b)$ oraz $TranZ(c)$.\\
+    
+\textbf{Macierze obrotu}\\
+Obroty przedstawiane s¹ w ró¿ny sposób, dlatego te¿ elementarne macierze rotacji musz¹ byæ przedstawiane oddzielnie.
+
+Dla obrotu wokó³ osi X:
+\begin{equation}
+RotX(\alpha)=
+\begin{bmatrix}
+  1 & 0 & 0 & 0 \\
+  0 & \cos\alpha & -\sin\alpha & 0 \\
+  0 & \sin\alpha & \cos\alpha & 0 \\
+  0 & 0 & 0 & 1 \\
+\end{bmatrix}
+\end{equation}
+
+Dla obrotu wokó³ osi Y:
+\begin{equation}
+RotY(\beta)=
+\begin{bmatrix}
+  \cos\beta & 0 & \sin\beta & 0 \\
+  0 & 1 & 0 & 0 \\
+  -\sin\beta & 0 & \cos\beta & 0 \\
+  0 & 0 & 0 & 1 \\
+\end{bmatrix}
+\end{equation}
+
+Dla obrotu wokó³ osi Z:
+\begin{equation}
+RotZ(\gamma)=
+\begin{bmatrix}
+  \cos\gamma & -\sin\gamma & 0 & 0 \\
+  \sin\gamma & \cos\gamma & 0 & 0 \\
+  0 & 0 & 1 & 0 \\
+  0 & 0 & 0 & 1 \\
+\end{bmatrix}
+\end{equation}
+
+
+
+\textbf{Ogólna macierz transformacji}\\
+W ogólnoœci macierz dowolnej\footnote{w rozumieniu - z³o¿enie dowolnego obrotu i translacji} transformacji omawianego typu mo¿na przedstawiæ w postaci:\\
+\begin{equation}
+\label{eq:macierz_transformacji}
+    \begin{bmatrix} R & T \\ 0 & 1 \end{bmatrix}
+\end{equation}
+,gdzie R to macierz opisuj¹ca obrót, a T to macierz opisuj¹ca translacjê.\\
+
+\textbf{Sk³adanie macierzy}\\
+Istnieje mo¿liwoœæ sk³adania transformacji. Jest to realizowane przez mno¿enie macierzy sk³adanych przekszta³ceñ. Wówczas obliczamy macierz wynikow¹ z³o¿enia przekszta³ceñ jako iloczyn sk³adowych macierzy transformacji.
+
+  Przyk³adowo w równaniu \ref{eq:przyklad_skladania} mo¿emy najpierw wykonaæ operacjê rotacji, nastêpnie translacji o wektor. Takich operacji mo¿e byæ wiêcej. Ka¿d¹ nastêpn¹ macierz transformacji dok³adamy po lewej stronie iloczynu macierzy, przy czym mno¿enie macierzy przez wektor wykonujemy od prawej strony do lewej \todo{usun¹æ uwagê - nie ma znaczenia od której strony mno¿ymy?}.
+
+  \begin{equation}
+  \label{eq:przyklad_skladania}
+    \begin{bmatrix} 
+      x' \\ 
+      y' \\ 
+      z' \\ 
+      1 
+    \end{bmatrix} = 
+    \begin{bmatrix} 
+      1 & 0 & 0 & a \\ 
+      0 & 1 & 0 & b \\ 
+      0 & 0 & 1 & c \\ 
+      0 & 0 & 0 & 1 
+    \end{bmatrix}
+    \begin{bmatrix}
+      \cos\gamma & -\sin\gamma & 0 & 0 \\
+      \sin\gamma & \cos\gamma & 0 & 0 \\
+      0 & 0 & 1 & 0 \\
+      0 & 0 & 0 & 1 \\
+    \end{bmatrix}
+    \begin{bmatrix} 
+      x \\ 
+      y \\ 
+      z \\ 
+      1 
+    \end{bmatrix}
+  \end{equation}
+
+  Mo¿emy tak¿e powy¿sze operacje zast¹piæ iloczynem macierzy wynikowej przez wektor. 
+
+  \begin{equation}
+    \begin{bmatrix} x' \\ y' \\ z' \\ 1 \end{bmatrix} = M
+    \begin{bmatrix} x \\ y \\ z \\ 1 \end{bmatrix}
+  \end{equation},
+
+  Macierz transformacji bêd¹c¹ z³o¿eniem poszczególnych transformacji sk³adowych otrzymamy ze wzoru:
+
+  \begin{equation}
+    M = 
+    \begin{bmatrix} 
+      1 & 0 & 0 & a \\ 
+      0 & 1 & 0 & b \\ 
+      0 & 0 & 1 & c \\ 
+      0 & 0 & 0 & 1 
+    \end{bmatrix}
+    \begin{bmatrix}
+      \cos\gamma & -\sin\gamma & 0 & 0 \\
+      \sin\gamma & \cos\gamma & 0 & 0 \\
+      0 & 0 & 1 & 0 \\
+      0 & 0 & 0 & 1 \\
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+      \cos\gamma & -\sin\gamma & 0 & a \\
+      \sin\gamma & \cos\gamma & 0 & b \\
+      0 & 0 & 1 & c \\
+      0 & 0 & 0 & 1 \\
+    \end{bmatrix}
+  \end{equation},
+
+Przekszta³cenie typu \ref{eq:wzor_przeksztalcenie} mo¿emy rozumieæ jako zmianê uk³adu wspó³rzêdnych z $X, Y, Z$ na $X', Y', Z'$. Jak pokazano powy¿ej, takich zmian mo¿e byæ wiele. Kolejnoœæ przekszta³ceñ notujemy za pomoc¹ indeksów dolnych i górnych. Przyk³adowo, gdy s¹ dane dwie macierze przekszta³ceñ:
+\begin{itemize}
+\item $T^0_1$ - macierz pierwsza - przekszta³caj¹ca zerowy uk³ad wspó³rzêdnych w uk³ad o indeksie pierwszym.
+\item $T^1_2$ - macierz druga - przekszta³caj¹ca uk³ad pierwszy w uk³ad drugi.
+\end{itemize}
+Obydwie macierze mo¿na z³o¿yæ w jedn¹ macierz przekszta³caj¹c¹ uk³ad zerowy w uk³ad drugi:
+
+\begin{equation}
+    T^0_2=T^0_1*T^1_2
+\end{equation}
+
+
+\textbf{Dzia³ania na macierzach przekszta³ceñ}\\
+Przedstawione macierze przekszta³ceñ postaci\ref{eq:macierz_transformacji} pozwalaj¹ opisaæ ruch bry³y sztywnej. Przy takim zapisie macierzy konieczne jest tak¿e stosowanie wspó³rzêdnych jednorodnych, ¿eby wymiar wektora przekszta³canych wspó³rzêdnych by³ równy liczbie kolumn macierzy. Macierze tego typu pozwalaj¹:
+\begin{itemize}
+\item przekszta³ciæ punkt P w Q wzglêdem ustalonego uk³adu $(X_0,Y_0,Z_0)$
+\item przekszta³ciæ uk³ad $(X_0,Y_0,Z_0)$ w taki uk³ad $(X_1,Y_1,Z_1)$, ¿e wspó³rzêdne punktu $\begin{bmatrix} x & 1 \end{bmatrix}^T$ wzglêdem $(X_1,Y_1,Z_1)$ transformuj¹ siê do uk³adu $(X_0,Y_0,Z_0)$ jako:
+\begin{equation}\begin{bmatrix} R & T \\ 0 & 1 \end{bmatrix} \begin{bmatrix} x \\ 1 \end{bmatrix}\end{equation}
+\end{itemize}\todo{poprawiæ notacjê macierzy na pogrubion¹ - poprawiæ notacjê wektora $x$ tym tekœcie}
+
+W sensie matematycznym macierze te oraz ich iloczyn nale¿¹ do specjalnej grupy euklidesowej SE(3)\footnote{Specjalna grupa euklidesowa mo¿e byæ tak¿e zapisana jako iloczyn wektora oraz grupy obrotów tj. $SE(3) \cong R^3 \times SO(3)$.}. Dla macierzy nale¿¹cych do tej grupy spe³nione s¹ nastêpuj¹ce zale¿noœci:
+\begin{itemize}
+    \item \begin{equation}\begin{bmatrix} R & T \\ 0 & 1 \end{bmatrix}^{-1} \begin{bmatrix} R & T \\ 0 & 1 \end{bmatrix} = I_4\end{equation}
+    \item \begin{equation}\begin{bmatrix} R & T \\ 0 & 1 \end{bmatrix}^{-1} = \begin{bmatrix} R^T & -R^TT \\ 0 & 1 \end{bmatrix}\end{equation}
+    \item \begin{equation}\begin{bmatrix} R_1 & T_1 \\ 0 & 1 \end{bmatrix}\begin{bmatrix} R_2 & T_2 \\ 0 & 1 \end{bmatrix} = \begin{bmatrix} R_1R_2 & R_1T_2+T_1 \\ 0 & 1 \end{bmatrix}\end{equation}
+\end{itemize}
+
+
+  
+  
+  \todo{rozwin¹æ opis: odwracanie, ortogonalnoœæ, ró¿niczkowanie, pochodne cz¹stkowe, pochodne po czasie}
+  
+  \todo{rozwin¹æ opis?: Podstawy geometrii analitycznej: Uk³ad wspó³rzêdnych, Punkt. Wektor. Powierzchnia. P³aszczyzna. Równanie precyzuje zwykle powierzchniê. Linia. Odleg³oœæ i k¹t. Rzuty, prostopad³oœæ, równoleg³oœæ, przeciêcia itp.}
+    
+  
+  \section{Model geometrii, kinematyki i dynamiki mechanizmów wielocz³onowych.}
+  \todo{dodaæ rysunki jak w \url{http://web.eecs.umich.edu/~ocj/courses/autorob/autorob_10_ik_closedform.pdf}}
+
+  \subsection{Wprowadzenie}
+  Przez model geometrii mechanizmu wielocz³onowego rozumiany jest matematyczny opis mechanizmu uwzglêdniaj¹cy kszta³ty, rozmiary i po³o¿enia elementów sk³adowych mechanizmu. W takim modelu zaniedbywane s¹ prêdkosci, si³y oraz momenty bezwladnosci elementow. Jak ju¿ zosta³o napisane - mechanizm wieloczonowy sk³ada siê z cz³onów po³¹czonych stawami.\\
+  \textbf{Cz³on} bêdzie dalej rozumiany jako bry³a sztywna, bêd¹ca czêci¹ mechanizmu. Przyk³adowo cz³onem jest ko³o w robocie lub przedramie rêki cz³owieka.\\
+  \textbf{Staw lub przegub} jest to po³¹czenie dwóch lub wiêcej cz³onów. Matematycznie staw reprezentuje ograniczenia (wiêzy) na wzglêdne mo¿liwoci ruchu po³¹czonych cz³onów. Typowe wiêzy to:
+\begin{itemize}
+    \item cardan joint or Universal Joint ; 4 kinematical constraints
+    \item prismatic joint; relative displacement along one axis is allowed, constrains relative rotation; implies 5 kinematical constraints
+    \item revolute joint; only one relative rotation is allowed; implies 5 kinematical constraints; see the example above
+    \item spherical joint; constrains relative displacements in one point, relative rotation is allowed; implies 3 kinematical constraints
+\end{itemize}
+
+
+  \textbf{Stopnie swobody i wiêzy}\\
+  
+  Degree of freedom\\
+    The degrees of freedom denote the number of independent kinematical possibilities to move. In other words, degrees of freedom are the minimum number of parameters required to completely define the position of an entity in space.\\
+    A rigid body has six degrees of freedom in the case of general spatial motion, three of them translational degrees of freedom and three rotational degrees of freedom. In the case of planar motion, a body has only three degrees of freedom with only one rotational and two translational degrees of freedom.\\
+    
+ A constraint condition implies a restriction in the kinematical degrees of freedom of one or more bodies. The classical constraint is usually an algebraic equation that defines the relative translation or rotation between two bodies. There are furthermore possibilities to constrain the relative velocity between two bodies or a body and the ground. This is for example the case of a rolling disc, where the point of the disc that contacts the ground has always zero relative velocity with respect to the ground. In the case that the velocity constraint condition cannot be integrated in time in order to form a position constraint, it is called non-holonomic.\todo{rozszerzyæ ten opis dot holonomicznosci?} This is the case for the general rolling constraint.  
+
+  \textbf{Mechanizm wielocz³onowy} mo¿na zazwyczaj przedstawiæ jako ³añcuch kinematyczny, czyli w postaci kilku po³¹czonych ze sob¹ cz³onów (bry³) tworz¹cych jedn¹ lub wiele par kinematycznych, realizuj¹cy zdefiniowane przeniesienie ruchu. W ³añcuchu kinematycznym ka¿dy staw ³¹czy ze sob¹ dwa kolejne cz³ony. \todo{podac definicjê - rozumiem, ¿e ³añcuch kinematyczny to szczególny przypadek mechanizmu wielocz³onowego?}Na potrzeby wyjaœnienia podstawowych pojêæ za³o¿ymy, ¿e opisujemy robota o pojedyñczym ³añcuchu kinematycznym. Dodatkowo ka¿dy z przegubów posiada jeden stopieñ swobody. \todo{czy to za³o¿enie jest potrzebne? czy to jest warunek stosowania notacji D-H?} \\
+
+    \todo{opisaæ Stopnie swobody i wiêzy w ujêciu mechanizmu wielocz³onowego, wiêzy bierne, nadmiarowe?, Ruchliwoœæ}
+
+  \subsection{Model geometrii}
+Dla robota o $n$-przegubach ponumerowanych od 1 do $n$ istnieje $n$+1 cz³onów ponumerowanych od 0 do $n$. Cz³on o numerze 0 nazywany jest cz³onem bazowym, natomiast cz³on $n$ jest cz³onem z elementem wykonawczym. Przegub $i$ ³¹czy cz³ony o numerach $i$-1 i $i$. Z ka¿dym z cz³onów zwi¹zany jest uk³ad wspó³rzêdnych o tym samym numerze.
+Istnieje wiele sposobów przypisania uk³adów wspó³rzêdych do cz³onów mechanizmu. Jedn¹ z najbardziej popularnych konwencji jest notacja Denavita-Hartenberga \cite{hartenberg:1955}. \todo{odnieæ siê równie¿ do sposobu przypisania zmiennych} Okreœla ona jak nazywaæ i w jakich miejscach mechanizmu umieszczaæ oraz do których cz³onów przyporz¹dkowaæ uk³ady wspó³rzêdnych kartezjañskich, które bêd¹ opisywa³y mechanizm.
+Podstawy notacji zamieszczono na Rys. \ref{fig:1}:
 
   \begin{figure}[htb!]
 	  \begin{center}
 		  \includegraphics[width=1\linewidth]{figures/fig1}
 		  %\\[1em]%
-		  \caption{Standardowa notacja Denavita – Hartenberga (przyk³ad dwóch obrotowych przegubów $i$-1 oraz $i$), $a_i$ - d³ugoœæ cz³onu, odleg³oœæ od osi $z_i-1$ do osi $z_i$ mierzona wzd³u¿ osi $x_i$, $\alpha_i$ – k¹t skrêcenia, k¹t miêdzy osiami $z_i-1$ i $z_i$ mierzony wokó³ osi $x_i$, $d_i$ - odsuniêcie cz³onów,
-			  odleg³oœæ od œrodka uk³adu $i-1$ do osi $x_i$ mierzona wzd³u¿ osi $z_i-1$, $\theta_i$ - k¹t konfiguracji, k¹t miêdzy osiami $x_i-1$ i $x_i$ mierzony wokó³ osi $z_i-1$ } \label{fig:1}
+		  \caption{Standardowa notacja Denavita – Hartenberga (przyk³ad dwóch obrotowych przegubów $i$-1 oraz $i$), $a_i$ - d³ugoœæ cz³onu, odleg³oœæ od osi $z_i-1$ do osi $z_i$ mierzona wzd³u¿ osi $x_i$, $\alpha_i$ – k¹t skrêcenia, k¹t miêdzy osiami $z_i-1$ i $z_i$ mierzony wokó³ osi $x_i$, $d_i$ - odsuniêcie cz³onów, odleg³oœæ od œrodka uk³adu $i-1$ do osi $x_i$ mierzona wzd³u¿ osi $z_i-1$, $\theta_i$ - k¹t konfiguracji, k¹t miêdzy osiami $x_i-1$ i $x_i$ mierzony wokó³ osi $z_i-1$ } 
+		\label{fig:1}
 	  \end{center}                                         
   \end{figure}
 
-  Po okreœleniu parametrów uk³adów wspó³rzêdnych kartezjañskich mo¿na wyznaczyæ
-  jednorodne macierze przekszta³ceñ okreœlaj¹cych orientacjê i po³o¿enie uk³adu $i$ wzglêdem uk³adu $i-1$ \cite{fu:1987}:
+  Po okreœleniu parametrów uk³adów wspó³rzêdnych kartezjañskich mo¿na wyznaczyæ jednorodne macierze przekszta³ceñ okreœlaj¹cych orientacjê i po³o¿enie uk³adu $i$ wzglêdem uk³adu $i-1$ \cite{fu:1987}:
 
   \begin{equation}
   ^{i-1}T{i}=T_{z,\theta}T_{z,d}T_{x,a}T_{x,\alpha}
@@ -69,20 +394,92 @@
   0 & 0 & 0 & 1
   \end{array}\right] 
   \end{equation}\label{eq:5}
+
+\subsubsection{Przyk³ad - kinematyka nogi robota}
+Za³ó¿my, ¿e chcemy opracowaæ model nogi dla maszyny krocz¹cej przedstawionej schematycznie na rys. \ref{fig:szkic_robota}. Przyjmijmy dodatkowo, ¿e ka¿da noga ma cztery stopnie swobody i wszystkie przeguby s¹ obrotowe.
+
+\begin{figure}[htb!]
+	\centering
+		\includegraphics[width=0.8\textwidth]{figures/szkic_robota.pdf}
+	\caption{Szkic konfiguracji robota.}
+	\label{fig:szkic_robota}
+\end{figure}
+
+W zwi¹zku z powy¿szym, u¿ywaj¹c notacji Denavita-Hartenberga, definicjê uk³adów wspó³rzêdnych  i ich relacji pokazano na schematycznym rysunku \ref{fig:schemat_nogi}.
+
+\begin{figure}[htb!]
+	\centering
+		\includegraphics[width=0.8\textwidth]{figures/schemat_nogi.pdf}
+	\caption{Schemat kinematyczny nogi w notacji Denavita-Hartenberga.}
+	\label{fig:schemat_nogi}
+\end{figure}
+
+Nale¿y zauwa¿yæ, ¿e za pocz¹tek bazowego uk³adu wspó³rzêdnych bierze siê œrodek przegubu po³¹czonego z korpusem maszyny. Punkt ten jest nieruchomy i jest oddalony o sta³¹ odleg³oœæ od œrodka ciê¿koœci robota dla ka¿dej nogi. Uk³ad $\mathrm{X_{1}Y_{1}Z_{1}}$  obraca siê wzglêdem nieruchomego brzegu korpusu $\mathrm{(X_{0}Y_{0}Z_{0})}$. Kolejne przeguby otrzymuj¹ numeracjê 2-4,  gdzie punkt koñca nogi, wymagany do obliczeñ posiada notacjê $\mathrm{X_{4}Y_{4}Z_{4}}$. W tabeli \ref{tab:par_przek} pokazano parametry przekszta³cenia Denavita-Hartenberga dla tego uk³adu.\\
+\begin{table}[htb!]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline 
+i & $a_{i}$ & $\alpha_{i}$ & $d_{i}$ & $\theta_{i}$\tabularnewline[0.3em]
+\hline 
+\hline 
+1 & 0 & $\frac{\pi}{2}$ & $d_{1}$ & $\theta_{1}$\tabularnewline[0.3em]
+\hline 
+2 & $l_{1}$ & $-\frac{\pi}{2}$ & $d_{2}$ & $\theta_{2}$\tabularnewline[0.3em]
+\hline 
+3 & $l_{2}$ & 0 & 0 & $\theta_{3}$\tabularnewline[0.3em]
+\hline 
+4 & $l_{3}$ & 0 & 0 & $\theta_{4}$\tabularnewline[0.3em]
+\hline 
+\end{tabular}
+\caption{Parametry przekszta³ceñ w notacji D-H.}
+\label{tab:par_przek}
+\end{table}
+
+A poszczególne macierze transformacji maj¹ postaæ:\\
+\begin{center}
+\begin{tabular}[H]{cc}
+$\mathbf{T}{}_{1}^{0}=\begin{bmatrix}c_{1} & 0 & s_{1} & 0\\
+s_{1} & 0 & -c_{1} & 0\\
+0 & 1 & 0 & d_{1}\\
+0 & 0 & 0 & 1
+\end{bmatrix}$
+& 
+$\mathbf{T}{}_{2}^{1}=\begin{bmatrix}c_{2} & 0 & -s_{2} & l_{1}c_{2}\\
+s_{2} & 0 & c_{2} & l_{1}s_{2}\\
+0 & -1 & 0 & d_{2}\\
+0 & 0 & 0 & 1
+\end{bmatrix}$ \\
+\end{tabular} 
+
+\begin{tabular}[H]{cc}
+$ \mathbf{T}{}_{3}^{2}=\begin{bmatrix}c_{3} & -s_{3} & 0 & l_{2}c_{3}\\
+s_{3} & c_{3} & 0 & l_{2}s_{3}\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1
+\end{bmatrix}$
+&
+$\mathbf{T}{}_{4}^{3}=\begin{bmatrix}c_{4} & -s_{4} & 0 & l_{3}c_{4}\\
+s_{4} & c_{4} & 0 & l_{3}s_{4}\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1
+\end{bmatrix}$ \\
+\end{tabular} 
+\end{center}
+
+W powy¿szych równaniach w celu skrócenia zapisu, zastosowano nastêpuj¹c¹ konwencjê: $s_{n}=\sin(\theta_{n})$, $c_{n}=\cos(\theta_{n})$. Ten sposób notacji bêdzie obowi¹zywa³ w dalszej czêœci skryptu.\todo{przenieœæ to gdzieœ wczeœniej? Do wprowadzenia matematycznego?}
   %
-  Wykorzystuj¹c jednorodne macierze przekszta³ceñ mo¿na obliczyæ wspó³rzêdne
-  punktu w $m$-tym uk³adzie, znaj¹c wspó³rzêdne tego samego punktu w $k$-tym uk³adzie
-  (zak³adaj¹c, ¿e $k>m$), jest to tzw. proste zadanie kinematyki. Zale¿noœæ t¹ wyznacza siê
-  korzystaj¹c z wyra¿enia \cite{fu:1987}:
+  \subsection{Zadanie proste geometrii} 
+Zadaniem prostym geometrii\footnote{w odniesieniu do mechanizmów wielocz³onowych} (czasem kinematyki) okreœla siê obliczenie wspó³rzêdnych kartezjañskich dowolnego punktu na mechaniŸnie wielocz³onowym znaj¹c jego wspó³rzêdne przegubowe (konfiguracyjne, maszynowe). Najwa¿niejszym punktem orientacyjnym jest zazwyczaj jeden z punktów ostatniego cz³onu maszyny. W wyniku zadania prostego wyznacza siê macierz transformacji uk³adu ostatniego w uk³ad bazowy. Wskazuje ona, jakie wspó³rzêdne w uk³adzie bazowym bêdzie mia³ ten punkt, gdy poszczególne k¹ty obrotu silników w przegubach bêd¹ mia³y zadane, znane wartoœci.\\
+W ujêciu ogólnym, wykorzystuj¹c jednorodne macierze przekszta³ceñ mo¿na obliczyæ wspó³rzêdne punktu (np. koñcówka chwytaka) w $m$-tym uk³adzie (np. uk³ad zwi¹zany z nieruchom¹ podstaw¹ robota), znaj¹c wspó³rzêdne tego samego punktu w $k$-tym (dla $k>m$)  uk³adzie (np. uk³ad zwi¹zany z ostatnim cz³onem, do którego prztwierdzony jest chwytak). Zale¿noœæ \todo{odniesc sie do opisu przy sk³adaniu macierzy} opisuj¹c¹ zadanie proste wyznacza siê korzystaj¹c z wyra¿enia \cite{fu:1987}:
   %
   \begin{equation}
-  P_{Am}=^{m}T_{k}P_{Ak}, k>m
+  P_{Am}=T^{m}_{k}P_{Ak}, k>m
   \end{equation}\label{eq:6}
   %
   gdzie:
   %
   \begin{equation}
-  ^{m}T_{k}=^{m}T_{m+1}\quad ^{m+1}T_{m+2} \dots ^{k-1}T_{k}
+  T^{m}_{k}=T^{m}_{m+1}\quad T^{m+1}_{m+2} \dots T^{k-1}_{k}
   \end{equation}\label{eq:7}
   %
   $P_{Ak}=\left[\begin{array}{c}
@@ -98,8 +495,90 @@
   z_{Am}\\ 
   1
   \end{array}\right]$ - jednorodny wektor wspó³rzêdnych punktu $A$ w $m$-tym uk³adzie wspó³rzêdnych
+ 
+ \subsubsection{Przyk³ad - zadanie proste dla nogi robota} 
+\todo{dodaæ przyk³ad w matlabie}
+Dla przyk³adowego modelu przedstawionego na Rys.\ref{fig:schemat_nogi}  Macierz transformacji z uk³adu 0 do uk³adu 4 jest równa:
+\begin{equation}
+\mathbf{T}{}_{4}^{0}=\mathbf{T}{}_{1}^{0}\cdot\mathbf{T}{}_{2}^{1}\cdot\mathbf{T}_{3}^{2}\cdot\mathbf{T}_{4}^{3}	
+\end{equation}
+
+Po pomno¿eniu macie¿y oraz wstawieniu znanych d³ugoœci geometrycznych otrzymano:
+\footnotesize
+\[
+\mathbf{T}{}_{4}^{0}=\begin{bmatrix}-c_{4}(s_{1}s_{3}-c_{1}c_{2}c_{3})-s_{4}(c_{3}s_{1}+c_{1}c_{2}s_{3}) & s_{4}(s_{1}s_{3}-c_{1}c_{2}c_{3})-c_{4}(c_{3}s_{1}+c_{1}c_{2}s_{3}) & -c_{1}s_{2} & o_{4x}\\
+c_{4}(c_{1}s_{3}+c_{2}c_{3}s_{1})+s_{4}(c_{1}c_{3}-c_{2}s_{1}s_{3}) & c_{4}(c_{1}c_{3}-c_{2}s_{1}s_{3})-s_{4}(c_{1}s_{3}+c_{2}c_{3}s_{1}) & -s_{1}s_{2} & o_{4y}\\
+c_{34}s_{2} & -s_{34}s_{2} & c_{2} & o_{4z}\\
+0 & 0 & 0 & 1
+\end{bmatrix}\]
+\normalsize
+gdzie: $s_{nm}=\sin(\theta_{n}+\theta_{m})$
+
+Wspó³rzêdne kartezjañskie koñca nogi wyra¿one w uk³adzie bazowym s¹ równe:\\
+\footnotesize
+\begin{equation}
+\mathbf{o_{4}}=\begin{bmatrix}40s_{1}+22.5c_{1}c_{2}-67.5s_{1}s_{3}-53.7c_{4}(s_{1}s_{3}-c_{1}c_{2}c_{3})-53.7s_{4}(c_{3}s_{1}+c_{1}c_{2}s_{3})+67.5c_{1}c_{2}c_{3}\\
+-40c_{1}+22.5c_{2}s_{1}+67.5c_{1}s_{3}+53.7c_{4}(c_{1}s_{3}+s_{1}c_{2}c_{3})+53.7s_{4}(c_{3}c_{1}+s_{1}c_{2}s_{3})+67.5s_{1}c_{2}c_{3}\\
+22.5s_{2}+67.5c_{3}s_{2}-53.7s_{2}s_{3}s_{4}+53.7c_{3}c_{4}s_{2}+41.5
+\end{bmatrix}
+\end{equation}
+\normalsize
+
+
+  \subsection{Zadanie odwrotne geometrii} 
+   Zadanie odwrotne geometrii (czasem okreœlane równie¿ jako zadanie odwrotne kinematyki) zazwyczaj rozumiane jest jako problem wyznaczenia wspó³rzêdnych konfiguracyjnych (np. k¹tów pomiedzy kolejnymi cz³onami) znaj¹c wspó³rzêdne (np. w uk³adzie bazowym) wybranego punktu ostatniego cz³onu w ³añcuchu kinematycznym. Zadanie odwrotne mo¿na rozwi¹zaæ stosuj¹c metody:\\
+\begin{itemize}
+\item analityczne - wzory w zamkniêtej postaci, pozwalaj¹ wyznaczyæ wiele rozwi¹zañ jednego zadania,
+\item iteracyjne - w szczególnosæi na podstawie Jakobianu.
+\end{itemize}
+
+\todo{czy to wyczerpuj¹cy podzia³? przedstawiæ Rozwi¹zanie analityczne w postaci rozwi¹zanie uk³adu równañ. + Przyk³ad}
+
+ Nale¿y zauwa¿yæ, ¿e zazwyczaj rozwi¹zanie zadania odwrotnego nie jest trywialne - tzn. istnieje nieskoñczona liczba rozwi¹zañ tego problemu. \todo{rysunek}  
   %
-  
+  \subsection{Model kinematyki}
+
+  \subsection{Zadanie proste kinematyki} 
+W sterowaniu robotem wa¿nym elementem jest znajomoœæ prêdkoœci koñca stopy robota. W tym celu macierze transformacji s¹ wykorzystywane do utworzenia jakobianu tych funkcji, który pomno¿ony przez pochodne wzglêdem czasu zmiennych parametrów da poszczególne prêdkoœci liniowe i k¹towe koñca nogi. Jakobian uk³ady otwartego, który posiada cztery cz³ony obrotowe, jest zdefiniowany:
+\small\begin{equation}
+\mathbf{J}=\begin{bmatrix}z_{0}\times o_{4} & z_{1}\times(o_{4}-o_{1}) & z_{2}\times(o_{4}-o_{2}) & z_{3}\times(o_{4}-o_{3})\\
+z_{0} & z_{1} & z_{2} & z_{3}
+\end{bmatrix}
+\end{equation}\normalsize
+
+gdzie:
+\begin{equation} 
+z_{i-1}^{0}=R_{i-1}^{0}\cdot z_{0}
+\end{equation}
+\begin{equation} 
+z_{0}=[0\,0\,1]^{T}
+\end{equation}
+Wektory $o_{i}$ to wektory wspó³rzêdnych, po kolejnych przejœciach, wyra¿one w uk³adzie globalnym $\mathrm{(X_{0}Y_{0}Z_{0})}$. Po podstawieniu jakobian ma postaæ macierzy 4x6. Jego zapis jest na tyle obszerny, i¿ zosta³ pominiêty. Jakobian jest nastêpnie wstawiony w równanie:  
+\begin{equation}
+\begin{bmatrix}v\\
+\omega
+\end{bmatrix}=\mathbf{J}\cdot\dot{q}
+\label{eq:v_jac}
+\end{equation}
+Gdzie $\dot{q}=[\dot{\theta}_{1}\,\dot{\theta}_{2}\,\dot{\theta}_{3}\,\dot{\theta}_{4}]^{T}$.
+
+  \subsection{Zadanie odwrotne kinematyki} 
+  Zadanie odwrotne kinematyki to problem wyznaczenia poszczególnych wartoœci elementów wykonawczych znaj¹c wspó³rzêdne koñca manipulatora. W omawianym przypadku nie ma mo¿liwoœci analitycznego wyznaczenia poszukiwanych wartoœci i trzeba skorzystaæ z metody numerycznej. Nale¿y zauwa¿yæ, ¿e istnieje nieskoñczona liczba rozwi¹zañ takiego równania i okreœlenie w³aœciwej konfiguracji nie jest trywialne.
+Dlatego, do wyznaczenia kinematyki odwrotnej pos³u¿ono siê obliczonym wczeœniej jakobianem. Jako, ¿e jakobian okreœla tendencjê zmiany wspó³rzêdnych przy okreœlonych wartoœciach obrotu przegubów, to korzystaj¹c z tej metody mo¿na wyznaczyæ z du¿¹ dok³adnoœci¹ rzeczywist¹ konfiguracjê. Zapisuj¹c pierwsze trzy wiersze jakobianu, œwiadcz¹ce o zmianie prêdkoœci liniowej jako $\mathbf{J_{P}}$ i przekszta³caj¹c równanie \ref{eq:v_jac}, gdzie pochodna po wspó³rzêdnych jest równa prêdkoœci, otrzymano:
+\begin{equation}
+\dot{\mathbf{o}}=\mathbf{J_{P}\cdot\dot q}
+ \end{equation}
+Z tego:
+\begin{equation}
+\mathbf{\dot{q}}=\mathbf{J}_{\mathbf{P}}^{-1}\cdot\dot{\mathbf{o}}
+\end{equation}
+Aby uzyskaæ aktualne wartoœci k¹tów przemieszczeñ na silnikach nale¿y sca³kowaæ praw¹ stronê równania oraz dodaæ do niej znan¹ wartoœæ pocz¹tkow¹ k¹tów. W zawi¹zku jednak z tym, i¿ macierz $\mathbf{J_{P}}$ nie jest kwadratowa do jej odwrócenia nale¿y znaleŸæ uogólnion¹ macierz odwrotn¹, zwan¹ tak¿e macierz¹ pseudoodwrotn¹. Do jej wyznaczenia pos³u¿ono siê wbudowan¹ funkcj¹ Matlaba pinv(). Ostatecznie:
+\begin{equation}
+\mathbf{q}=\mathbf{q}_{\mathbf{0}}+\int(\mathbf{J}_{\mathbf{P}}^{+}\cdot\mathbf{\dot{o})}\mathrm{dt}
+\end{equation}
+Macierz pseudoodwrotna, zwana tak¿e macierz¹ Moora-Penrose'a daje najlepszy numeryczny rezultat odwracania pozyskanego wczeœniej jakobianu. Jednak¿e, w otoczeniu osobliwoœci, macierz pseudoodwrotna mo¿e spowodowaæ problemy ze stabilnoœci¹. W tych miejscach, jakobian nie ma ju¿ maksymalnego rzêdu macierzy co odpowiada niemo¿liwemu do wykonania ruchowi koñca nogi. Gdy konfiguracja uk³adu wielocz³onowego jest bliska osobliwoœci, wykorzystanie takiej macierzy prowadzi do du¿ych zmian k¹tów w przegubach nawet dla ma³ych zmian w pozycji docelowej. \cite{book:IK}
+Do weryfikacji przedstawionych obliczeñ wykorzystano symulacjê w Simulinku, która ³¹czy opisane równania w jeden model matematyczny. Jest ona szerzej opisana w sekcji \ref{sec:simulink_model}.
+
   \subsection{Model dynamiki - Kuba}
   %
   Zale¿noœci opisuj¹ce dynamikê robota o $n$-stopniach swobody mo¿na wyznaczyæ
