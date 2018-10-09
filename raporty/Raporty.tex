@@ -1,7 +1,6 @@
-%& --translate-file=cp1250pl.tcx
 \documentclass[10pt,a4paper]{report}
 \usepackage{polski}
-\usepackage[latin1]{inputenc}
+\usepackage[cp1250]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
@@ -11,45 +10,44 @@
 \begin{document}
 	\maketitle
 	\section{Tematy raportów}
-\begin{enumerate}
-	\item Notacja DH i jej modyfikacje (dh notation alternatives modifications). (JK)
-	\item Rodzaje i opis mechanizmów wielocz³onowych z elementami elastycznymi (rigid-flexible flexible multibody system). (JK)
-	\item Zadanie odwrotne kinematyki - przegl¹d metod (inverse kinematics methods). (JK)
-	\item Zastosowanie kwaternionów do opisu mechanizmów wielocz³onowych. (JM)
-	\item Opis zamknietych mechanizmów wielocz³onowych (closed loop multibody system). (JK)
-	\item Opis mechanizmów wielocz³onowych o strukturze rozga³êzionej (multibody system tree-like tree structure). (JK)
-	\item Opis modelu robota Puma 560 - parametry modelu, model kinematyki i dynamiki. (JM)
-	\item Opis modelu robota Universal UR5 - parametry modelu, model kinematyki i dynamiki. (JM)
-	\item Opis modelu robota Fanuc LR Mate 200iC - parametry modelu, model kinematyki i dynamiki. (JK)
-	\item Opis modelu robota Fanuc M10iA - parametry modelu, model kinematyki i dynamiki. (JK)
-	\item Opis modelu robota Fanuc M1iA - parametry modelu, model kinematyki i dynamiki. (JK)
-	\item Opis modelu ramienia robota modelarskiego - parametry modelu, model kinematyki i dynamiki. (JK)
-	\item Algorytm Walkera-Orina wyznaczania dynamiki MW. (JM)
-	\item Linearyzacja modelu robota w wybranym punkcie pracy. (JM)
-	\item Opis przegubów kulistych w MW. (JM)
-	\item Algorytm Fatherstone'a wyznaczania dynamiki MW. (JM)
-	\item Instalacja i uruchomienie symulacji mechanizmu wielocz³onowego w srodowisku V-Rep, komunikacja srodowisk V-Rep i Matlab. (JM)
-	\item Biblioteki programistyczne do symulacji mechanizmów wielocz³onowych - przegl¹d i porównanie. (JK)
-	\item Opis modelu robota Darwin-OP i symulacja w srodowisku ROS/Gazebo. (JM)
-	\item Opis modelu robota czterono¿nego w srodowisku ROS/Gazebo (urdf xacro ros gazebo). (JK)
-	\item Opis uk³adów niedosterowanych (underactuated multibody systems). (JK)
-	\item Sposoby opisu kolizji (multibody systems collision contact force). (JK)
-	\item Kinematyczne równania wiezów dla po³o¿enia, prêdkoœci i przyspieszenia (constrained multibody systems). (JK)
-	\item Jakobian analityczny i geometryczny - ró¿ne sposoby zapisu orientacji i obrotu. (JK)
-	\item Identyfikacja parametrów kinematycznych i dynamicznych robotów. (JM)
-	%\item Model dwuno¿nej maszyny krocz¹cej. (JK) %to siê dubluje z \item Opis modelu robota Darwin-OP i symulacja w srodowisku ROS/Gazebo. (JM)
-	\item Strategie poruszania siê dwuno¿nych maszyn krocz¹cych - metoda ZMP (biped, walking pattern, passive walking, zmp method). (JK)
-	%\item Model czterono¿nej maszyny krocz¹cej. (JK) %to siê dubluje z \item Opis modelu robota czterono¿nego w srodowisku ROS/Gazebo (urdf xacro ros gazebo). (JK)
-        \item Strategie poruszania siê czterono¿nych maszyn krocz¹cych (quadruped, walking pattern, gait). (JK)
-	\item Równowaga i stabilnoœæ w odniesieniu do maszyn krocz¹cych. (JK)
-	\item Model motocyklu/roweru w ujêciu mechanizmów wielocz³onowych. (JK)
-	\item Heurystyki dla planowania trasy. (JK)
-	\item Sposoby dyskretyzacji przestrzeni przeszukiwania przy planowaniu trasy. (JK)
-	\item Sposoby redukcji przestrzeni przeszukiwania przy planowaniu trasy. (JK)
-	\item Przestrzeñ przeszukiwania z uwzglêdnieniem czasu - omijanie przeszkód w ruchu. (JK)
-	\item Algorytm Dijkstry i A*. (JK)
-	\item Algorytm D*, D* Light oraz D* Extra Lite. (JK)
-\end{enumerate}
+	\begin{enumerate}
+		\item Notacja D-H i jej modyfikacje (-DH notation alternatives modifications). (JK)
+		\item Rodzaje i opis mechanizmów wielocz³onowych z elementami elastycznymi (rigid-flexible flexible multibody system). (JK)
+		\item Zadanie odwrotne kinematyki - przegl¹d metod (inverse kinematics methods). (JK)
+		\item Zastosowanie kwaternionów do opisu mechanizmów wielocz³onowych (robot kinematics using quaternions). (JM)
+		\item Opis zamkniêtych mechanizmów wielocz³onowych (closed loop multibody system). (JK)
+		\item Opis mechanizmów wielocz³onowych o strukturze rozga³êzionej (multibody system tree-like tree structure). (JK)
+		\item Opis modelu robota Puma 560 - parametry modelu, model kinematyki i dynamiki \footnote{http://www.cs.cmu.edu/~deadslug/puma.html}. (JM)
+		\item Opis modelu robota Universal UR5 - parametry modelu, model kinematyki i dynamiki \footnote{https://www.universal-robots.com/pl/produkty/model-ur5/}. (JM)
+		\item Opis modelu robota Fanuc LR Mate 200iC - parametry modelu, model kinematyki i dynamiki. (JK)
+		\item Opis modelu robota Fanuc M10iA - parametry modelu, model kinematyki i dynamiki. (JK)
+		\item Opis modelu robota Fanuc M1iA - parametry modelu, model kinematyki i dynamiki. (JK)
+		\item Opis modelu ramienia robota modelarskiego - parametry modelu, model kinematyki i dynamiki. (JK)
+		%\item Algorytm Walkera-Orina wyznaczania dynamiki MW. (JM)
+		\item Linearyzacja modelu mechanizmów wielocz³onowych ( linearization of multibody system equations). (JM)
+		\item Opis przegubów kulistych w MW (ball joint mechanism). (JM)
+		\item Algorytm Fatherstone'a wyznaczania dynamiki MW (Featherstone's algorithm). (JM)
+		\item Instalacja i uruchomienie symulacji mechanizmu wielocz³onowego w srodowisku V-Rep, komunikacja srodowisk V-Rep i Matlab \footnote{http://www.coppeliarobotics.com/}. (JM)
+		\item Biblioteki programistyczne do symulacji mechanizmów wielocz³onowych - przegl¹d i porównanie. (JK)
+		\item Opis modelu robota Darwin-OP w œrodowisku ROS/Gazebo (urdf xacro ros gazebo)\footnote{http://www.ros.org/news/2015/02/darwin-op-package-for-rosgazebo-available.html}. (JM)
+		\item Opis modelu robota czterono¿nego w srodowisku ROS/Gazebo (urdf xacro ros gazebo). (JK)
+		\item Opis uk³adów niedosterowanych (underactuated multibody systems). (JK)
+		\item Sposoby opisu kolizji (multibody systems collision contact force). (JK)
+		\item Kinematyczne równania wiêzów dla po³o¿enia, prêdkoœci i przyspieszenia (constrained multibody systems). (JK)
+		\item Jakobian analityczny i geometryczny - ró¿ne sposoby zapisu orientacji i obrotu (differential kinematics, geometric jacobian, analytical Jacobian). (JK)
+		\item Identyfikacja parametrów kinematycznych i dynamicznych mechanizmów wielocz³onowych (Determination of the base inertial parameters). (JM)
+		\item Strategie poruszania siê dwuno¿nych maszyn krocz¹cych - metoda ZMP (biped, walking pattern, passive walking, zmp method). (JK)
+		\item Strategie poruszania siê czterono¿nych maszyn krocz¹cych (quadruped, walking pattern, gait). (JK)
+		\item Równowaga i stabilnoœæ w odniesieniu do maszyn krocz¹cych (stability of walking machines). (JK)
+		\item Model motocyklu/roweru w ujêciu mechanizmów wielocz³onowych. (JK)
+		\item Heurystyki dla planowania trasy. (JK)
+		\item Sposoby dyskretyzacji przestrzeni przeszukiwania przy planowaniu trasy. (JK)
+		\item Sposoby redukcji przestrzeni przeszukiwania przy planowaniu trasy. (JK)
+		\item Przestrzeñ przeszukiwania z uwzglêdnieniem czasu - omijanie przeszkód w ruchu. (JK)
+		\item Algorytm Dijkstry i A*. (JK)
+		\item Algorytm D*, D* Light oraz D* Extra Lite. (JK)
+	\end{enumerate}
+	\newpage
 	\section{Zakres raportów}
 	\begin{enumerate}
 		\item Przegl¹d literatury zwi¹zanej z tematem raportu.
@@ -60,7 +58,7 @@
 		\begin{itemize}
 			\item Strona tytu³owa, 7-10 stron tekstu + 1-2 strony literatury.
 			\item Wykorzystanie systemu edycji tekstów Latex, szablon \textbf{report}.
-			\item Uk?ad: A4, czcionka: Times New Roman, 10pt.
+			\item Uk³ad: A4, czcionka: Times New Roman, 10pt.
 		\end{itemize}
 	\end{enumerate}
 	\section{Terminy}
