@@ -9,7 +9,7 @@
   %
  \begin{equation}
  	s(x)=Hx(t)
- \end{equation}
+ \end{equation}\label{eq:6_1}
   %
   gdzie: $H\in R^{m\times n}$ i jest pe?nego rz?du, $n$ - liczba zmiennych stanu uk?adu, $m$ - liczba sygna?ów steruj?cych.
   
@@ -17,13 +17,13 @@
   %
 	\begin{equation}
 	\Psi=\left\{x\in R^{n}:s(x)=0\right\}
-	\end{equation}
+	\end{equation}\label{eq:6_2}
   %
   Zbiór  $\Psi$ nazywany jest powierzchni? ?lizgow?. Mo?na go te? nazwa? hiperpowierzchni?, lub quasipowierzchni? ?lizgow?, gdy? wymiar $\Psi$ zale?y od liczby  zmiennych stanu i liczby wej?? steruj?cych zgodnie z zale?no?ci?:
    %
   \begin{equation}
   n_{\Psi}=n-m
-  \end{equation}
+  \end{equation}\label{eq:6_3}
   %
   Przyk?adowo dla dwóch zmiennych stanu i jednego wej?cia steruj?cego zbiór $\Psi$ jest  krzyw? o wymiarze 1, dla uk?adu o trzech zmiennych stanu i jednym wej?ciu steruj?cym jest p?aszczyzn?, dla uk?adu o sze?ciu zmiennych stanu i dwóch wej?ciach steruj?cych ma wymiar $n_{\Psi}=4$
   
@@ -31,13 +31,13 @@
   %
   \begin{equation}
   s(x)=[s_{1}(x),\dots,s_{m}(x)]^{T}, H=[H_{1},\dots,H_{m}] 
-  \end{equation}
+  \end{equation}\label{eq:6_4}
   %
   gdzie: $H_{i}=[h_{i1}\quad h_{i2} \dots h_{in}], i=1,\dots,m$   równanie (4.5) mo?na przedstawi? w postaci $i$ równa?:
    %
  	\begin{equation}
  	s_{i}(x)=H_{i}x\quad \text{gdzie} i=1,\dots,m 
- 	\end{equation}
+ 	\end{equation}\label{eq:6_5}
   %
   Zbiór punktów $\Psi_{i}=\left\{x\in R^{n}:s_{i}(x) = 0\right\} $ opisuje powierzchni? $\Psi_{i}$ zwan? $i$-t? sk?adow? powierzchni? ?lizgow?.
 
@@ -52,7 +52,7 @@
   u_{i}^{+}(x)& \text{gdy} & s_{i}(x)>0 \\ 
   u_{i}^{-}(x)& \text{gdy} & s_{i}(x)<0  
   \end{array}\right., i=1,\dots,m
-  \end{equation}
+  \end{equation}\label{eq:6_6}
   %
   Projektowanie uk?adu sterowania ?lizgowego powinno sk?ada? si? z nast?puj?cych etapów:
   %
@@ -65,7 +65,7 @@
   którego wyznacza si? sygna? steruj?cy. Przyk?adowa funkcja prze??czaj?ca (oznaczona kolorem niebieskim) ma posta?:
   \begin{equation}
   s(x)=x_{2}+hx_{1}, h>0
-  \end{equation}
+  \end{equation}\label{eq:6_7}
   %
     \begin{figure}[htb!]
   	\begin{center}
@@ -74,7 +74,196 @@
   			?lizgowym, z wyró?nieniem trybu osi?gania i trybu ?lizgowego.}\label{rys:6.1}
   	\end{center}
   \end{figure}
+	%
+\subsection{Projektowanie funkcji prze??czaj?cej dla mechanizmu wielocz?onowego}
+%
+W przypadku rozwa?anego robota, równanie funkcji prze??czaj?cej proponowane jest w postaci \cite{young:controller}, \cite{slotine:tracking}, \cite{gao:variable}:
+%
+\begin{equation}
+	s(\tilde{s})=H\tilde{x}=[\Lambda I][e_{q}\quad e_{\dot{q}}]^{T}=\Lambda e_{q}+e_{\dot{q}}
+\end{equation}\label{eq:6_8}
+%
+gdzie: $\tilde{x}=[e_{q}\quad e_{\dot{q}}]^{T}$, $\Lambda=\text{diag}[h_{1}\dots h_{n}]$
+%
+Powierzchnia ?lizgowa wyznaczona dla robota $\Psi_{rob}$ opisywana jest przez zbiór punktów w przestrzeni zmiennych stanu robota takich, ?e:
+%
+\begin{equation}
+\Psi_{\text{rob}} ={x\in R^{2n}:s(\tilde{x})=0}
+ \end{equation}\label{eq:6_9}
+%
+Aby stan uk?adu zd??a? zawsze w kierunku powierzchni $\Psi_{\text{rob}}$ , czyli znajdowa? si? w trybie osi?gania musz? zosta? spe?nione odpowiednie warunki osi?gania powierzchni ?lizgowej. Maj? one posta? \cite{edwards:sliding}:
+%
+\begin{equation}
+\dot{s}_{i}\tilde{x}s_{i}(\tilde{x})<0, \qquad, i=1\dots n
+\end{equation}\label{eq:6_10}
+%
+gdzie:
+\begin{equation}
+s_{i}(\tilde{x})=h_{i}e_{qi}+e_{\dot{q}i}, \qquad, i=1\dots n
+\end{equation}\label{eq:6_11}
+%
+Warunek (4.15) mówi, ?e ka?da sk?adowa powierzchnia ?lizgowa $\Psi_{i}$ , taka ?e:
+%
+\begin{equation}
+\Psi_{i}={\tilde{x}\in R^{2n}:s_{i}(\tilde{x})=0}
+\end{equation}\label{eq:6_12}
+%
+musi by? przynajmniej lokalnie przyci?gaj?ca i w pewnym obszarze wokó? tej powierzchni trajektoria uk?adu ze sterowaniem ?lizgowym musi kierowa? si? zawsze w jej stron?.
+
+Powierzchnia ?lizgowa $\Psi_{\text{rob}}$ mo?e by? opisana jako zbiór punktów pochodz?cy z wzajemnego przecinania si? wszystkich powierzchni $\Psi_{i}$ co mo?na wyrazi? zale?no?ci?:
+%
+\begin{equation}
+\Psi_{\text{rob}}=\Psi_{1}\cap \Psi_{2}\cap \dots \Psi_{n}
+\end{equation}\label{eq:6_13}
+%
+\subsection{Sterowanie równowa?ne}
+%
+Aby uk?ad realizowa? tryb ?lizgowy, nale?y okre?li? odpowiednie sterowanie. Jednym z proponowanych rozwi?za? jest tzw.?sterowanie równowa?ne? \cite{edwards:sliding}.
+Sterowanie równowa?ne wykorzystywane jest przy analizie uk?adu ze sterowaniem ?lizgowym. Sterowanie to jest sterowaniem ci?g?ym odpowiadaj?cym sterowaniu o zmiennej strukturze, które wymusza ruch stanu uk?adu po powierzchni ?lizgowej $\Psi_{rob}$, w momencie gdy stan uk?adu j? osi?gnie.
+
+Podczas poni?szych wyprowadze? przyj?to, ?e parametry modelu obiektu sterowania, na podstawie którego oblicza si? sygna? steruj?cy, s? takie same jak parametry sterowanego obiektu.
+
+Gdy stan uk?adu znajduje si? na powierzchni $\Psi_{rob}$ i zachodzi idealny ruch ?lizgowy, spe?nione s? nast?puj?ce zale?no?ci \cite{edwards:sliding}:
+%
+\begin{equation}
+	s(\tilde{x})=H\tilde{x}=0
+\end{equation}\label{eq:6_14}
+%
+\begin{equation}
+\dot{s}(\tilde{x})=H\dot{\tilde{x}}=0, \qquad t\geq t_{s}
+\end{equation}\label{eq:6_15}
+%
+gdzie $t_{s}$ to czas, po którym uk?ad znajduje si? w trybie ?lizgu.
+
+W przypadku modelu robota opisanego równaniem (4.1) mo?na wyznaczy? sterowanie równowa?ne korzystaj?c z równania (4.13) i oznacze? (4.2) i (4.3). Przyjmuj?c ?e w trybie ?lizgu spe?niona jest zale?no?? (4.19), mo?na napisa? ?e:
+%
+\begin{equation}
+\dot{s}(\tilde{x})=H\dot{\tilde{x}}=\Lambda \dot{e}_{q}+\dot{e}_{\dot{q}}=\Lambda(\dot{q}-\dot{q}_{k})+\hat{F}_{2}(x)+\hat{E}(x_{1})\tau-\ddot(q)_{k}=0
+\end{equation}\label{eq:6_16}
+%
+Z powy?szego równania uzyskuje si? sterowanie równowa?ne w postaci:
+%
+\begin{equation}
+\tau_{eq}=-\left(\hat{E}(x_{1})\right)^{-1}\left(\hat{F}_{2}(x)+\Lambda(x_{2}-\dot{q}_{k})-\ddot{q}_{k}\right)
+\end{equation}\label{eq:6_17}
+%
+Je?li stan opisuj?cy dynamik? robota znajdzie si? na powierzchni ?lizgowej $\Psi_{rob}$, to stan uk?adu pod wp?ywem sterowania równowa?nego (4.21) powinien ??lizga?? si? wzd?u? tej powierzchni. Równania opisuj?ce dynamik? robota w przestrzeni zmiennych stanu, w którym
+zastosowano sterowanie równowa?ne s? nast?puj?ce:
+%
+\begin{equation}
+\dot{x}=\left[\begin{array}{c}
+x_{2}\\
+F_{2}(x)
+\end{array}\right]+
+\left[\begin{array}{c}
+0\\
+E(x_{1})
+\end{array}\right]\tau_{eq}=\left[\begin{array}{c}
+x_{2}\\
+F_{2}(x)
+\end{array}\right]+\left[\begin{array}{c}
+x_{2}\\
+E(x_{1})\left[\left(\hat{E}(x_{1})\right)^{-1}\left(-\hat{F}_{2}(x)-\Lambda(x_{2}-\dot{q}_{k})+\ddot{q}_{k}\right)\right]
+\end{array}\right]
+\end{equation}\label{eq:6_18}
+%
+W przypadku, gdy parametry modelu robota odpowiadaj? parametrom rzeczywistego
+robota mo?na napisa?, ?e:
+%
+\begin{equation}
+\hat{F}_{2}(x)=F_{2}(x), \hat{E}(x_{1})=E(x_{1})
+\end{equation}\label{eq:6_19}
+%
+i równanie (4.22) upraszcza si? do postaci:
+%
+\begin{equation}
+\dot{x}=\left[\begin{array}{c}
+x_{2}\\
+-\Lambda(x_{2}-\dot{q}_{k})+\ddot{q}_{k}
+\end{array}\right]
+\end{equation}\label{eq:6_20}
+%
+Zazwyczaj w po?o?eniu zadanym przyjmuje si?, ?e: $\dot{q}_{k}=0$, $\ddot{q}_{k}=0$ i uk?ad opisany jest zale?no?ci?
+%
+\begin{equation}
+\begin{array}{l}
+\dot{x}=\left[\begin{array}{cc}
+0 & I\\
+0 & -\Lambda
+\end{array}\right] \\
+y=[I \quad 0]x
+\end{array}
+\end{equation}\label{eq:6_21}
+%
+Równanie (4.25) uk?adu w trybie ?lizgu, w którym dzia?a sterowanie równowa?ne
+opisuje n odsprz?gni?tych uk?adów, które s? zwi?zane z poszczególnymi przegubami robota. 
+
+Ka?dy z uk?adów opisany jest zale?no?ci?:
+%
+\begin{equation}
+\begin{array}{l}
+\dot{x}_{i}=A_{i}x_{i} \\
+y=[1 \quad 0]x_{i}
+\end{array}
+\end{equation}\label{eq:6_22}
+%
+gdzie: $x_{i}=[x_{1i} \quad x_{2i}]^{T}$,$A_i=\left[\begin{array}{cc}
+0 & 1\\
+0 & -h_{i}
+\end{array}\right]$
+%
+Równanie charakterystyczne ka?dego z uk?adów w trybie ?lizgu ma posta?:
+%
+\begin{equation}
+\text{det}[Iz-A{i}]=z(z+h_{i})
+\end{equation}\label{eq:6_23}
+%
+W trybie ?lizgu równanie charakterystyczne $i$-tego uk?adu posiada dwa pierwiastki:
+%
+\begin{equation}
+z_{i1}=0,z_{i2}=-h_{i}
+\end{equation}\label{eq:6_24}
+%
+Wybieraj?c warto?ci $h_{i}>0$ uk?ady opisane zale?no?ci? (4.26) s? stabilne.
+
+Wygl?d funkcji prze??czaj?cej dla $i$-tego przegubu pokazano na rysunku 4.2.
   %
+\begin{figure}[htb!]
+	\begin{center}
+		\includegraphics[width=1\linewidth]{figures/fig6_2}
+		\caption{Wygl?d funkcji $s_{i}(\tilde{x}=0$, w $i$-tym uk?adzie wspó?rz?dnych stanu, jako funkcji (a) b??dów (4.2) i (4.3) i (b) wspó?rz?dnych stanu (po?o?enie k?towe, pr?dko?? k?towa), przy za?o?eniu, ?e
+		$\dot{q}_{ki}>0$, $q_{ki}>0$}\label{rys:6.2}
+	\end{center}
+\end{figure}
+%
+\subsection{Algorytm sterowania ?lizgowego}
+%	
+Przyjmuj?c przedstawione za?o?enia mo?na wyznaczy? sygna?y steruj?ce w ka?dym z
+przegubów robota. Powinny one spowodowa? osi?gni?cie przez stan opisuj?cy uk?ad
+powierzchni ?lizgowej ?rob (tryb osi?gania), a nast?pnie ruch ?lizgowy po trajektorii
+znajduj?cej si? na tej powierzchni do zadanego punktu {?k , ( ?"k ,?""k} tryb ?lizgowy). Algorytm
+wyznaczania sygna?ów steruj?cych w danej chwili t jest nast?puj?cy:
+
+Algorytm 4.1.
+1. Odczyta? z obiektu warto?ci po?o?e? k?towych i pr?dko?ci k?towych ?( ) ( ) t , we ?" t
+wszystkich przegubach.
+2. Poda? zadane warto?ci po?o?e?, pr?dko?ci i przyspiesze? k?towych w ka?dym z
+przegubów: ?( ) ( ) ( ) t k , .
+3. Obliczy? warto?ci funkcji prze??czaj?cej s( ) ~x korzystaj?c z zale?no?ci (4.20).
+4. Obliczy? macierze i wektory w równaniach Lagrange?a-Eulera na podstawie oszacowanych
+parametrów robota: M? ( ) ( ) ( ) x1 , V? x , G? x1 , F?2[ ] [ ] x , E? x1 .
+5. Znaj?c warto?ci funkcji prze??czaj?cej s( ) ~x (okre?laj?cej po?o?enie uk?adu wzgl?dem
+powierzchni ?rob ) okre?li? warto?ci elementów wektora sygna?u steruj?cego ? . W tym
+celu wykorzystuje si? ró?ne struktury sygna?ów steruj?cych. W pracy zbadane zostan?
+dwie struktury, pierwsz? jest sterowanie prze??czaj?ce (Fu, Gonzales, Lee,1987, Hung,
+Gao, 1993), którego opis i symulacje zawarte b?d? w rozdziale 4.8.1, drug? jest
+uzupe?nione sterowanie równowa?ne (Hung, Gao, 1993, Edwards, Spurgeon, 1998)
+którego opis i symulacje zawarte b?d? w rozdziale 4.8.2.
+6. Zastosowa? w uk?adzie sygna? steruj?cy ? wyznaczony w kroku 5.
+
+Uproszczony schemat blokowy robota z generatorem trajektorii i uk?adem sterowania
+wykorzystuj?cym algorytm sterowania ?lizgowego pokazano na rysunku 4.7
+
   \section{Sterowanie predykcyjne mechanizmów wielocz³onowych}
   \section{Sterowanie LQR/LQG mechanizmów wielocz³onowych}
 %-----
