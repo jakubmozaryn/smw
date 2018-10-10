@@ -1051,78 +1051,228 @@ Opis uk³adów we wspó³rzêdnych stanu jest \textbf{trudniejszy do interpretacji fi
 }
 %
 \frame{
-	\frametitle{W³aœciwoœci strukturalne modelu dynamiki}
-%
-\begin{description}
+	\frametitle{W³aœciwoœci strukturalne modelu dynamiki - macierz $\mathbf M(Q)$}
 	%
-	\item[WMR.1] Macierz inercji $\mathbf M(q)$ jest symetryczna
+	\begin{description}
+		%
+		\item[WM1] Macierz inercji $\mathbf M(q)$ jest symetryczna
+		%
+		\begin{equation}\label{2.4.1}%{2.17}
+		\mathbf M(Q)=\mathbf M^{T}(Q)
+		\end{equation}
+		%
+		\item[WM2] Macierz inercji $\mathbf M(q)$ jest dodatnio okreœlona
+		%
+		\begin{equation}\label{2.4.2}%{2.18}
+		X^{T}\mathbf M(Q)X > 0 \qquad \forall X=[x_{i}]_{n \times 1}, x \neq 0
+		\end{equation}
+		%
+		\item[WM3] Elementy $m_{i,j}(q)$ macierzy inercji $\mathbf M(Q)$ nie zale¿¹ od przemieszczeñ uogólnionych w 'aktualnym' przegubie i przegubach 'poprzednich'
+		%
+		\begin{equation}\label{2.4.4}%{2.20}
+		m_{i,j}(Q)=m_{i,j}(q_{k+1},q_{k+2}, \ldots, q_{n}), k=\min(i,j), \forall i,j=1,\ldots,n
+		\end{equation}
+		%
+	\end{description}
 	%
-	\begin{equation}\label{2.4.1}%{2.17}
-	\mathbf M(q)=\mathbf M^{T}(q)
-	\end{equation}
-	%
-	\item[WMR.2] Macierz inercji $\mathbf M(q)$ jest dodatnio okreœlona
-	%
-	\begin{equation}\label{2.4.2}%{2.18}
-	x^{T}\mathbf M(q)x > 0 \qquad \forall x=[x_{i}]_{n \times 1}, x \neq 0
-	\end{equation}
-	%
-	\item[WMR.3] Elementy $m_{i,j}(q)$ macierzy inercji $\mathbf M(q)$ nie zale¿¹ od przemieszczeñ uogólnionych w 'aktualnym' przegubie i przegubach 'poprzednich'
-	%
-	\begin{equation}\label{2.4.4}%{2.20}
-	m_{i,j}(q)=m_{i,j}(q_{k+1},q_{k+2}, \ldots, q_{n}), k=\min(i,j), \forall i,j=1,\ldots,n
-	\end{equation}
-	%
-\end{description}
-%
 }
 %
 \frame{
-	\frametitle{W³aœciwoœci strukturalne modelu dynamiki}
-\justify
-\footnotesize
-Z w³asnoœci \emph{WMR.1} - \emph{WMR.3} wynikaj¹ nastêpuj¹ce wnioski
-%
-\begin{enumerate}
+	\frametitle{W³aœciwoœci strukturalne modelu dynamiki - macierz $\mathbf M(Q)$}
+	\justify
+	\footnotesize
+	Z w³asnoœci \emph{WM1} - \emph{WM3} wynikaj¹ nastêpuj¹ce wnioski
 	%
-	\item Macierz $\mathbf M(q)$ jest nieosobliwa
+	\begin{enumerate}
+		%
+		\item Macierz $\mathbf M(Q)$ jest nieosobliwa
+		%
+		\begin{equation}\label{2.4.3}
+		\text{det}[\mathbf M(Q)]\neq 0
+		\end{equation}
+		%
+		\item Mo¿na dokonaæ dekompozycji macierzy $\mathbf M(q)$
+		%
+		\begin{equation}\label{2.4.3a}
+		\mathbf M(Q)=\mathbf P^{T}\mathbf P \qquad \det{\mathbf P}\neq 0
+		\end{equation}
+		%
+		\item ¯aden element macierzy inercji nie zale¿y od przemieszczenia uogólnionego w pierwszym przegubie, natomiast element $m_{n,n}$ nie zale¿y od przemieszczeñ uogólnionych w ¿adnym z przegubów i ma wartoœæ sta³¹.
+		%
+		\item Odwrócona macierz inercji $\bar{\mathbf M}(Q)=[\bar{m}_{i,j}(Q)]_{n \times n}$ jest symetryczna
+		%
+		\begin{equation}\label{2.6.9}%{2.17}
+		\bar{\mathbf M}(Q)=\mathbf M(Q)^{-1}=\bar{\mathbf M}^{T}(Q)
+		\end{equation}
+		%
+		\item Odwrócona macierz inercji $\bar{\mathbf M}(q)$ jest dodatnio okreœlona
+		%
+		\begin{equation}\label{2.6.10}%{2.18}
+		x^{T}\bar{\mathbf M}(Q)x > 0 \qquad \forall x=[x_{i}]_{n \times 1}, x \neq 0
+		\end{equation}
+		%
+		\item Ka¿dy element odwróconej macierzy inercji $\bar{\mathbf M}(Q)$ jest funkcj¹ przemieszczeñ uogólnionych we wszystkich przegubach oprócz pierwszego
+		%
+		\begin{equation}\label{2.6.12}%{2.20}
+		\bar{m}_{i,j}(Q)=\bar{m}_{i,j}(q_{2}, \ldots, q_{n}) \qquad \forall i,j=1,\ldots,n
+		\end{equation}
+		%
+	\end{enumerate}
 	%
-	\begin{equation}\label{2.4.3}
-	\text{det}[M(q)]\neq 0
-	\end{equation}
-	%
-	\item Mo¿na dokonaæ dekompozycji macierzy $\mathbf M(q)$
-	%
-	\begin{equation}\label{2.4.3a}
-	M(q)=P^{T}P \qquad \det{P}\neq 0
-	\end{equation}
-	%
-	\item ¯aden element macierzy inercji nie zale¿y od przemieszczenia uogólnionego w pierwszym przegubie, natomiast element $m_{n,n}$ nie zale¿y od przemieszczeñ uogólnionych w ¿adnym z przegubów i ma wartoœæ sta³¹.
-	%
-	\item Odwrócona macierz inercji $\bar{\mathbf M}(q)=[\bar{m}_{i,j}(q)]_{n \times n}$ jest symetryczna
-	%
-	\begin{equation}\label{2.6.9}%{2.17}
-	\bar{\mathbf M}(q)=\mathbf M(q)^{-1}=\bar{\mathbf M}^{T}(q)
-	\end{equation}
-	%
-	\item Odwrócona macierz inercji $\bar{\mathbf M}(q)$ jest dodatnio okreœlona
-	%
-	\begin{equation}\label{2.6.10}%{2.18}
-	x^{T}\bar{\mathbf M}(q)x > 0 \qquad \forall x=[x_{i}]_{n \times 1}, x \neq 0
-	\end{equation}
-	%
-	\item Ka¿dy element odwróconej macierzy inercji $\bar{\mathbf M}(q)$ jest funkcj¹ przemieszczeñ uogólnionych we wszystkich przegubach oprócz pierwszego
-	%
-	\begin{equation}\label{2.6.12}%{2.20}
-	\bar{m}_{i,j}(q)=\bar{m}_{i,j}(q_{2}, \ldots, q_{n}) \qquad \forall i,j=1,\ldots,n
-	\end{equation}
-	%
-\end{enumerate}
-%
 }
 %
 \frame{
-\titlepage
+	\frametitle{W³aœciwoœci strukturalne modelu dynamiki - macierz $\mathbf M(Q)$}
+	\begin{description}
+		\item[WM4] Istnieje sta³a $\alpha \in R_{+}$, taka ¿e	
+		\begin{equation}
+		\mathbf M ( Q ) \geq \alpha \mathbf I \quad \forall Q \in \mathbb { R } ^ { n }
+		\end{equation}
+		gdzie $\mathbf I$ oznacza macierz jednostkow¹ o wymiarach $n\times n$.
+		%
+		\item[WM5]Dla robotów maj¹cych tylko po³¹czenia obrotowe istnieje sta³a $\beta > 0$, taka ¿e
+		\begin{equation}
+		\lambda _ { \operatorname { Max } } \{ \mathbf M ( \boldsymbol { Q } ) \} \leq \beta \quad \forall \boldsymbol { Q } \in \mathbb { R } ^ { n }
+		\end{equation}
+		Sta³¹ $\beta$ mo¿na oszacowac nastêpuj¹co
+		\begin{equation}
+		\beta \geq n \quad \left( \max _ { i , j} \left| m _ { i j } ( Q ) \right| \right)
+		\end{equation}
+	\end{description}
+}
+%
+\frame{
+	\frametitle{W³aœciwoœci strukturalne modelu dynamiki - macierz $\mathbf M(Q)$}
+	\begin{description}
+		\item[WM6]Dla robotów maj¹cych tylko po³¹czenia obrotowe istnieje sta³a $k_{M} >
+		0$, taka ¿e	
+		\begin{equation}
+		\| M ( \boldsymbol { x } ) z - M ( \boldsymbol { y } ) z \| \leq k _ { M } \| \boldsymbol { x } - y \| \| z \|
+		\end{equation}
+		dla wszystkich wektorów $x, y, z \in R^{n}$. Sta³¹  $k_{M}$ mo¿na oszacowac nastêpuj¹co
+		\begin{equation}
+		k _ { M } \geq n ^ { 2 } \left( \max _ { i , j , k } \left| \frac { \partial M _ { i j } ( \boldsymbol { Q } ) } { \partial q _ { k } } \right| \right)
+		\end{equation}
+		%
+		\item[WM7]Dla robotów maj¹cych tylko po³¹czenia obrotowe istnieje sta³a  $k_{M}' >
+		0$ such that
+		\begin{equation}
+		\| M ( x ) y \| \leq k _ { M } ^ { \prime } \| y \|
+		\end{equation}
+		dla wszystkich wektorów  $x, y \in R^{n}$
+	\end{description}
+}
+%
+\frame{
+	\frametitle{W³aœciwoœci strukturalne modelu dynamiki - wektor $V(Q, \dot{Q})$}
+	\begin{description}	
+		\item[WV1]Dla danego manipulatora macierz $V(Q, \dot{Q})$ mo¿e nie byæ jednoznaczna, ale wektor $V(Q, \dot{Q})\dot{Q}$ jest jednoznaczny
+		\item[WV2]Dla wszystkich wektorów $q, x, y, z \in R^{n}$ i sta³ej $\alpha$ spe³niona jest zale¿noœæ
+		\begin{equation}
+		V ( \boldsymbol { q } , \boldsymbol { x } ) \boldsymbol { y } = V ( \boldsymbol { q } , \boldsymbol { y } ) \boldsymbol { x }
+		\end{equation}
+		\begin{equation}
+		V ( \boldsymbol { q } , \boldsymbol { z } + \alpha \boldsymbol { x } ) \boldsymbol { y } = V ( \boldsymbol { q } , \boldsymbol { z } ) \boldsymbol { y } + \alpha V ( \boldsymbol { q } , \boldsymbol { x } ) \boldsymbol { y }
+		\end{equation}	\end{description}
+}
+%
+\frame{
+	\frametitle{W³aœciwoœci strukturalne modelu dynamiki - wektor $V(Q, \dot{Q})$}
+	\begin{description}	
+		\item[WV3] Wektor $V(q, x)y$ mo¿e byæ zapisany w postaci
+		\begin{equation}
+		V ( \boldsymbol { q } , \boldsymbol { x } ) \boldsymbol { y } = \left[ \begin{array} { c } { \boldsymbol { x } ^ { T } V _ { 1 } ( \boldsymbol { q } ) \boldsymbol { y } } \\ { \boldsymbol { x } ^ { T } V _ { 2 } ( \boldsymbol { q } ) \boldsymbol { y } } \\ { \vdots } \\ { \boldsymbol { x } ^ { T } V _ { \mathbf { n } } ( \boldsymbol { q } ) \boldsymbol { y } } \end{array} \right]
+		\end{equation}
+		gdzie $V_k(q)$ s¹ symetryczymi macierzami o wymiarach $n \times n$ dla wszystkich
+		$k = 1, 2, \dots , n$. Element $V_{kij}(q)$ macierzy $V_{k}(q)$ odpowieda tzw. symbolowi \textit{Christoffela} pierwszego rodzaju $v_{jik}(q)$ postaci
+		\begin{equation}
+		v _ { i j k } ( q ) = \frac { 1 } { 2 } \left[ \frac { \partial M _ { k j } ( Q ) } { \partial q _ { i } } + \frac { \partial M _ { k i } ( Q ) } { \partial q _ { j } } - \frac { \partial M _ { i j } ( Q ) } { \partial q _ { k } } \right].
+		\end{equation}
+	\end{description}
+}
+%
+\frame{
+	\frametitle{W³aœciwoœci strukturalne modelu dynamiki - wektor $V(Q, \dot{Q})$}
+	\begin{description}	
+		\item[WV4] Dla robotów maj¹cych tylko po³¹czenia obrotowe istnieje sta³a $k_{C_1} > 0$, taka ¿e
+		\begin{equation}
+		\| V ( \boldsymbol { q } , \boldsymbol { x } ) \boldsymbol { y } \| \leq k _ { V _ { 1 } } \| \boldsymbol { x } \| \| y \|
+		\end{equation}
+		dla wszystkich $q, x, y \in R^{n}.$	
+		\item[WV5] Dla robotów maj¹cych tylko po³¹czenia obrotowe istniej¹ sta³e
+		$k_{C_1} > 0$ and $k_{C_2} > 0$, takie ¿e
+		\begin{equation}
+		\left.\begin{aligned} \| V ( \boldsymbol { x } , \boldsymbol { z } ) \boldsymbol { w } - V ( \boldsymbol { y } , \boldsymbol { v } ) \boldsymbol { w } \| \leq k _ { C _ { 1 } } \| \boldsymbol { z } - \boldsymbol { v } \| & \| \boldsymbol { w } \| \\ & + k _ { C _ { 2 } } \| \boldsymbol { x } - \boldsymbol { y } \| \| \boldsymbol { w } \| \| \boldsymbol { z } \| \end{aligned} \right.
+		\end{equation}
+		dla wszystkich $v, x, y, z, w \in R^{n}.$	
+	\end{description}
+}
+%
+\frame{
+	\frametitle{W³aœciwoœci strukturalne modelu dynamiki - wektor $V(Q, \dot{Q})$}
+	\begin{description}	
+		\item[WV6]\justify Macierz $V(Q,\dot{Q})$, zale¿y od macierzy $M(Q)$ zgodnie z zale¿noœci¹
+		\begin{equation}
+		\boldsymbol { x } ^ { T } \left[ \frac { 1 } { 2 } \dot { M } ( \boldsymbol { q } ) - V ( \boldsymbol { q } , \boldsymbol { \boldsymbol { q } } ) \right] \boldsymbol { x } = 0 \quad \forall \boldsymbol { q } , \dot { \boldsymbol { q } } , \boldsymbol { x } \in \mathbb { R } ^ { \boldsymbol { n } }
+		\end{equation}
+		i w rzeczywistoœci $\frac { 1 } { 2 } \dot { M } ( \boldsymbol { q } ) - V ( \boldsymbol { q } , \boldsymbol { \boldsymbol { q } } )$ jest skoœnie-symetryczna.
+		Równowa¿nie, macierz $\dot { M } ( \boldsymbol { q } ) - 2V ( \boldsymbol { q } , \boldsymbol { \boldsymbol { q } } )$ jest skoœnie-symetryczna, spe³nia nastêpuj¹c¹ zale¿noœæ
+		\begin{equation}
+		\dot { M } ( \boldsymbol { q } ) = V ( \boldsymbol { q } , \dot { \boldsymbol { q } } ) + C ( \boldsymbol { q } , \dot { \boldsymbol { q } } ) ^ { T }
+		\end{equation}	
+		Niezale¿nie od sposobu, w jaki $V ( \boldsymbol { q } , \dot { \boldsymbol { q } } )$ jest wyprowadzana, zawsze spe³nia
+		\begin{equation}
+		\dot { \boldsymbol { q } } ^ { T } \left[ \frac { 1 } { 2 } \dot { M } ( \boldsymbol { q } ) - V ( \boldsymbol { q } , \dot { q } ) \right] \dot { \boldsymbol { q } } = 0 \quad \forall \boldsymbol { q } , \dot { \boldsymbol { q } } \in \mathbb { R } ^ { n }
+		\end{equation}
+	\end{description}
+}
+%
+\frame{
+	\frametitle{W³aœciwoœci strukturalne modelu dynamiki - wektor $G(Q)$}
+	\begin{description}	
+		\item[WG1]
+		Wektor $G(Q)$ i wektor $\dot{Q}$ s¹ ze sob¹ skorelowane nastêpuj¹co
+		\begin{equation}
+		\int _ { 0 } ^ { T } \boldsymbol { G } ( \boldsymbol { q } ( t ) ) ^ { T } \boldsymbol { \dot { q } } ( t ) d t = \mathcal { U } ( \boldsymbol { q } ( T ) ) - \mathcal { U } ( \boldsymbol { q } ( 0 ) )
+		\end{equation}
+		dla wszystkich $T \in R_{+} $.
+		%
+		\item[WG2]
+		Dla robotów maj¹cych tylko po³¹czenia obrotowe istnieje sta³a $k_{ \mathcal { U }}$,
+		taka ¿e
+		\begin{equation}
+		\mathcal { U } ( \boldsymbol { q } ( 0 ) )+\int _ { 0 } ^ { T } G ( \boldsymbol { q } ( t ) ) ^ { T } \dot { \boldsymbol { q } } ( t ) d t \geq k _ { \mathcal { U } }
+		\end{equation}
+		dla wszystkich $T \in R_{+} $, kiedy $k _ { \mathcal { U }} = \min _ { q } \{ \mathcal { U } ( \boldsymbol { q } ) \}$.
+		\item[WG3] Dla robotów maj¹cych tylko po³¹czenia obrotowe istnieje sta³a $k'$ taka ¿e
+		\begin{equation}
+		\| \boldsymbol { G } ( \boldsymbol { q } ) \| \leq k ^ { \prime }
+		\end{equation}
+		dla wszystkich $q \in R^{n}.$
+	\end{description}
+}
+%
+\frame{
+	\frametitle{W³aœciwoœci strukturalne modelu dynamiki - wektor $G(Q)$}
+	\begin{description}	
+		\item[WG4]
+		Dla robotów maj¹cych tylko po³¹czenia obrotowe, wektor $G(q)$ jest lipszycowski (ang. \textit{Lipschitz vector}), co oznacza, ¿e istnieje sta³a $k_{g} > 0$, taka ¿e
+		\begin{equation}
+		\| \boldsymbol { G } ( \boldsymbol { x } ) - \boldsymbol { G } ( \boldsymbol { y } ) \| \leq k _ { g } \| \boldsymbol { x } - \boldsymbol { y } \|
+		\end{equation}
+		for all $x,y \in R^{n} $. Sta³¹ $k_{g}$ mo¿na oszacowaæ korzystaj¹c z pochodnej cz¹stkowej
+		\begin{equation}
+		k _ { g } \geq n \left( \max _ { i , j , q } \left| \frac { \partial G _ { i } ( \boldsymbol { q } ) } { \partial q _ { j } } \right| \right)
+		\end{equation}
+		Ponadto, $k _ { g }$ spe³nia zale¿noœæ
+		\begin{equation}
+		k _ { g } \geq \| \frac { \partial G ( q ) } { \partial q } | | \geq \lambda _ { \operatorname { Max } } \left\{ \frac { \partial G ( q ) } { \partial q } \right\}
+		\end{equation}
+	\end{description}
+}
+%
+\frame{
+	\titlepage
 }
 %
 \end{document}
